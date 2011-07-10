@@ -1,2 +1,5 @@
+chrome/
+        Chrome Extensions
+
 perl/
         Perl modules
