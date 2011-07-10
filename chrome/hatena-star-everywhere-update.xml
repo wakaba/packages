@@ -1,5 +1,5 @@
 <gupdate xmlns="http://www.google.com/update2/response" protocol="2.0">
   <app appid="dijafbkdlihggagmdgkmdhdbcgmdpbah">
-    <updatecheck codebase="http://wakaba.github.com/packages/chrome/hatena-star-everywhere.crx" version="1.1" />
+    <updatecheck codebase="http://wakaba.github.com/packages/chrome/hatena-star-everywhere-1.1.crx" version="1.1" />
   </app>
 </gupdate>
