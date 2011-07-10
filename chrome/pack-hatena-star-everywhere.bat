@@ -1,0 +1,1 @@
+"%USERPROFILE%\Local Settings\Application Data\Google\Chrome\Application\chrome.exe" --pack-extension="%CD%\hatena-star-everywhere" --pack-extension-key="%CD%\hatena-star-everywhere.pem" --no-message-box
