@@ -1,0 +1,3 @@
+[submodule "hatenaid-discovery"]
+	path = hatenaid-discovery
+	url = git://github.com/wakaba/hatenaid-discovery.git
