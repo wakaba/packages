@@ -1,3 +1,6 @@
 [submodule "hatenaid-discovery"]
 	path = hatenaid-discovery
 	url = git://github.com/wakaba/hatenaid-discovery.git
+[submodule "modules/perl-json-functions-xs"]
+	path = modules/perl-json-functions-xs
+	url = git://github.com/wakaba/perl-json-functions-xs.git

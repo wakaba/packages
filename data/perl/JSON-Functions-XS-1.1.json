@@ -1,0 +1,7 @@
+{
+   "desc" : "    The \"JSON::Functions::XS\" module provides various useful functions to\n    decode or encode JSON data. These functions are wrappers; actual\n    conversion is enforced by the JSON::XS module.\n",
+   "dist_name" : "JSON-Functions-XS",
+   "name" : "JSON::Functions::XS",
+   "urls" : {},
+   "version" : "1.1"
+}
