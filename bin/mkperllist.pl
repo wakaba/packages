@@ -71,7 +71,7 @@ for my $dist_name (sort { $a cmp $b } keys %{$data}) {
       my $tar_name = $info->{dist_name} . '-' . $info->{version} . '.tar.gz';
       my $tar_f = $tar_d->file ($tar_name);
       my $tar_stat = $tar_f->stat;
-      printf q{<dt>Tarball<dd><a href="perl/%s">%s</a>
+      printf q{<dt>Tarball<dd><a href="%s">%s</a>
                (%s, <time datetime="%s">%s</time>)},
           htescape $tar_name, htescape $tar_name,
           htescape size_label $tar_stat->size,
@@ -93,7 +93,7 @@ for my $dist_name (sort { $a cmp $b } keys %{$data}) {
       my $tar_name = $info->{dist_name} . '-' . $info->{version} . '.tar.gz';
       my $tar_f = $tar_d->file ($tar_name);
       my $tar_stat = $tar_f->stat;
-      printf q{<dd><a href="perl/%s">%s</a>
+      printf q{<dd><a href="%s">%s</a>
                (%s, <time datetime="%s">%s</time>)},
           htescape $tar_name, htescape $tar_name,
           htescape size_label $tar_stat->size,
