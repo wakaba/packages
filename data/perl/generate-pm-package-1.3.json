@@ -1,15 +1,11 @@
 {
    "desc" : "    The \"generate-pm-package\" script can be used to generate Perl module\n    packages using a simple manifest file.",
    "dist_name" : "generate-pm-package",
-   "files" : [
-      "bin/generate-pm-package",
-      "config/dist/generate-pm-package.pi"
-   ],
    "name" : "generate-pm-package",
    "urls" : {
       "git" : {
          "GitHub" : "https://github.com/wakaba/generate-pm-package"
       }
    },
-   "version" : "1.2"
+   "version" : "1.3"
 }
