@@ -1,0 +1,7 @@
+{
+   "desc" : "    The \"Dongry::Type::DateTime\" module defines data types for handing date\n    and time in Dongry. They represents date and time in Perl DateTime\n    object.\n",
+   "dist_name" : "Dongry-Type-DateTime",
+   "name" : "Dongry::Type::DateTime",
+   "urls" : {},
+   "version" : "1.0"
+}

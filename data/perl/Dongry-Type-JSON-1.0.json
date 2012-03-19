@@ -1,0 +1,7 @@
+{
+   "desc" : "    The \"Dongry::Type::JSON\" module defines data types for handing\n    JSON-encoded data structure as column value in Dongry.",
+   "dist_name" : "Dongry-Type-JSON",
+   "name" : "Dongry::Type::JSON",
+   "urls" : {},
+   "version" : "1.0"
+}
