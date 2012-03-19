@@ -64,9 +64,11 @@ for my $dist_name (sort { $a cmp $b } keys %{$data}) {
   for my $version (sort { $b cmp $a } keys %{$data->{$dist_name}}) {
     my $info = $data->{$dist_name}->{$version};
     if ($count == 0) {
+      my $desc = join '',
+          map { /^     / ? '<pre>' . $_ . '</pre>' : '<p>' . $_ }
+          split /\n{2,}/, htescape $info->{desc};
       printf q{<dt>%s %s<dd>%s},
-          htescape $info->{name}, htescape $info->{version},
-          htescape $info->{desc};
+          htescape $info->{name}, htescape $info->{version}, $desc;
 
       my $tar_name = $info->{dist_name} . '-' . $info->{version} . '.tar.gz';
       my $tar_f = $tar_d->file ($tar_name);
