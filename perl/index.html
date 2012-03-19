@@ -7,13 +7,61 @@
 latest version of these modules are avaialble from their Git
 repositories.  Use of the Git version is always recommended.</p>
 
-<section id="JSON-Functions-XS"><h2>JSON-Functions-XS</h2><dl><dt>JSON::Functions::XS 1.1<dd>    The &quot;JSON::Functions::XS&quot; module provides various useful functions to
+<section id="Dongry-Database"><h2>Dongry-Database</h2><dl><dt>Dongry::Database 2.0<dd><p>    Dongry is a lightweight Perl interface to MySQL databases. It provides
+    different levels of abstractions for applications to handle database
+    operations in easy, memorable, and safe ways without stealing full
+    control for how and when SQL queries are executed from them.<p>    The &quot;Dongry::Database&quot; module contains the implementation of the
+    database object, which is the most fundamental and important object in
+    Dongry. All of the features in Dongry can be directly or indirectly
+    accessible from the database object, as described in the following
+    sections.<p>    In addition to the synchronous processing model, Dongry also supports
+    the asynchronous event-based model by using the AnyEvent::DBI module as
+    its backend. Since both modes can be switched or combined easily, you
+    can transit one from the other, or you can partially change the
+    processing mode, in very low cost.<pre>     + - - - - - - - - - - - - - - - - - - - - - +
+     :                                           :
+     : Application                               :
+     :                                           :
+     +---+------------+                          :
+     | D | Query obj. |                          :
+     | o +------------+-----------+              :
+     | n | Schema-aware ops.      |              :
+     | g +------------------------+------+       :
+     | r | Structured SQL ops.           |       :
+     | y +-------------------------------+---+   :
+     |   | Bare SQL w/named placeholders     |   :
+     |   +-----------------------------------+---+
+     |   | Bare SQL ops.                         |
+     |   +---------------------------------------+
+     |   | Connection management                 |
+     +---+------------------+--------------------+
+     |                      | AnyEvent::DBI      |
+     |                      +--------------------+
+     | DBI                                       |
+     | DBD                                       |
+     +-------------------------------------------+
+                        |   ^
+                        |   |
+                        v   |
+     +-------------------------------------------+
+     | Database                                  |
+     +-------------------------------------------+
+       Fig. Various levels of features in Dongry</pre><dt>Tarball<dd><a href="Dongry-Database-2.0.tar.gz">Dongry-Database-2.0.tar.gz</a>
+               (91KB, <time datetime="2012-01-09T09:12:12Z">Mon Jan  9 09:12:12 2012 UTC</time>)</dl></section><section id="Dongry-Type-DateTime"><h2>Dongry-Type-DateTime</h2><dl><dt>Dongry::Type::DateTime 1.0<dd><p>    The &quot;Dongry::Type::DateTime&quot; module defines data types for handing date
+    and time in Dongry. They represents date and time in Perl DateTime
+    object.
+<dt>Tarball<dd><a href="Dongry-Type-DateTime-1.0.tar.gz">Dongry-Type-DateTime-1.0.tar.gz</a>
+               (3KB, <time datetime="2011-12-31T14:47:46Z">Sat Dec 31 14:47:46 2011 UTC</time>)</dl></section><section id="Dongry-Type-JSON"><h2>Dongry-Type-JSON</h2><dl><dt>Dongry::Type::JSON 1.0<dd><p>    The &quot;Dongry::Type::JSON&quot; module defines data types for handing
+    JSON-encoded data structure as column value in Dongry.<dt>Tarball<dd><a href="Dongry-Type-JSON-1.0.tar.gz">Dongry-Type-JSON-1.0.tar.gz</a>
+               (2KB, <time datetime="2011-12-31T14:47:46Z">Sat Dec 31 14:47:46 2011 UTC</time>)</dl></section><section id="Dongry-Type-MessagePack"><h2>Dongry-Type-MessagePack</h2><dl><dt>Dongry::Type::MessagePack 1.0<dd><p>    The &quot;Dongry::Type::MessagePack&quot; module defines data types for handing
+    MessagePack-encoded data structure as column value in Dongry.<dt>Tarball<dd><a href="Dongry-Type-MessagePack-1.0.tar.gz">Dongry-Type-MessagePack-1.0.tar.gz</a>
+               (2KB, <time datetime="2012-03-19T15:36:49Z">Mon Mar 19 15:36:49 2012 UTC</time>)</dl></section><section id="JSON-Functions-XS"><h2>JSON-Functions-XS</h2><dl><dt>JSON::Functions::XS 1.1<dd><p>    The &quot;JSON::Functions::XS&quot; module provides various useful functions to
     decode or encode JSON data. These functions are wrappers; actual
     conversion is enforced by the JSON::XS module.
 <dt>Tarball<dd><a href="JSON-Functions-XS-1.1.tar.gz">JSON-Functions-XS-1.1.tar.gz</a>
-               (3KB, <time datetime="2012-03-17T15:35:01Z">Sat Mar 17 15:35:01 2012 UTC</time>)<dt>Git repository<dd><a href="https://github.com/wakaba/perl-json-functions-xs">GitHub</a></dl></section><section id="generate-pm-package"><h2>generate-pm-package</h2><dl><dt>generate-pm-package 1.3<dd>    The &quot;generate-pm-package&quot; script can be used to generate Perl module
+               (3KB, <time datetime="2012-03-17T15:09:31Z">Sat Mar 17 15:09:31 2012 UTC</time>)<dt>Git repository<dd><a href="https://github.com/wakaba/perl-json-functions-xs">GitHub</a></dl></section><section id="generate-pm-package"><h2>generate-pm-package</h2><dl><dt>generate-pm-package 1.3<dd><p>    The &quot;generate-pm-package&quot; script can be used to generate Perl module
     packages using a simple manifest file.<dt>Tarball<dd><a href="generate-pm-package-1.3.tar.gz">generate-pm-package-1.3.tar.gz</a>
-               (3KB, <time datetime="2012-03-17T15:35:06Z">Sat Mar 17 15:35:06 2012 UTC</time>)<dt>Git repository<dd><a href="https://github.com/wakaba/generate-pm-package">GitHub</a></dl></section>
+               (3KB, <time datetime="2012-03-17T15:36:51Z">Sat Mar 17 15:36:51 2012 UTC</time>)<dt>Git repository<dd><a href="https://github.com/wakaba/generate-pm-package">GitHub</a></dl></section>
 
 <hr>
 
