@@ -2,11 +2,6 @@
    "desc" : "    Dongry is a lightweight Perl interface to MySQL databases. It provides\n    different levels of abstractions for applications to handle database\n    operations in easy, memorable, and safe ways without stealing full\n    control for how and when SQL queries are executed from them.\n\n    The \"Dongry::Database\" module contains the implementation of the\n    database object, which is the most fundamental and important object in\n    Dongry. All of the features in Dongry can be directly or indirectly\n    accessible from the database object, as described in the following\n    sections.\n\n    In addition to the synchronous processing model, Dongry also supports\n    the asynchronous event-based model by using the AnyEvent::DBI module as\n    its backend. Since both modes can be switched or combined easily, you\n    can transit one from the other, or you can partially change the\n    processing mode, in very low cost.\n\n     + - - - - - - - - - - - - - - - - - - - - - +\n     :                                           :\n     : Application                               :\n     :                                           :\n     +---+------------+                          :\n     | D | Query obj. |                          :\n     | o +------------+-----------+              :\n     | n | Schema-aware ops.      |              :\n     | g +------------------------+------+       :\n     | r | Structured SQL ops.           |       :\n     | y +-------------------------------+---+   :\n     |   | Bare SQL w/named placeholders     |   :\n     |   +-----------------------------------+---+\n     |   | Bare SQL ops.                         |\n     |   +---------------------------------------+\n     |   | Connection management                 |\n     +---+------------------+--------------------+\n     |                      | AnyEvent::DBI      |\n     |                      +--------------------+\n     | DBI                                       |\n     | DBD                                       |\n     +-------------------------------------------+\n                        |   ^\n                        |   |\n                        v   |\n     +-------------------------------------------+\n     | Database                                  |\n     +-------------------------------------------+\n       Fig. Various levels of features in Dongry",
    "dist_name" : "Dongry-Database",
    "name" : "Dongry::Database",
-   "urls" : {
-      "git" : {
-         "GitHub" : "https://github.com/wakaba/dongry",
-         "Suika" : "http://suika.fam.cx/gate/git/wi/perl/dongry.git/tree"
-      }
-   },
-   "version" : "2.0"
+   "urls" : {},
+   "version" : "1.0"
 }

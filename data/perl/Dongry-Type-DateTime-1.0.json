@@ -2,6 +2,11 @@
    "desc" : "    The \"Dongry::Type::DateTime\" module defines data types for handing date\n    and time in Dongry. They represents date and time in Perl DateTime\n    object.\n",
    "dist_name" : "Dongry-Type-DateTime",
    "name" : "Dongry::Type::DateTime",
-   "urls" : {},
+   "urls" : {
+      "git" : {
+         "GitHub" : "https://github.com/wakaba/dongry",
+         "Suika" : "http://suika.fam.cx/gate/git/wi/perl/dongry.git/tree"
+      }
+   },
    "version" : "1.0"
 }
