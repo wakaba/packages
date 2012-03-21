@@ -1,0 +1,11 @@
+{
+   "desc" : "",
+   "dist_name" : "Test-Worker-Client",
+   "name" : "Test::Worker::Client",
+   "urls" : {
+      "git" : {
+         "GitHub" : "https://github.com/wakaba/perl-test-worker-client"
+      }
+   },
+   "version" : "1.0"
+}
