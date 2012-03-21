@@ -61,7 +61,53 @@ repositories.  Use of the Git version is always recommended.</p>
     conversion is enforced by the JSON::XS module.
 <dt>Tarball<dd><a href="JSON-Functions-XS-1.1.tar.gz">JSON-Functions-XS-1.1.tar.gz</a>
                (3KB, <time datetime="2012-03-17T15:09:31Z">Sat Mar 17 15:09:31 2012 UTC</time>)<dt>Git repository<dd><a href="https://github.com/wakaba/perl-json-functions-xs">GitHub</a></dl></section><section id="Test-Worker-Client"><h2>Test-Worker-Client</h2><dl><dt>Test::Worker::Client 1.0<dd><dt>Tarball<dd><a href="Test-Worker-Client-1.0.tar.gz">Test-Worker-Client-1.0.tar.gz</a>
-               (5KB, <time datetime="2012-03-21T03:47:35Z">Wed Mar 21 03:47:35 2012 UTC</time>)<dt>Git repository<dd><a href="https://github.com/wakaba/perl-test-worker-client">GitHub</a></dl></section><section id="generate-pm-package"><h2>generate-pm-package</h2><dl><dt>generate-pm-package 1.3<dd><p>    The &quot;generate-pm-package&quot; script can be used to generate Perl module
+               (5KB, <time datetime="2012-03-21T03:50:33Z">Wed Mar 21 03:50:33 2012 UTC</time>)<dt>Git repository<dd><a href="https://github.com/wakaba/perl-test-worker-client">GitHub</a></dl></section><section id="Wanage-HTTP"><h2>Wanage-HTTP</h2><dl><dt>Wanage::HTTP 1.0<dd><p>    The &quot;Wanage::HTTP&quot; module provides a set of APIs for handling HTTP
+    messages in server-side Web applications, namely interpretation of HTTP
+    request message and generation of HTTP response message in response to
+    the request, using the underlying interface for server-application
+    communication such as CGI and PSGI.<p>    The Wanage HTTP object provides access to data contained in HTTP request
+    message, as well as primitive methods to generate HTTP response, while
+    not entirely exposing historical complexness of underlying interfaces to
+    servers. The goal of the HTTP object implementation is not completely
+    modeling the HTTP request and response messages, but providing a set of
+    API that is convinient and secure enough to build general-purpose Web
+    applications. Therefore, it does not, and will not, support full HTTP
+    protocol features.<p>    Although it is not required, Wanage is intended to be combined with
+    Warabe::App, a fundamental building block of server-side Web
+    applications. Warabe defines more specific or higher-level APIs for
+    typical Web application use cases, such as URL path interpretation,
+    request validation, error handling, redirect response construction, and
+    so on, which are all built on the top of Wanage's generic HTTP
+    interface.<dt>Tarball<dd><a href="Wanage-HTTP-1.0.tar.gz">Wanage-HTTP-1.0.tar.gz</a>
+               (43KB, <time datetime="2012-03-21T13:19:46Z">Wed Mar 21 13:19:46 2012 UTC</time>)<dt>Git repository<dd><a href="https://github.com/wakaba/wanage">GitHub</a><dd><a href="http://suika.fam.cx/gate/git/wi/wanage.git/tree">Suika</a></dl></section><section id="Warabe-App"><h2>Warabe-App</h2><dl><dt>Warabe::App 1.0<dd><p>    The Warabe::App module is the primary component of Warabe, a server-side
+    Web application construction toolkit. It provides a number of convinient
+    methods handling HTTP request and response in the way that would be
+    useful for typical Web applications.<p>    Warabe accesses the HTTP request and response through the interface
+    provided by Wanage::HTTP. Therefore, Warabe can handle any
+    server-application interface supported by Wanage::HTTP, including CGI
+    and PSGI.<p>    Warabe constructs higher-level operations for more concrete use cases on
+    the top of APIs provided by Wanage HTTP object. It does not mean a Web
+    application using Warabe should not access Wanage HTTP object directly -
+    in fact, Warabe does not provide complete access to HTTP request and
+    response, as it can be easily accessed through the HTTP object directly
+    from the application, if necessary.<pre>      +------+   +------+   +------+      +------+      +------+
+      |Your  |&lt;-&gt;|Warabe|&lt;-&gt;|Wanage|&lt;----&gt;|HTTP  |&lt;----&gt;|HTTP  |
+      |  App.|   +------+   |      | CGI  |server| HTTP |client|
+      |      |&lt;------------&gt;|      | PSGI |      |      |      |
+      +------+              +------+      +------+      +------+
+  
+      App.       Common     Generic       TCP/HTTP
+      specific   Web app.   HTTP          protocol
+      logic      operations interpret.    handling</pre><dt>Tarball<dd><a href="Warabe-App-1.0.tar.gz">Warabe-App-1.0.tar.gz</a>
+               (12KB, <time datetime="2012-03-21T13:19:46Z">Wed Mar 21 13:19:46 2012 UTC</time>)<dt>Git repository<dd><a href="https://github.com/wakaba/wanage">GitHub</a><dd><a href="http://suika.fam.cx/gate/git/wi/wanage.git/tree">Suika</a></dl></section><section id="Warabe-App-Role-DateTime"><h2>Warabe-App-Role-DateTime</h2><dl><dt>Warabe::App::Role::DateTime 1.0<dd><p>    The &quot;Warabe::App::Role::DateTime&quot; module defines additional methods for
+    handling date-time data as DateTime objects in Warabe::App API. This
+    module is intended to be used a superclass of some subclass of
+    Warabe::App.<dt>Tarball<dd><a href="Warabe-App-Role-DateTime-1.0.tar.gz">Warabe-App-Role-DateTime-1.0.tar.gz</a>
+               (2KB, <time datetime="2012-03-21T13:19:46Z">Wed Mar 21 13:19:46 2012 UTC</time>)<dt>Git repository<dd><a href="https://github.com/wakaba/wanage">GitHub</a><dd><a href="http://suika.fam.cx/gate/git/wi/wanage.git/tree">Suika</a></dl></section><section id="Warabe-App-Role-JSON"><h2>Warabe-App-Role-JSON</h2><dl><dt>Warabe::App::Role::JSON 1.0<dd><p>    The &quot;Warabe::App::Role::JSON&quot; module defines additional methods for
+    handling JSON data in Warabe::App API. This module is intended to be
+    used a superclass of some subclass of Warabe::App.
+<dt>Tarball<dd><a href="Warabe-App-Role-JSON-1.0.tar.gz">Warabe-App-Role-JSON-1.0.tar.gz</a>
+               (3KB, <time datetime="2012-03-21T13:19:46Z">Wed Mar 21 13:19:46 2012 UTC</time>)<dt>Git repository<dd><a href="https://github.com/wakaba/wanage">GitHub</a><dd><a href="http://suika.fam.cx/gate/git/wi/wanage.git/tree">Suika</a></dl></section><section id="generate-pm-package"><h2>generate-pm-package</h2><dl><dt>generate-pm-package 1.3<dd><p>    The &quot;generate-pm-package&quot; script can be used to generate Perl module
     packages using a simple manifest file.<dt>Tarball<dd><a href="generate-pm-package-1.3.tar.gz">generate-pm-package-1.3.tar.gz</a>
                (3KB, <time datetime="2012-03-17T15:36:51Z">Sat Mar 17 15:36:51 2012 UTC</time>)<dt>Git repository<dd><a href="https://github.com/wakaba/generate-pm-package">GitHub</a></dl></section>
 

@@ -1,0 +1,12 @@
+{
+   "desc" : "    The Warabe::App module is the primary component of Warabe, a server-side\n    Web application construction toolkit. It provides a number of convinient\n    methods handling HTTP request and response in the way that would be\n    useful for typical Web applications.\n\n    Warabe accesses the HTTP request and response through the interface\n    provided by Wanage::HTTP. Therefore, Warabe can handle any\n    server-application interface supported by Wanage::HTTP, including CGI\n    and PSGI.\n\n    Warabe constructs higher-level operations for more concrete use cases on\n    the top of APIs provided by Wanage HTTP object. It does not mean a Web\n    application using Warabe should not access Wanage HTTP object directly -\n    in fact, Warabe does not provide complete access to HTTP request and\n    response, as it can be easily accessed through the HTTP object directly\n    from the application, if necessary.\n\n      +------+   +------+   +------+      +------+      +------+\n      |Your  |<->|Warabe|<->|Wanage|<---->|HTTP  |<---->|HTTP  |\n      |  App.|   +------+   |      | CGI  |server| HTTP |client|\n      |      |<------------>|      | PSGI |      |      |      |\n      +------+              +------+      +------+      +------+\n  \n      App.       Common     Generic       TCP/HTTP\n      specific   Web app.   HTTP          protocol\n      logic      operations interpret.    handling",
+   "dist_name" : "Warabe-App",
+   "name" : "Warabe::App",
+   "urls" : {
+      "git" : {
+         "GitHub" : "https://github.com/wakaba/wanage",
+         "Suika" : "http://suika.fam.cx/gate/git/wi/wanage.git/tree"
+      }
+   },
+   "version" : "1.0"
+}

@@ -1,0 +1,12 @@
+{
+   "desc" : "    The \"Wanage::HTTP\" module provides a set of APIs for handling HTTP\n    messages in server-side Web applications, namely interpretation of HTTP\n    request message and generation of HTTP response message in response to\n    the request, using the underlying interface for server-application\n    communication such as CGI and PSGI.\n\n    The Wanage HTTP object provides access to data contained in HTTP request\n    message, as well as primitive methods to generate HTTP response, while\n    not entirely exposing historical complexness of underlying interfaces to\n    servers. The goal of the HTTP object implementation is not completely\n    modeling the HTTP request and response messages, but providing a set of\n    API that is convinient and secure enough to build general-purpose Web\n    applications. Therefore, it does not, and will not, support full HTTP\n    protocol features.\n\n    Although it is not required, Wanage is intended to be combined with\n    Warabe::App, a fundamental building block of server-side Web\n    applications. Warabe defines more specific or higher-level APIs for\n    typical Web application use cases, such as URL path interpretation,\n    request validation, error handling, redirect response construction, and\n    so on, which are all built on the top of Wanage's generic HTTP\n    interface.",
+   "dist_name" : "Wanage-HTTP",
+   "name" : "Wanage::HTTP",
+   "urls" : {
+      "git" : {
+         "GitHub" : "https://github.com/wakaba/wanage",
+         "Suika" : "http://suika.fam.cx/gate/git/wi/wanage.git/tree"
+      }
+   },
+   "version" : "1.0"
+}
