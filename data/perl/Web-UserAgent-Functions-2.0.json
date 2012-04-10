@@ -1,0 +1,11 @@
+{
+   "desc" : "    This module provides three functions for HTTP access: \"http_get\",\n    \"http_post\", and \"http_post_data\". They are in fact wrappers for\n    LWP::UserAgent. They accept parameters that describes which resource is\n    how retrieved and return HTTP::Request and HTTP::Response objects of the\n    HTTP access.\n\n    It adds following features to the original LWP::UserAgent module:\n\n    - Useful functional interfaces\n    - Avoiding use of SOCKS proxy transparently using LWP::UserAgent::Curl\n    module\n    - \"application/x-www-form-urlencoded\" support\n    - OAuth 1.0 support",
+   "dist_name" : "Web-UserAgent-Functions",
+   "name" : "Web::UserAgent::Functions",
+   "urls" : {
+      "git" : {
+         "GitHub" : "https://github.com/wakaba/perl-web-useragent-functions"
+      }
+   },
+   "version" : "2.0"
+}
