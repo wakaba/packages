@@ -1,0 +1,12 @@
+{
+   "desc" : "    The \"Dongry::Type::MessagePack\" module defines data types for handing\n    MessagePack-encoded data structure as column value in Dongry.",
+   "dist_name" : "Dongry-Type-MessagePack",
+   "name" : "Dongry::Type::MessagePack",
+   "urls" : {
+      "git" : {
+         "GitHub" : "https://github.com/wakaba/dongry",
+         "Suika" : "http://suika.fam.cx/gate/git/wi/perl/dongry.git/tree"
+      }
+   },
+   "version" : "1.0"
+}

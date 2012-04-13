@@ -53,7 +53,18 @@ print qq{<!DOCTYPE HTML><html lang=en><title>Perl packages</title>
 latest version of these modules are avaialble from their Git
 repositories.  Use of the Git version is always recommended.</p>
 
+<section id=toc>
+<h2>Modules</h2>
+
+<ul>
 };
+
+for my $dist_name (sort { $a cmp $b } keys %{$data}) {
+  printf q{<li><a href="#%s">%s</a>},
+      htescape $dist_name, htescape $dist_name;
+}
+
+print q{</ul></section>};
 
 for my $dist_name (sort { $a cmp $b } keys %{$data}) {
   printf q{<section id="%s"><h2>%s</h2><dl>},
@@ -64,9 +75,11 @@ for my $dist_name (sort { $a cmp $b } keys %{$data}) {
   for my $version (sort { $b cmp $a } keys %{$data->{$dist_name}}) {
     my $info = $data->{$dist_name}->{$version};
     if ($count == 0) {
+      my $desc = join '',
+          map { /^     / ? '<pre>' . $_ . '</pre>' : '<p>' . $_ }
+          split /\n{2,}/, htescape $info->{desc};
       printf q{<dt>%s %s<dd>%s},
-          htescape $info->{name}, htescape $info->{version},
-          htescape $info->{desc};
+          htescape $info->{name}, htescape $info->{version}, $desc;
 
       my $tar_name = $info->{dist_name} . '-' . $info->{version} . '.tar.gz';
       my $tar_f = $tar_d->file ($tar_name);

@@ -1,0 +1,11 @@
+{
+   "desc" : "    This module defines the \"simple_request\" method that can be used to\n    replace \"LWP::UserAgent\"'s \"simple_request\" method such that curl is\n    invoked instead of usual \"LWP::UserAgent\"'s processing.\n",
+   "dist_name" : "LWP-UserAgent-Curl",
+   "name" : "LWP::UserAgent::Curl",
+   "urls" : {
+      "git" : {
+         "GitHub" : "https://github.com/wakaba/perl-web-useragent-functions"
+      }
+   },
+   "version" : "1.0"
+}
