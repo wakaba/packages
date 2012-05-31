@@ -2,6 +2,10 @@
    "desc" : "    The \"List::Ish\" module provides a class for handling a list (or array)\n    as an object.",
    "dist_name" : "List-Ish",
    "name" : "List::Ish",
-   "urls" : {},
+   "urls" : {
+      "git" : {
+         "GitHub" : "https://github.com/wakaba/perl-ooutils"
+      }
+   },
    "version" : "0.04"
 }

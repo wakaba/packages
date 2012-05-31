@@ -2,6 +2,10 @@
    "desc" : "",
    "dist_name" : "Operation-Response",
    "name" : "Operation::Response",
-   "urls" : {},
+   "urls" : {
+      "git" : {
+         "GitHub" : "https://github.com/wakaba/perl-ooutils"
+      }
+   },
    "version" : "1.0"
 }
