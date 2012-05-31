@@ -98,6 +98,14 @@ for my $dist_name (sort { $a cmp $b } keys %{$data}) {
               htescape $info->{urls}->{git}->{$_}, htescape $_;
         }
       }
+
+      if (keys %{$info->{urls}->{ci} or {}}) {
+        print q{<dt>Continuous integration};
+        for (keys %{$info->{urls}->{ci}}) {
+          printf q{<dd><a href="%s">%s</a>},
+              htescape $info->{urls}->{ci}->{$_}, htescape $_;
+        }
+      }
     } else {
       if ($count == 1) {
         print q{<dt>Old version};

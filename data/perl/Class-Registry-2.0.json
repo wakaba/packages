@@ -3,6 +3,9 @@
    "dist_name" : "Class-Registry",
    "name" : "Class::Registry",
    "urls" : {
+      "ci" : {
+         "Travis CI" : "http://travis-ci.org/wakaba/perl-ooutils"
+      },
       "git" : {
          "GitHub" : "https://github.com/wakaba/perl-ooutils"
       }
