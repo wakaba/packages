@@ -1,0 +1,15 @@
+{
+   "desc" : "    The \"Warabe::App::Role::MessagePack\" module defines additional methods\n    for handling MessagePack data in Warabe::App API. This module is\n    intended to be used a superclass of some subclass of Warabe::App.",
+   "dist_name" : "Warabe-App-Role-MessagePack",
+   "name" : "Warabe::App::Role::MessagePack",
+   "urls" : {
+      "ci" : {
+         "Travis CI" : "http://travis-ci.org/wakaba/wanage"
+      },
+      "git" : {
+         "GitHub" : "https://github.com/wakaba/wanage",
+         "Suika" : "http://suika.fam.cx/gate/git/wi/wanage.git/tree"
+      }
+   },
+   "version" : "1.0"
+}

@@ -1,0 +1,15 @@
+{
+   "desc" : "    The \"Warabe::App::Role::JSON\" module defines additional methods for\n    handling JSON data in Warabe::App API. This module is intended to be\n    used a superclass of some subclass of Warabe::App.\n",
+   "dist_name" : "Warabe-App-Role-JSON",
+   "name" : "Warabe::App::Role::JSON",
+   "urls" : {
+      "ci" : {
+         "Travis CI" : "http://travis-ci.org/wakaba/wanage"
+      },
+      "git" : {
+         "GitHub" : "https://github.com/wakaba/wanage",
+         "Suika" : "http://suika.fam.cx/gate/git/wi/wanage.git/tree"
+      }
+   },
+   "version" : "2.0"
+}
