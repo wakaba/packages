@@ -1,0 +1,14 @@
+{
+   "desc" : "    The \"Class::Registry\" module defines a registry for short names of Perl\n    classes (packages). It might be useful where there could be different\n    sets of subclasses and a library does not know which set of subclasses\n    should be used a priori.",
+   "dist_name" : "Class-Registry",
+   "name" : "Class::Registry",
+   "urls" : {
+      "ci" : {
+         "Travis CI" : "http://travis-ci.org/wakaba/perl-ooutils"
+      },
+      "git" : {
+         "GitHub" : "https://github.com/wakaba/perl-ooutils"
+      }
+   },
+   "version" : "1.1"
+}
