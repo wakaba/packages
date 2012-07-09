@@ -15,7 +15,7 @@ repositories.  Use of the Git version is always recommended.</p>
     classes (packages). It might be useful where there could be different
     sets of subclasses and a library does not know which set of subclasses
     should be used a priori.<dt>Tarball<dd><a href="Class-Registry-3.0.tar.gz">Class-Registry-3.0.tar.gz</a>
-               (3KB, <time datetime="2012-06-22T05:53:54Z">Fri Jun 22 05:53:54 2012 UTC</time>)<dt>Git repository<dd><a href="https://github.com/wakaba/perl-ooutils">GitHub</a><dt>Continuous integration<dd><a href="http://travis-ci.org/wakaba/perl-ooutils">Travis CI</a><dt>Old version<dd><a href="Class-Registry-2.0.tar.gz">Class-Registry-2.0.tar.gz</a>
+               (3KB, <time datetime="2012-06-22T05:56:52Z">Fri Jun 22 05:56:52 2012 UTC</time>)<dt>Git repository<dd><a href="https://github.com/wakaba/perl-ooutils">GitHub</a><dt>Continuous integration<dd><a href="http://travis-ci.org/wakaba/perl-ooutils">Travis CI</a><dt>Old version<dd><a href="Class-Registry-2.0.tar.gz">Class-Registry-2.0.tar.gz</a>
                (2KB, <time datetime="2012-05-31T07:29:05Z">Thu May 31 07:29:05 2012 UTC</time>)<dd><a href="Class-Registry-1.1.tar.gz">Class-Registry-1.1.tar.gz</a>
                (2KB, <time datetime="2012-01-01T07:53:31Z">Sun Jan  1 07:53:31 2012 UTC</time>)</dl></section><section id="Dongry-Database"><h2>Dongry-Database</h2><dl><dt>Dongry::Database 2.0<dd><p>    Dongry is a lightweight Perl interface to MySQL databases. It provides
     different levels of abstractions for applications to handle database
@@ -66,11 +66,33 @@ repositories.  Use of the Git version is always recommended.</p>
     JSON-encoded data structure as column value in Dongry.<dt>Tarball<dd><a href="Dongry-Type-JSON-1.0.tar.gz">Dongry-Type-JSON-1.0.tar.gz</a>
                (2KB, <time datetime="2011-12-31T14:47:46Z">Sat Dec 31 14:47:46 2011 UTC</time>)<dt>Git repository<dd><a href="https://github.com/wakaba/dongry">GitHub</a><dd><a href="http://suika.fam.cx/gate/git/wi/perl/dongry.git/tree">Suika</a></dl></section><section id="Dongry-Type-MessagePack"><h2>Dongry-Type-MessagePack</h2><dl><dt>Dongry::Type::MessagePack 1.0<dd><p>    The &quot;Dongry::Type::MessagePack&quot; module defines data types for handing
     MessagePack-encoded data structure as column value in Dongry.<dt>Tarball<dd><a href="Dongry-Type-MessagePack-1.0.tar.gz">Dongry-Type-MessagePack-1.0.tar.gz</a>
-               (2KB, <time datetime="2012-03-19T15:45:06Z">Mon Mar 19 15:45:06 2012 UTC</time>)<dt>Git repository<dd><a href="https://github.com/wakaba/dongry">GitHub</a><dd><a href="http://suika.fam.cx/gate/git/wi/perl/dongry.git/tree">Suika</a></dl></section><section id="JSON-Functions-XS"><h2>JSON-Functions-XS</h2><dl><dt>JSON::Functions::XS 1.1<dd><p>    The &quot;JSON::Functions::XS&quot; module provides various useful functions to
+               (2KB, <time datetime="2012-03-19T15:45:06Z">Mon Mar 19 15:45:06 2012 UTC</time>)<dt>Git repository<dd><a href="https://github.com/wakaba/dongry">GitHub</a><dd><a href="http://suika.fam.cx/gate/git/wi/perl/dongry.git/tree">Suika</a></dl></section><section id="JSON-Functions-XS"><h2>JSON-Functions-XS</h2><dl><dt>JSON::Functions::XS 1.2<dd><p>    The &quot;JSON::Functions::XS&quot; module provides various useful functions to
     decode or encode JSON data. These functions are wrappers; actual
-    conversion is enforced by the JSON::XS module.
-<dt>Tarball<dd><a href="JSON-Functions-XS-1.1.tar.gz">JSON-Functions-XS-1.1.tar.gz</a>
-               (3KB, <time datetime="2012-03-17T15:09:31Z">Sat Mar 17 15:09:31 2012 UTC</time>)<dt>Git repository<dd><a href="https://github.com/wakaba/perl-json-functions-xs">GitHub</a></dl></section><section id="LWP-UserAgent-Curl"><h2>LWP-UserAgent-Curl</h2><dl><dt>LWP::UserAgent::Curl 1.0<dd><p>    This module defines the &quot;simple_request&quot; method that can be used to
+    conversion is enforced by the JSON::XS module.<p>    Strictly speaking, &quot;JSON::Functions::XS&quot; is not just a wrapper for
+    JSON::XS, but it adds some modifications to improve interoperability,
+    namely:<p>    - Support for scalar literal values
+        According to ECMAScript 5.1, i.e. the latest JSON specification, a
+        number, string, boolean, or null value can be recognized as valid
+        input.<p>    - Silent error recovery from fatal errors
+        In many use cases of JSON parsing, the application don't have to
+        know what is exatly wrong with the JSON input but rather the entire
+        operation should not die just because the input is invalid. In such
+        an application, ill-formed input is as bad as wrongly-constructed
+        well-formed JSON data, such that it has to check the result data
+        structure anyway to be error tolerant. Therefore this module does
+        not raise when the input is invalid. If you'd like to distinguish
+        parse errors from application-dependent structural errors, this
+        module would not be a choice for you.<p>    - Avoiding HTML XSS
+        To prevent from HTML XSS attacks when the JSON output is
+        poorly-labelled, or for legacy-browser users, this module replaces
+        &quot;&lt;&quot; characters in JSON output into its escaped form.<p>    - Avoiding UTF-7 XSS
+        To avoid UTF-7 XSS attacks for legacy-browser users, this module
+        replaces &quot;+&quot; characters in JSON output into its escaped form.<p>    - JavaScript/JSONP compatbility
+        To improve JavaScript/JSONP compatibility, this module replaces
+        U+2028 and U+2029 characters in JSON output, which are not allowed
+        in JavaScript string literals, into their escaped forms.<dt>Tarball<dd><a href="JSON-Functions-XS-1.2.tar.gz">JSON-Functions-XS-1.2.tar.gz</a>
+               (4KB, <time datetime="2012-07-09T13:47:46Z">Mon Jul  9 13:47:46 2012 UTC</time>)<dt>Git repository<dd><a href="https://github.com/wakaba/perl-json-functions-xs">GitHub</a><dt>Old version<dd><a href="JSON-Functions-XS-1.1.tar.gz">JSON-Functions-XS-1.1.tar.gz</a>
+               (3KB, <time datetime="2012-03-17T15:09:31Z">Sat Mar 17 15:09:31 2012 UTC</time>)</dl></section><section id="LWP-UserAgent-Curl"><h2>LWP-UserAgent-Curl</h2><dl><dt>LWP::UserAgent::Curl 1.0<dd><p>    This module defines the &quot;simple_request&quot; method that can be used to
     replace &quot;LWP::UserAgent&quot;'s &quot;simple_request&quot; method such that curl is
     invoked instead of usual &quot;LWP::UserAgent&quot;'s processing.
 <dt>Tarball<dd><a href="LWP-UserAgent-Curl-1.0.tar.gz">LWP-UserAgent-Curl-1.0.tar.gz</a>

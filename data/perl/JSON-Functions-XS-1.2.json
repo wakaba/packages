@@ -1,0 +1,11 @@
+{
+   "desc" : "    The \"JSON::Functions::XS\" module provides various useful functions to\n    decode or encode JSON data. These functions are wrappers; actual\n    conversion is enforced by the JSON::XS module.\n\n    Strictly speaking, \"JSON::Functions::XS\" is not just a wrapper for\n    JSON::XS, but it adds some modifications to improve interoperability,\n    namely:\n\n    - Support for scalar literal values\n        According to ECMAScript 5.1, i.e. the latest JSON specification, a\n        number, string, boolean, or null value can be recognized as valid\n        input.\n\n    - Silent error recovery from fatal errors\n        In many use cases of JSON parsing, the application don't have to\n        know what is exatly wrong with the JSON input but rather the entire\n        operation should not die just because the input is invalid. In such\n        an application, ill-formed input is as bad as wrongly-constructed\n        well-formed JSON data, such that it has to check the result data\n        structure anyway to be error tolerant. Therefore this module does\n        not raise when the input is invalid. If you'd like to distinguish\n        parse errors from application-dependent structural errors, this\n        module would not be a choice for you.\n\n    - Avoiding HTML XSS\n        To prevent from HTML XSS attacks when the JSON output is\n        poorly-labelled, or for legacy-browser users, this module replaces\n        \"<\" characters in JSON output into its escaped form.\n\n    - Avoiding UTF-7 XSS\n        To avoid UTF-7 XSS attacks for legacy-browser users, this module\n        replaces \"+\" characters in JSON output into its escaped form.\n\n    - JavaScript/JSONP compatbility\n        To improve JavaScript/JSONP compatibility, this module replaces\n        U+2028 and U+2029 characters in JSON output, which are not allowed\n        in JavaScript string literals, into their escaped forms.",
+   "dist_name" : "JSON-Functions-XS",
+   "name" : "JSON::Functions::XS",
+   "urls" : {
+      "git" : {
+         "GitHub" : "https://github.com/wakaba/perl-json-functions-xs"
+      }
+   },
+   "version" : "1.2"
+}
