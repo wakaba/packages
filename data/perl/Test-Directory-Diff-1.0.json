@@ -1,0 +1,7 @@
+{
+   "desc" : "    The \"Test::Directory::Diff\" module provides a test assertion to ensure\n    that two given directories contain same content. The equivalence is\n    determined by the \"diff\" command.",
+   "dist_name" : "Test-Directory-Diff",
+   "name" : "Test::Directory::Diff",
+   "urls" : {},
+   "version" : "1.0"
+}
