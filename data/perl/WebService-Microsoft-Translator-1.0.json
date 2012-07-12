@@ -1,0 +1,7 @@
+{
+   "desc" : "    The \"WebService::Microsoft::Translator\" module is a wrapper for\n    Microsoft Translator API.\n",
+   "dist_name" : "WebService-Microsoft-Translator",
+   "name" : "WebService::Microsoft::Translator",
+   "urls" : {},
+   "version" : "1.0"
+}
