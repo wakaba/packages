@@ -1,0 +1,14 @@
+{
+   "desc" : "    The \"Test::X1\" module defines a simple, lightweight test management\n    framework for Test::Builder-based tests. It supports automatic naming of\n    tests, partial execution, concurrent execution, and other useful\n    features.",
+   "dist_name" : "Test-X1",
+   "name" : "Test::X1",
+   "urls" : {
+      "ci" : {
+         "Travis CI" : "http://travis-ci.org/wakaba/perl-test-x1"
+      },
+      "git" : {
+         "GitHub" : "https://github.com/wakaba/perl-test-x1"
+      }
+   },
+   "version" : "1.0"
+}
