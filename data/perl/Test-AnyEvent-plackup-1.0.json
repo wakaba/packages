@@ -1,0 +1,14 @@
+{
+   "desc" : "",
+   "dist_name" : "Test-AnyEvent-plackup",
+   "name" : "Test::AnyEvent::plackup",
+   "urls" : {
+      "ci" : {
+         "Travis CI" : "http://travis-ci.org/wakaba/perl-test-anyevent-plackup"
+      },
+      "git" : {
+         "GitHub" : "https://github.com/wakaba/perl-test-anyevent-plackup"
+      }
+   },
+   "version" : "1.0"
+}
