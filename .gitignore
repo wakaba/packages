@@ -2,6 +2,7 @@
 *~
 /local/
 /perl
+!/perl/
 /prove
 /plackup
 /Makefile.setupenv
