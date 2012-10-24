@@ -1,0 +1,5 @@
+Path::Class~0.26
+Encode~2.47
+Exporter::Lite~0.02
+common::sense~3.6
+JSON::XS~2.33

@@ -1,0 +1,14 @@
+{
+   "desc" : "    The \"Test::AnyEvent::plackup\" module invokes the \"plackup\" command of\n    Plack with specified options. It might be useful for testing your PSGI\n    Web applications, or applications that requires access to some Web\n    applications.",
+   "dist_name" : "Test-AnyEvent-plackup",
+   "name" : "Test::AnyEvent::plackup",
+   "urls" : {
+      "ci" : {
+         "Travis CI" : "http://travis-ci.org/wakaba/perl-test-anyevent-plackup"
+      },
+      "git" : {
+         "GitHub" : "https://github.com/wakaba/perl-test-anyevent-plackup"
+      }
+   },
+   "version" : "2.0"
+}

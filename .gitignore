@@ -1,2 +1,11 @@
 .DAV
 *~
+/local/
+/perl
+!/perl/
+/prove
+/plackup
+/Makefile.setupenv
+/cin
+/config/perl/libs.txt
+/deps

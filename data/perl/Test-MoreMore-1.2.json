@@ -1,0 +1,7 @@
+{
+   "desc" : "    The \"Test::MoreMore\" module provides a number of basic but useful test\n    assertion subroutines. It is a superset of Test::More.",
+   "dist_name" : "Test-MoreMore",
+   "name" : "Test::MoreMore",
+   "urls" : {},
+   "version" : "1.2"
+}

@@ -1,0 +1,7 @@
+{
+   "desc" : "    The \"Test::Interval\" module exports a test subroutine \"ms_ok\", which can\n    be used to test the execution time of the specified block is less than\n    or equal to the specified milliseconds.",
+   "dist_name" : "Test-Interval",
+   "name" : "Test::Interval",
+   "urls" : {},
+   "version" : "1.0"
+}
