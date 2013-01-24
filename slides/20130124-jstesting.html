@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang=ja>
+<meta charset=utf-8>
+<title>JavaScript のテストを Perl から実行できるようにした話</title>
+
+<style>
+  body {
+    font-size: 30px;
+    counter-reset: slide;
+  }
+  section {
+    position: relative;
+    display: block;
+    min-height: 15em;
+    background-image: url(http://www.hatena.ne.jp/images/logo_portal_hatena.gif);
+    background-position: 98% 0.5em;
+    background-repeat: no-repeat;
+    border: #CDDFEF 3px solid;
+    margin: 1em;
+    padding: 1em;
+    counter-increment: slide;
+  }
+
+  section::after {
+    position: absolute;
+    content: counter(slide);
+    bottom: 0.5em;
+    right: 0.5em;
+    font-size: 80%;
+    color: #CDDFEF;
+  }
+
+  p {
+    text-align: center;
+    margin-left: 2em;
+    margin-right: 2em;
+  }
+
+  section.text p {
+    text-align: left;
+    line-height: 1.5;
+  }
+
+  p strong {
+    font-size: 110%;
+  }
+
+  li, dd {
+    line-height: 1.5;
+  }
+
+  h1 {
+    text-align: center;
+  }
+
+  .timestamp h1 {
+    font-size: 300%;
+    margin-top: 1em;
+    margin-bottom: 1em;
+  }
+
+  dt img {
+    width: 2em;
+  }
+  dd {
+    margin-left: 3em;
+  }
+
+  footer {
+    display: block;
+    font-size: 40%;
+    text-align: right;
+  }
+
+  .global-cover h1 {
+    margin-top: 3em;
+    margin-bottom: 3em;
+  }
+  .global-cover p {
+    font-size: 80%;
+  }
+
+  figure {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+  }
+  figure.long {
+    width: 90%;
+  }
+
+  pre {
+    text-align: left;
+    white-space: pre-wrap;
+  }
+  pre.code.informative {
+    font-size: 60%;
+  }
+
+  pre.code ins {
+    text-decoration: none;
+    color: gray;
+  }
+
+  code {
+    font-family: "Courier New";
+  }
+
+  img.thumbnail {
+    width: 70%;
+  }
+
+  .hatena img {
+    width: 32px;
+  }
+</style>
+
+<section class="cover global-cover">
+<h1>JavaScript のテストを Perl から実行できるようにした話</h1>
+
+<p>わかば (id:wakabatan)
+<p><time datetime=2013-01-24>2013年1月24日</time>
+</section>
+
+<section class=text>
+<h1>自己紹介</h1>
+
+<p><strong>わかば</strong>
+<p><small><img src="http://www.hatena.ne.jp/users/wa/wakabatan/profile.gif" alt style="width: 32px">id:wakabatan</small>
+
+<p>JavaScript は15年目くらい
+
+<p class=hatena>株式会社はてな アプリケーションエンジニア<br>
+<img src="https://www.hatena.ne.jp/images/favicon/www.gif" alt=www>
+<img src="https://www.hatena.ne.jp/images/favicon/coco.gif" alt=c>
+<img src="https://www.hatena.ne.jp/images/favicon/haiku.gif" alt=h>
+<img src="https://www.hatena.ne.jp/images/favicon/message.gif" alt=m>
+<img src="https://www.hatena.ne.jp/images/favicon/star.gif" alt=s>
+<img src="http://www.hatena.ne.jp/images/top/side_webservice.gif" alt=developer>
+<img src="http://copie.hatelabo.jp/images/favicon.gif" alt=copie>
+<img src="http://let.hatelabo.jp/images/favicon.png" alt=let>
+(<img src="https://www.hatena.ne.jp/images/favicon/ugomemo.gif" alt=ugomemo>
+<img src="https://www.hatena.ne.jp/images/favicon/haiku2.gif" alt=h2>
+<img src="http://l.hatena.ne.jp/images/favicon.ico" alt=l>)
+
+<p>仕事では1年くらい JavaScript 書いてない
+
+</section>
+
+<section>
+<h1>概要</h1>
+
+<ul>
+  <li>HatenaStar.js
+  <li>Ten.js
+  <li>JSAN
+  <li>PhantomJS
+  <li>Wight / Poltergeist
+  <li>Travis CI
+</ul>
+
+<p>JavaScript のテストを Perl から実行できるようにした話です。
+
+</section>
+
+<section>
+<h1>HatenaStar.js</h1>
+
+<figure>
+<img src="http://s.hatena.ne.jp/images/index-star.gif" alt>
+
+<p><a href="http://s.hatena.ne.jp/js/HatenaStar.js"><code>http://s.hatena.ne.jp/<wbr>js/<wbr>HatenaStar.js</code></a>
+</figure>
+
+<ul>
+  <li><a href="http://s.hatena.ne.jp/">はてなスター</a>の 
+  Web ページ用公式クライアント (2007-)
+  <li>ブログ記事に <img src="http://s.hatena.ne.jp/images/add.gif" alt="add star"> ボタンを付ける
+  <li>ほとんどのはてなサービス、いくつかの社外のサイト、
+  いくつかのブラウザ拡張で利用されている
+</ul>
+
+</section>
+
+<section>
+<h1>Ten.js</h1>
+
+<ul>
+  <li>id:jkondo 作の JavaScript フレームワーク
+  <li>2007年～2011年くらいのはてなサービスの多くで使われている
+  <li>HatenaStar.js が使っているし、含まれている
+</ul>
+
+<figure>
+<pre class="code informative"><code>Hatena.Star.Entry = new Ten.Class({
+    initialize: function(e) {
+        this.entry = e;
+        this.uri = e.uri;
+        <ins>...</ins>
+    },
+    maxStarCount: 11
+},{
+    flushStars: function() {
+        <ins>...</ins>
+</code></pre>
+</figure>
+
+</section>
+
+<section>
+<h1>JSAN</h1>
+
+<figure>
+<img src="http://openjsan.org/images/logo/jsan-logo-rhino.png" alt>
+
+<p><a href="http://openjsan.org/"><code>http://openjsan.org/</code></a>
+</figure>
+
+<ul>
+  <li>JavaScript ライブラリ集積サイト (Perl でいう CPAN)
+  <li>2005年からしばらく使われたが、あまり流行らなかった
+  <li>Perl のモジュールと文化を移植しようとしていた
+  <li>Ten.js のテストはなぜか JSAN ライブラリを使って書かれている
+</ul>
+
+<figure>
+<pre class=code><code>&lt;script>
+new JSAN('lib').use('Test.More');
+plan({tests: 9});
+
+ok (Ten.JSONP, 'JSONP');
+<ins>...</ins>
+&lt;/script>
+</code></pre>
+</figure>
+
+</section>
+
+<section>
+<h1>Ten.js/HatenaStar.js で困ったこと</h1>
+
+<ul>
+  <li>テストはあるにはあった
+  <li>ブラウザで開いて TAP を目視でチェック...
+  <li>面倒なので実行されない → だんだん腐っていく
+</ul>
+</section>
+
+<section>
+<h1>テスト自動化したいです</h1>
+
+<ul>
+  <li>変更するたびに自動でチェックしたい
+  <li>サーバー側 (Perl) と連動したテストもしたい
+  <li>既存のテストを書きなおすのは面倒くさい
+</ul>
+</section>
+
+<section>
+<h1>PhantomJS</h1>
+
+<figure>
+<img src="http://phantomjs.org/images/phantomjs-logo.png" alt>
+
+<p><a href="http://phantomjs.org/"><code>http://phantomjs.org/</code></a>
+</figure>
+
+<ul>
+  <li>画面表示なしの WebKit ブラウザ
+  <li>HTML, JavaScript, CSS, ... そのまま動く
+</ul>
+
+</section>
+
+<section>
+<h1>Wight</h1>
+
+<ul>
+  <li><a href="https://github.com/motemen/Wight">Wight</a> +
+  <a href="https://github.com/jonleighton/poltergeist">Poltergeist</a>
+  <li>Perl から PhantomJS を操作できるモジュール
+  <li>URL を指定して表示 -> DOM 操作
+  <li>(ちなみに Web Sockets をプロセス間通信に使っている)
+</ul>
+
+<figure>
+<pre class="code"><code>my $wight = Wight->new;
+$wight->visit('http://example.com/');
+$wight->evaluate('document.title');
+$wight->find('//a[@rel="next"]')->click;
+</code></pre>
+</figure>
+
+</section>
+
+<section>
+<h1>できた</h1>
+
+<ol>
+  <li>Ten.js/HatenaStar.js <- テストしたいコード
+  <li>JSAN / Test.Simple <- テストライブラリ
+  <li>PhantomJS <- Web ブラウザ
+  <li>Wight <- ブラウザ操作ライブラリ
+  <li><a href="https://github.com/wakaba/opentenjs/blob/master/t_deps/lib/taptest.pl">taptest.pl</a> <- JavaScript ファイルを開いてテスト結果を出力する Perl スクリプト
+  <li>Prove <- テストランナー
+</ol>
+
+<figure class=long>
+<pre class="code informative"><code>
+$wight->execute(q{
+    var v = document.getElementById('test');
+    var list = v.querySelectorAll<wbr>('script, style');
+    for (var i = list.length - 1; i >= 0; <wbr>i--) {
+        list[i].parentNode.removeChild(list[i]);
+    }
+});
+$tap = $wight->evaluate(q{document<wbr>.getElementById('test')<wbr>.textContent});
+print $tap;
+</code></pre>
+</figure>
+
+</section>
+
+<section>
+<h1>Travis CI</h1>
+
+<figure>
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEkAAAAeCAMAAABXJsOhAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBNYWNpbnRvc2giIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OUZGRkVGNjVGQTE0MTFFMUEzNzhDNjZGM0QyMzVGNUIiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OUZGRkVGNjZGQTE0MTFFMUEzNzhDNjZGM0QyMzVGNUIiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo5RkZGRUY2M0ZBMTQxMUUxQTM3OEM2NkYzRDIzNUY1QiIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo5RkZGRUY2NEZBMTQxMUUxQTM3OEM2NkYzRDIzNUY1QiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PqH5DXgAAAMAUExURSQkJOrq6qqqqrs7OXJycnx8fM/Pz6Ojo8NCPLIYF7s3NPLy8oY1LiwsLM7Ozvjy8r80LkJCQtJfVbskHFQdH8k5K785MrlNPeOvrME4MbouLMA0LrwyLuWzsrMnKslmZfT09M5zcoGBgWJiYrIoK/r6+vf392VlZbYqK7YuLc5OPTExMcdjZO7OzcExKN3d3fXm5cAmG8E2MLUoK8U1KfDMybgtLOXl5bgnI7swLsbGxv39/ZKSksA+OtJzb5iYmPHg4F5eXsU6MJSUlFhYWMEtItTU1DU1NcM4MO/v725ubnkkJElJSfDRz81vb7otKcLCwu7IxcIwJVJSUtiGg+m+vbW1tUo6Nfj4+GhoaIk7MsEtLTk5OcQxL+Li4tuJhPnv796TjtCBg/78/DAeHL4tLLsmK5ycnMRDNb8yLvTj49JgVcI9M8o/Mrm5ucdIQLYhHrQiIcc8Ms5WTNWDgn0rKKysrIyMjHUjI+Dg4MU2K89NPLovLdF+fr0oIa4bHszMzNJBM7YwLoqKivbo6L4qLNaEgrgnJlZWVrIgIOvDwtE+M74xK9BNPOGrqbgrK8g/M8ErILIsLLEeILQqK+/JxjspJj4sKbosLMo+MsAzLdFwa85uak5OTtBgWHsoJ889M8o+MDgmJDYjIbwxLs07Mco2MLo1L1YdH70zLr0nK7MkJ0IwLck9MoEvK8IuJEAuK7wqJDMgH/////7+/rcsK+3t7fv4+dfX174zLr6+voWFhbUpK7snLD8/P/Tb2P7///rx8DkxLh0dHbYwMd6PicMyKNlCNO3Dv7syLnlCOdWEhM9va/z6+sA5M8g2L8+BgslhXee+veOtq+SurK0NDMlGPcs4Mfjp5/fu7u/Pzb4xLtycnPXg3q4oKtB1c9d7dbCwsMpra8trbLtAQc1rabclI9jY2MI0Kr8oLMtJPLIjJ8xvcOvOzu/LyPjx8fr29sRRUcJZWc9bUvDU0/PY1kI4NLkoI9eIiLwvKr4tJrgzL/jr6tRzbsg8Mf///5ksZz8AAAEAdFJOU////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////wBT9wclAAAEF0lEQVR42pTWC1xTVRwH8IswRIjYENdgQ+bGYDYEHZbx0liTyVwmoOSSh0IxQ4YOK4oyIynEUrClFcZ6YbGslv6Hgg6iLHoZWdHL3mWlvd/vPP3PuRtCLz73d++5957/Z/f72Tm757PLEfLThf8VIiQcee7MLVePzqneljMESU+sarTbp/xL7rHbn75IiPTQKrvdvm41TTTdov2Xqz+ztzUKk2ruaJvyTBb8PZU7Z7c1niZMeriuoWAg/hXZ8LBsWCajJ5ls6w+wc3bdTYKkR2tO1jVs35/jmb8NMzjooafCWU8Jl26rOWlAaU3DOpfL9X2dYY0r2uV6zbMSDg8a7h5H6kgeI0kNhuMoeQpwcprC5pfTSZo7i0m7xpGugJKx0oLjBfvDPGdVbv3jTSq9XDAwd/JK752phl2P/L+UnWcaJe1AKXU7vPNY5dfir6LCtpXDS+/DGz+ugMOFC8aTxs7TDqlenzpc3dRU/WXO0aica8sHPv6zembTzOqEwtjXqZSrJjqrmRCTaJ5N1U/IphD2RXTmTaTIHEk4Tp1t22ihUrher4+VDg1JY28+H6Ul8N5vQ1IMlpkU+ml/PhQTaxJoloEyl4hgI5XMXhXOk4noMiFLCZBNuHsf0Mv18nZ5e3t7QNqD11iRy+9nUllPqMiiS4owEs7sPUB0mjwqFWt0TFKBLZJI8kCCklzMp5dKk5fAtD3+gvjFy6kEBzhCjHPq6f1lZWiAhJBIZS0hE1CaCLlYNxYbqdTbK+7F5v6VSjeixPdHpKLApParvHMISabDs4KVl9SQX9/BZvy+3y9VuBVut1uhQCmYSj/TvkLhFpdS6XQv+1zJvNAk2KdEiQvC4X2Qz1FJR7iQIABlrZFKb3UqOnFXdF5wNCp4LUrn8H3Fs7yUTyWLMuI8tYTrQYnYcFKUE4lfOkQ6Di72QghKnRkYPMS1UukymPZJhj+ld1FpH2E3GenpKipZoF7NhkylIjZ2NYRye6/PuIYlo3ntDCZ9OCnOXxolLQb6FBmBSiSvZ0Ia8Uu1+BviiDXXcXunx/Fp/iX+8RXhKM2I/7aZL5UuHJGyIdNqtSmDltFFq4Kk+oCUDGmiXHMmqKh0NotjM7xwbrhz/TcACQ6+tPyUxBV7AdKKRBBBn2+NtyQgHQopwyUfdJBwF99yezeLY2nWd8ema8OD34YUB19iUiA6SSQeTZH/XHEmC3VRatW2dmND6clJLQ7nq8+j1KrVdndrl18pZAVTiaVlqXf9R4u+WJQQDyktfOkSgZLPp/Vpb/U5N4/8GyQ4fSw3CJMSfbjhvjulouJIBc2RY7uRSU8XKr2bPpUl0bkhkM8T+dIJQRJZeKKKT19V1airvr6qB6cKey8gMTExXV2sdbGwPusIesP4S4ABALuzx/Q14rYaAAAAAElFTkSuQmCC" style="background-color: black">
+
+<p><a href="https://travis-ci.org/"><code>https://travis-ci.org/</code></a>
+</figure>
+
+<ul>
+  <li>GitHub にコードを push したら自動でビルドしてくれる
+  <li><a href="http://d.hatena.ne.jp/wakabatan/20120408/1333878824">簡単な設定ファイルを書いてボタンを押す</a>と後は勝手にテストを実行してくれる (便利!)
+</ul>
+
+<figure>
+<img src="http://cdn-ak.f.st-hatena.com/images/fotolife/w/wakabatan/20130124/20130124105740.png?1358992671" class=thumbnail>
+</figure>
+
+</section>
+
+<section>
+<h1>完成!</h1>
+
+<ul>
+  <li>HatenaStar.js
+  <li>Ten.js
+  <li>JSAN
+  <li>PhantomJS
+  <li>Wight / Poltergeist
+  <li>Travis CI
+</ul>
+
+<figure>
+<a href="https://github.com/wakaba/opentenjs"><code>https://github.com/wakaba/opentenjs</code></a>
+</figure>
+
+</section>
+
+<section class=text>
+<h1>終わり</h1>
+
+<p>この発表資料は Kyoto.js のページ <a href="https://github.com/kyotojs/meetup/wiki/4"><code>https://github.com/kyotojs/meetup/wiki/4</code></a> に置く予定です。
+
+</section>
+
+<!--
+
+Copyright 2013 Wakaba <wakaba@suikawiki.org>.
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.
+
+-->
