@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang=ja>
+<meta charset=utf-8>
+<title>クイズ</title>
+
+<style>
+  body {
+    font-size: 30px;
+    counter-reset: slide;
+  }
+  section {
+    position: relative;
+    display: block;
+    min-height: 15em;
+    background-position: 98% 0.5em;
+    background-repeat: no-repeat;
+    border: #CDDFEF 3px solid;
+    margin: 1em;
+    padding: 1em;
+    counter-increment: slide;
+  }
+
+  section::after {
+    position: absolute;
+    content: counter(slide);
+    bottom: 0.5em;
+    right: 0.5em;
+    font-size: 80%;
+    color: #CDDFEF;
+  }
+
+  p {
+    text-align: center;
+    margin-left: 2em;
+    margin-right: 2em;
+  }
+
+  section.text p {
+    text-align: left;
+    line-height: 1.5;
+  }
+
+  p strong {
+    font-size: 110%;
+  }
+
+  li, dd {
+    line-height: 1.5;
+  }
+
+  h1 {
+    text-align: center;
+  }
+
+  .timestamp h1 {
+    font-size: 300%;
+    margin-top: 1em;
+    margin-bottom: 1em;
+  }
+
+  dt img {
+    width: 2em;
+  }
+  dd {
+    margin-left: 3em;
+  }
+
+  h2 {
+    display: block;
+    margin: 0;
+    padding: 0;
+    font-size: 100%;
+    font-weight: bolder;
+  }
+
+  h2 + pre {
+    margin-top: 0;
+  }
+
+  footer {
+    display: block;
+    font-size: 40%;
+    text-align: right;
+  }
+
+  .global-cover h1, .last h1 {
+    margin-top: 3em;
+    margin-bottom: 3em;
+  }
+  .global-cover p, .last p {
+    font-size: 80%;
+  }
+
+  figure {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+  }
+  figure.long {
+    width: 90%;
+  }
+
+  pre {
+    text-align: left;
+    white-space: pre-wrap;
+  }
+  pre.code.informative {
+    font-size: 60%;
+  }
+
+  pre.code ins {
+    text-decoration: none;
+    color: gray;
+  }
+
+  code {
+    font-family: "Courier New";
+  }
+
+  img.thumbnail {
+    width: 70%;
+  }
+
+  .hatena img {
+    width: 32px;
+  }
+</style>
+
+<section class="cover global-cover">
+<h1>クイズ</h1>
+
+<p>わかば (id:wakabatan)
+<p><time datetime=2013-03-21>2013年3月21日</time>
+</section>
+
+<section class=text>
+<h1>自己紹介</h1>
+
+<p><strong>わかば</strong>
+<p><small><img src="http://www.hatena.ne.jp/users/wa/wakabatan/profile.gif" alt style="width: 32px">id:wakabatan</small>
+
+<p>JavaScript は15年目くらい
+
+<p class=hatena>株式会社はてな アプリケーションエンジニア<br>
+<img src="https://www.hatena.ne.jp/images/favicon/www.gif" alt=www>
+<img src="https://www.hatena.ne.jp/images/favicon/coco.gif" alt=c>
+<img src="https://www.hatena.ne.jp/images/favicon/haiku.gif" alt=h>
+<img src="https://www.hatena.ne.jp/images/favicon/message.gif" alt=m>
+<img src="https://www.hatena.ne.jp/images/favicon/star.gif" alt=s>
+<img src="https://www.hatena.ne.jp/images/favicon/ugomemo.gif" alt=ugomemo>
+<img src="http://www.hatena.ne.jp/images/top/side_webservice.gif" alt=developer>
+<img src="http://copie.hatelabo.jp/images/favicon.gif" alt=copie>
+<img src="http://let.hatelabo.jp/images/favicon.png" alt=let>
+(<img src="https://www.hatena.ne.jp/images/favicon/haiku2.gif" alt=h2>
+<img src="http://l.hatena.ne.jp/images/favicon.ico" alt=l>)
+
+<p>仕事では1年くらい JavaScript 書いてない
+
+</section>
+
+<section>
+<h1>Q1</h1>
+
+<pre><code>&lt;base href="http://1.example.com/">
+&lt;script>
+  function go (url) {
+    location.href = url;
+  }
+
+  go ('hoge.html');
+&lt;/script></code></pre>
+
+</section>
+
+<section>
+<h1>Q2</h1>
+
+<pre><code>&lt;base href="http://1.example.com/">
+&lt;iframe src="2.html" onload="
+  this.contentWindow.go ('hoge.html');
+">&lt;/iframe></pre></code>
+
+<h2><code>2.html</code></h2>
+<pre><code>&lt;base href="http://2.example.com/">
+&lt;script>
+  function go (url) {
+    location.href = url;
+  }
+&lt;/script></code></pre>
+
+</section>
+
+<section>
+<h1>Q3</h1>
+
+<pre><code>&lt;base href="http://1.example.com/">
+&lt;iframe src="2.html" onload="
+  this.contentWindow.go ('hoge.html');
+">&lt;/iframe></pre></code>
+
+<h2><code>2.html</code></h2>
+<pre><code>&lt;base href="http://2.example.com/">
+&lt;script>
+  function go (url) {
+    setTimeout (function () {
+      location.href = url;
+    }, 0);
+  }
+&lt;/script></code></pre>
+
+</section>
+
+<section>
+<h1>Q4</h1>
+
+<pre><code>&lt;base href="http://1.example.com/">
+&lt;iframe src=2.html onload="
+  this.contentWindow.setImage ('hoge.png');
+">&lt;/iframe></code></pre>
+
+<h2><code>2.html</code></h2>
+<pre><code>&lt;base href="http://2.example.com/">
+&lt;script>
+  function setImage (url) {
+    var img = new Image;
+    img.src = url;
+    document.body.appendChild (img);
+  }
+&lt;/script></code></pre>
+
+</section>
+
+<section>
+<h1>Q5</h1>
+
+<pre><code>&lt;base href="http://1.example.com/">
+&lt;iframe src=2.html onload="
+  var img = this.contentWindow.getImage ('hoge.png');
+  document.body.appendChild (img);
+">&lt;/iframe></code></pre>
+
+<h2><code>2.html</code></h2>
+<pre><code>&lt;base href="http://2.example.com/">
+&lt;script>
+  function getImage (url) {
+    var img = new Image;
+    img.src = url;
+    return img;
+  }
+&lt;/script></code></pre>
+
+</section>
+
+<section>
+<h1>Q6</h1>
+
+<pre><code>&lt;base href="http://1.example.com/">
+&lt;script>
+  var img = new Image;
+  img.src = 'hoge.png';
+  document.getElementsByTagName ('base')[0].href = 'http://2.example.com/';
+  document.body.appendChild (img);
+&lt;/script></code></pre>
+
+</section>
+
+<section class=last>
+<h1>終わり</h1>
+
+</section>
+
+<!--
+
+Copyright 2013 Wakaba <wakaba@suikawiki.org>.
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.
+
+-->
