@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang=ja>
+<meta charset=utf-8>
+<title>DOM Future と DOM の将来</title>
+
+<style>
+  body {
+    font-size: 30px;
+    counter-reset: slide;
+  }
+  section {
+    position: relative;
+    display: block;
+    min-height: 15em;
+    background-position: 98% 0.5em;
+    background-repeat: no-repeat;
+    border: #CDDFEF 3px solid;
+    margin: 1em;
+    padding: 1em;
+    counter-increment: slide;
+  }
+
+  section::after {
+    position: absolute;
+    content: counter(slide);
+    bottom: 0.5em;
+    right: 0.5em;
+    font-size: 80%;
+    color: #CDDFEF;
+  }
+
+  p {
+    text-align: center;
+    margin-left: 2em;
+    margin-right: 2em;
+  }
+
+  section.text p {
+    text-align: left;
+    line-height: 1.5;
+  }
+
+  section p:only-child {
+    margin-top: 2em;
+    font-size: 250%;
+  }
+
+  p strong {
+    font-size: 110%;
+  }
+
+  li, dd {
+    line-height: 1.5;
+  }
+
+  h1 {
+    text-align: center;
+  }
+
+  .timestamp h1 {
+    font-size: 300%;
+    margin-top: 1em;
+    margin-bottom: 1em;
+  }
+
+  dt img {
+    width: 2em;
+  }
+  dd {
+    margin-left: 3em;
+  }
+
+  footer {
+    display: block;
+    font-size: 40%;
+    text-align: right;
+  }
+
+  .global-cover h1 {
+    margin-top: 3em;
+    margin-bottom: 3em;
+  }
+  .global-cover p {
+    font-size: 80%;
+  }
+
+  figure {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+  }
+  figure.long {
+    width: 90%;
+  }
+
+  pre {
+    text-align: left;
+    white-space: pre-wrap;
+  }
+  pre.code.informative {
+    font-size: 60%;
+  }
+  pre.long code {
+    font-size: 70%;
+    line-height: 1.0;
+  }
+
+  pre.code ins {
+    text-decoration: none;
+    color: gray;
+  }
+
+  code {
+    font-family: "Courier New";
+  }
+
+  .host {
+    display: block;
+    margin: 0;
+    text-indent: 0;
+    font-size: 75%;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  img.thumbnail {
+    width: 70%;
+  }
+
+  .hatena img {
+    width: 32px;
+  }
+</style>
+
+<section class="cover global-cover">
+<h1>DOM <code>Future</code> と DOM の将来</h1>
+
+<p>わかば (id:wakabatan)
+<p><time datetime=2013-05-23>2013年5月23日</time>
+</section>
+
+<section class=text>
+<h1>自己紹介</h1>
+
+<p><strong>わかば</strong>
+<p><small><img src="http://www.hatena.ne.jp/users/wa/wakabatan/profile.gif" alt style="width: 32px">id:wakabatan</small>
+
+<p>JavaScript は15年目くらい
+
+<p class=hatena>株式会社はてな アプリケーションエンジニア<br>
+<img src="https://www.hatena.ne.jp/images/favicon/www.gif" alt=www>
+<img src="https://www.hatena.ne.jp/images/favicon/coco.gif" alt=c>
+<img src="https://www.hatena.ne.jp/images/favicon/haiku.gif" alt=h>
+<img src="https://www.hatena.ne.jp/images/favicon/message.gif" alt=m>
+<img src="https://www.hatena.ne.jp/images/favicon/star.gif" alt=s>
+<img src="http://www.hatena.ne.jp/images/top/side_webservice.gif" alt=developer>
+<img src="http://copie.hatelabo.jp/images/favicon.gif" alt=copie>
+<img src="http://let.hatelabo.jp/images/favicon.png" alt=let>
+<img src="https://www.hatena.ne.jp/images/favicon/ugomemo.gif" alt=ugomemo>
+(<img src="https://www.hatena.ne.jp/images/favicon/haiku2.gif" alt=h2>
+<img src="http://l.hatena.ne.jp/images/favicon.ico" alt=l>)
+
+<p><del>仕事では JavaScript 書いてない</del> 最近たまに書いてる
+
+</section>
+
+<section>
+<h1>DOM <code>Future</code> と DOM の将来</h1>
+
+<ul>
+<li>DOM 現代史のつまみぐいです
+  <ul>
+    <li>細かい話はばっさり省いています
+  </ul>
+<li>紹介する新機能はまだ実装されていないかもしれません
+  <ul>
+    <li>5年後くらいには普通に使えるようになっている、かも
+  </ul>
+</ul>
+</section>
+
+<section>
+<h1>DOM の歴史</h1>
+
+<ul>
+  <li>1995年 Netscape2 JavaScript
+  <li>1997年 IE4 DOM
+  <li>1998年 W3C DOM1
+  <li>2000年 W3C DOM2
+  <li>2004年 W3C DOM3
+  <li>2008年～現在 WHATWG DOM Standard <a href="http://dom.spec.whatwg.org/"><code>&lt;http://dom.spec.whatwg.org/&gt;</code></a>
+</ul>
+</section>
+
+<section>
+<h1>DOM Standard</h1>
+
+<ul>
+  <li><a href="http://dom.spec.whatwg.org/"><code>&lt;http://dom.spec.whatwg.org/&gt;</code></a>
+  <li>“フルスクラッチ”された DOM 仕様書
+  <li>旧 Core、Events、Ranges、Traversal、Element Traversal に相当するもの + α
+</ul>
+</section>
+
+<section>
+<h1>DOM Standard の歴史</h1>
+
+<ul>
+  <li>2007年 しばしば「DOM5」が必要だと囁かれるようになる
+    <ul>
+      <li>DOM3 が現状と乖離しており、メンテナンスもされていなかった
+    </ul>
+  <li>2008年 「Web DOM Core」
+  <li>2010年 「Web DOM Range」
+  <li>2011年 「Web DOM Core」が W3C WebApps WG へ
+    <ul>
+      <li>Events、Traversal が追加される
+      <li>Web DOM Range が統合される
+      <li>「Web DOM Core」→「DOM Core」→「DOM4」
+        <ul>
+          <li>CSS3, DOM4, HTML5
+        </ul>
+    </ul>
+  <li>2012年 「DOM4」が WHATWG へ
+    <ul>
+      <li>「DOM Standard」
+      <li>HTML 同様の Living Standard 開発モデル
+      <li>W3C DOM4 は WHATWG DOM Standard のスナップショットコピーに
+    </ul>
+</ul>
+</section>
+
+<section>
+<h1>DOM3 から変わったこと</h1>
+
+<ul>
+  <li>あらゆる規定が明確になった
+    <ul>
+      <li>DOM3 はリファレンスマニュアルレベルでとても曖昧だった
+    </ul>
+  <li>ブラウザ実装との違いや矛盾が解消された
+    <ul>
+      <li>実装されていない機能はばっさり削除されている
+      <li><code>EntityReference</code> や <code>CDATASection</code> も廃止
+    </ul>
+  <li>いくつかの新機能
+</ul>
+</section>
+
+<section>
+<h1>もっと JavaScript っぽく</h1>
+
+<pre class=JS><code>
+// DOM
+new Document
+new Text ("Hoge")
+new MouseEvent ("click", {bubbles: true, view: window})
+
+// DOM2
+document.implementation.createDocument (null, null, null)
+document.createTextNode ("Hoge")
+ev = document.createEvent ("MouseEvent"); ev.initMouseEvent("click", true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null)
+
+exception.name === 'HierarchyRequestError'         // DOM
+exception.code === exception.HIERARCHY_REQUEST_ERR // DOM1-3
+
+object.addEventListener ("click", function (ev) { ... }) // 第3引数は省略可能に
+</code></pre>
+</section>
+
+<section>
+<h1><code>MutationObserver</code></h1>
+
+<ul>
+  <li>DOM 木に変化があった時にコールバックが呼び出される
+    <ul>
+      <li>失敗作だった DOM3 mutation event のかわりに追加された
+    </ul>
+</ul>
+
+<pre class=JS><code>
+var observer = new MutationObserver (function (records) {
+  ...
+});
+observer.observe (element, {childNodes: true, characterData: true});
+</code></pre>
+</section>
+
+<section>
+<h1>新しい木操作メソッド</h1>
+
+<pre class=JS><code>
+element.append ("Hoge", childElement1, childElement2, "fuga");
+
+element.appendChild (document.createTextNode ("Hoge"));
+element.appendChild (childElement1);
+element.appendChild (childElement2);
+element.appendChild (document.createTextNode ("fuga"));
+
+element.before (childNode, "text");
+
+element.parentNode.insertBefore (childNode, element);
+element.parentNode.insertBefore (document.createTextNode ("text"), element);
+
+node.after ("text", childNode);
+node.replace ("hoge");
+node.remove ();
+</code></pre>
+</section>
+
+<section>
+<h1><code>Future</code></h1>
+
+<ul>
+  <li>今年追加された
+    <ul>
+      <li>まだ少し変わるかも??
+    </ul>
+  <li>「実行中かこれから実行されるかもう実行完了した操作の結果への非同期アクセス」
+  <li>promise, deferred, thenable などと呼ばれているものと同じ
+    <ul>
+      <li>ちょっと前に流行ってましたね
+      <li>jQuery.Deferred, JSDeferred, ...
+      <li>
+<pre>
+E -> Python Deferreds -> MochiKit Deferreds -> Dojo Deferreds -> Promises/A -> Promises/A+
+
+E -> Waterken Q -> Caja Q -> Kris Kowal's Q -> Promises/C -> Promises/A+
+
+(Q, Promises/A+) -> DOMFutures
+</pre>
+        <small>(<a href="http://www.xanthir.com/b4P_0#4P_0-13"><code class=URL>&lt;http://www.xanthir.com/b4P_0#4P_0-13&gt;</code></a> から引用)</small>
+    </ul>
+</ul>
+</section>
+
+<section>
+<h1><code>Future</code> 使わない例</h1>
+
+<pre class="JS long"><code>
+xhr.onreadystatechange = function () {
+  if (xhr.readyState == 4) {
+    if (xhr.status == 200) {
+      if (xhr.responseText == '') {
+        alert ('error');
+      } else {
+        var xhr2 = new XMLHttpRequest ();
+        xhr2.open ('GET', xhr.responseText, true);
+        xhr2.onreadystatechange = function () {
+          if (xhr2.readyState == 4) {
+            if (xhr2.status == 200) {
+              step3 ();
+            } else {
+              alert ('error');
+            }
+          }
+        };
+        xhr2.send (null);
+      }
+    } else {
+      alert ('error');
+    }
+  }
+};
+</code></pre>
+
+<ul>
+  <li>コールバックの入れ子でコードが右にのびていきがち
+  <li>深いコールバックでエラーが起こったことを浅い方にどう伝えたらいいかよくわからない
+  <li>複数のコールバックの結果を待って何かしたいときどう書いたらいいのかよくわからない
+</ul>
+</section>
+
+<section>
+<h1><code>Future</code> 使った例</h1>
+
+<pre class="JS long"><code>
+xhr.send ().then (function () {
+  if (xhr.status == 200) {
+    if (xhr.responseText == '') {
+      throw "error";
+    } else {
+      return xhr.responseText;
+    }
+  } else {
+    throw "error";
+  }
+}).then (function (path) {
+  var xhr2 = new XMLHttpRequest ();
+  xhr2.open ('GET', path, true);
+  return xhr2.send (); // Future を返す
+}).then (function () {
+  step3 ();
+}).catch (function (e) {
+  alert (e.name);
+});
+</code></pre>
+
+<ul>
+  <li><code>.then() .then() .then() ...</code> と書き連ねていける
+  <li>前の <code>.then</code> のコールバックで返した値が次の
+    <code>.then</code> のコールバックに伝わる
+    <ul>
+      <li><code>Future</code> を返せば、その <code>Future</code> の結果を待つ
+    </ul>
+  <li>例外を投げれば <code>.catch</code> のコールバックに伝わる
+</ul>
+</section>
+
+<section>
+<h1>「実行中かこれから実行されるかもう実行完了した操作」</h1>
+
+<pre class=JS><code>
+document.ready().then(...)
+navigator.geolocation.getCurrentPosition().then(...)
+indexDB.open(name).then(...)
+
+new Future (function (resolver) {
+  if (...) {
+    resolver.accept(...);
+  } else {
+    resolver.reject("error");
+  }
+}).then(...)
+</code></pre>
+</section>
+
+<section>
+<h1><code>Future</code> の組み合わせ</h1>
+
+<pre class=JS><code>
+Future.any(future1, future2, ...).then(...)
+Future.some(future1, future2, ...).then(...)
+Future.every(future1, future2, ...).then(...)
+
+<!-- DOM Standard から -->
+Future.every(fetchJSON("/user/mario"), fetchJSON("/user/luigi")).done(
+  function(mario, luigi) { ... },
+  showFailcat
+)
+</code></pre>
+</section>
+
+<section>
+<h1>DOM の将来</h1>
+
+<ul>
+  <li>JavaScript との親和性をより高く
+  <li>よく使う操作をより簡単に
+  <li>... という方向性は今後も続いていきそう
+    <ul>
+      <li><code>node.on("click", function () { ... })</code> ???
+      <li>E4H ???
+        <ul>
+          <li><pre class="JS long"><code>function addCheckbox(name, label, checked, enabled) {
+  return @&lt;label>&lt;input type="checkbox" name={name}
+           checked?={checked} disabled?={!enabled}/>
+           {label}&lt;/label>;
+}
+</code></pre>
+          <li>ECMAScript の人達に評判が良くないので当面はなさそう
+        </ul>
+    </ul>
+</ul>
+</section>
+
+<section>
+<h1>参考文献</h1>
+
+<ul>
+  <li><a href="http://dom.spec.whatwg.org/">DOM Standard</a>
+  <li><a href="http://www.xanthir.com/b4PY0">Explaining Futures</a>
+  <li><a href="https://github.com/slightlyoff/Futures">DOM Futures</a>
+</ul>
+</section>
+
+<section class=text>
+<h1>終わり</h1>
+
+<p>この発表資料は Kyoto.js のページ <a href="https://github.com/kyotojs/meetup/wiki/8"><code>https://github.com/kyotojs/meetup/wiki/8</code></a> に置く予定です。
+
+</section>
+
+<script>
+function getCurrentStatus () {
+  var currentEl = document.elementFromPoint
+      (window.innerWidth / 2, window.innerHeight / 2);
+  while (currentEl && (currentEl.localName != 'section' || currentEl.parentNode != document.body)) {
+    currentEl = currentEl.parentNode;
+  }
+  if (currentEl) {
+    var sections = document.querySelectorAll ('body > section');
+    for (var i = 0; i < sections.length; i++) {
+      if (sections[i] == currentEl) {
+        return [sections, i];
+      }
+    }
+    return [sections, 0];
+  }
+  return [[], 0];
+} // getCurrentStatus
+
+window,onkeypress = function (ev) {
+  var char = String.fromCharCode (ev.charCode).toLowerCase ();
+  if (char === 'j') {
+    var current = getCurrentStatus ();
+    var next = current[0][current[1]+1];
+    if (next) next.scrollIntoView ();
+  } else if (char === 'k') {
+    var current = getCurrentStatus ();
+    var prev = current[0][current[1]-1];
+    if (prev) prev.scrollIntoView ();
+  }
+};
+</script>
+
+<!--
+
+Copyright 2013 Wakaba <wakaba@suikawiki.org>.
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.
+
+-->
