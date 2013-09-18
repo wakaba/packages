@@ -1,3 +1,3 @@
 #!/bin/sh
 mkdir -p local/bin
-curl https://github.com/wakaba/perl-setupenv/raw/master/bin/pmbp.pl > local/bin/pmbp.pl
+curl https://raw.github.com/wakaba/perl-setupenv/master/bin/pmbp.pl > local/bin/pmbp.pl
