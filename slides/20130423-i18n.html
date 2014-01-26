@@ -1,0 +1,3533 @@
+<!DOCTYPE html>
+<html lang=ja>
+<meta charset=utf-8>
+<title>はてなにおける Web アプリケーションの国際化</title>
+
+<style>
+  body {
+    font-size: 30px;
+    counter-reset: slide;
+  }
+  section {
+    position: relative;
+    display: block;
+    min-height: 15em;
+    background-image: url(http://www.hatena.ne.jp/images/logo_portal_hatena.gif);
+    background-position: 98% 0.5em;
+    background-repeat: no-repeat;
+    border: #CDDFEF 3px solid;
+    margin: 1em;
+    padding: 1em;
+    counter-increment: slide;
+  }
+
+  section::after {
+    position: absolute;
+    content: counter(slide);
+    bottom: 0.5em;
+    right: 0.5em;
+    font-size: 80%;
+    color: #CDDFEF;
+  }
+
+  p {
+    text-align: left;
+    margin-left: 2em;
+    margin-right: 2em;
+    line-height: 1.3;
+  }
+
+  section.text p {
+    text-align: left;
+    line-height: 1.5;
+  }
+
+  p strong {
+    font-size: 110%;
+  }
+
+  li, dd {
+    line-height: 1.5;
+  }
+
+  li.arrow {
+    list-style: none;
+  }
+  li.arrow::before {
+    content: "→ ";
+    text-indent: -1.5em;
+  }
+
+  li.more {
+    list-style: none;
+  }
+
+  li.note {
+    list-style: none;
+  }
+
+  h1 {
+    text-align: center;
+    line-height: 1.5;
+  }
+
+  .timestamp h1 {
+    font-size: 300%;
+    margin-top: 1em;
+    margin-bottom: 1em;
+  }
+
+  dt img {
+    width: 2em;
+  }
+  dd {
+    margin-left: 3em;
+  }
+
+  .service-list {
+    font-size: 90%;
+  }
+
+  .service-list dt {
+    float: left;
+    clear: left;
+    padding-top: 0.2em;
+  }
+
+  .service-list dd {
+    text-align: left;
+  }
+
+  .service-list dd img {
+    width: 1em;
+    vertical-align: middle;
+  }
+
+  h2 {
+    display: block;
+    margin: 0;
+    padding: 0;
+    font-size: 100%;
+    font-weight: bolder;
+  }
+
+  h2 + pre {
+    margin-top: 0;
+  }
+
+  footer {
+    display: block;
+    font-size: 40%;
+    text-align: right;
+  }
+
+  .global-cover h1, .cover h1, .last h1 {
+    margin-top: 3em;
+    margin-bottom: 3em;
+  }
+  .global-cover p, .cover p, .last p {
+    font-size: 80%;
+    text-align: center;
+  }
+
+  figure {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+  }
+  figure.long {
+    width: 90%;
+  }
+
+  figure.screenshots {
+    width: 100%;
+  }
+
+  figcaption:first-child {
+    display: block;
+    text-align: center;
+    font-size: 100%;
+    font-weight: bolder;
+  }
+
+  figcaption:last-child {
+    display: block;
+    text-align: right;
+    font-size: 65%;
+  }
+  figcaption:last-child::before {
+    content: "―― ";
+  }
+
+  figure.screenshots figcaption.label,
+  figure.code figcaption.label {
+    font-size: 70%;
+    text-align: center;
+    text-decoration: none;
+  }
+
+  figure.screenshots figcaption.label::before,
+  figure.code figcaption.label::before {
+    content: "";
+  }
+
+  .codeset {
+    display: table;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .codeset figure.code {
+    display: table-cell;
+    width: 50%;
+    padding-left: 1em;
+    padding-right: 1em;
+  }
+
+  figure.code {
+    width: 90%;
+    font-size: 75%;
+  }
+
+  figure.code figcaption {
+    display: block;
+    text-align: left;
+    font-size: 100%;
+    font-weight: normal;
+    text-decoration: underline;
+  }
+
+  pre {
+    position: relative;
+    text-align: left;
+    white-space: pre-wrap;
+  }
+  pre.code.informative {
+    font-size: 60%;
+  }
+
+  figure.code pre[class]::before {
+    content: attr(class) ":" "\A0";
+    position: absolute;
+    display: block;
+    right:100%;
+    top: 0.3em;
+    text-align: right;
+    font-size: 80%;
+    color: gray;
+  }
+
+  figure.code figcaption + pre {
+    margin-top: 0.3em;
+  }
+
+  pre.code ins {
+    text-decoration: none;
+    color: gray;
+  }
+
+  code {
+    font-family: "Courier New";
+  }
+
+  blockquote {
+    position: relative;
+    font-size: 80%;
+  }
+  blockquote::before {
+    content: "“";
+    position: absolute;
+    top: -0.2em;
+    display: block;
+    font-size: 400%;
+    text-indent: -0.5em;
+    color: #ccc;
+  }
+  blockquote::after {
+    content: "”";
+    position: absolute;
+    bottom: -0.7em;
+    right: 0;
+    display: block;
+    font-size: 400%;
+    color: #ccc;
+  }
+
+  blockquote p {
+    margin-left: 0;
+  }
+  blockquote p:first-child {
+    margin-top: 0;
+  }
+  blockquote p:last-child {
+    margin-bottom: 0;
+  }
+
+  th, td {
+    padding: 0 0.5em;
+  }
+
+  th {
+    text-align: left;
+  }
+
+  th:first-child {
+    text-align: right;
+  }
+
+  td {
+    text-align: left;
+  }
+
+  .i18n-elements th {
+    white-space: nowrap;
+    font-size: 70%;
+    text-align: right;
+  }
+
+  .i18n-elements th::after {
+    content: "・・・・・・";
+  }
+
+  .i18n-elements td {
+    text-align: center;
+  }
+
+  .i18n-elements td p {
+    display: inline-block;
+    margin: 0 1em 0 0;
+  }
+
+  figure.screenshots img {
+    max-width: 15em;
+    max-height: 15em;
+  }
+
+  figure.screenshots.long img {
+    max-width: 30em;
+    max-height: 30em;
+  }
+
+  img.thumbnail {
+    width: 70%;
+  }
+
+  img.profile-icon {
+    height: 1em;
+    vertical-align: middle;
+    padding: 2px;
+  }
+
+  figure ul {
+    list-style: none;
+  }
+
+  figure dl {
+    text-align: left;
+  }
+
+  .combination {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .combination tr {
+    display: table-row-group;
+  }
+  .combination.compact td {
+    text-align: center;
+  }
+  .combination tr::after {
+    content: "×";
+    display: table-row;
+    text-align: right;
+    color: #ccc;
+  }
+  .combination.compact tr::after {
+    text-align: center;
+  }
+  .combination tr:last-child::after {
+    content: "";
+  }
+
+  dfn {
+    font-weight: bolder;
+    font-style: normal;
+  }
+</style>
+
+<script>
+function getCurrentStatus () {
+  var currentEl = document.elementFromPoint
+      (window.innerWidth / 2, window.innerHeight / 2);
+  while (currentEl && (currentEl.localName != 'section' || currentEl.parentNode != document.body)) {
+    currentEl = currentEl.parentNode;
+  }
+  if (currentEl) {
+    var sections = document.querySelectorAll ('body > section');
+    for (var i = 0; i < sections.length; i++) {
+      if (sections[i] == currentEl) {
+        return [sections, i];
+      }
+    }
+    return [sections, 0];
+  }
+  return [[], 0];
+} // getCurrentStatus
+
+window,onkeypress = function (ev) {
+  var char = String.fromCharCode (ev.charCode).toLowerCase ();
+  if (char === 'j') {
+    var current = getCurrentStatus ();
+    var next = current[0][current[1]+1];
+    if (next) next.scrollIntoView ();
+  } else if (char === 'k') {
+    var current = getCurrentStatus ();
+    var prev = current[0][current[1]-1];
+    if (prev) prev.scrollIntoView ();
+  }
+};
+</script>
+
+<section class="cover global-cover">
+<h1>はてなにおける<br>Web アプリケーションの国際化</h1>
+
+<p><time datetime=2013-04-23>2013年4月23日</time>
+</section>
+
+<section>
+<h1>前回</h1>
+
+<ul>
+  <li><time datetime=2009-05-01>2009年5月1日</time>の TGIF
+    で「Hatena::Translator の紹介」と題して発表しました
+  <li>4年ぶりのリメイク完全版です
+</ul>
+</section>
+
+<section>
+<h1>国際化とは何か</h1>
+
+<p>Wikipedia によると定義は
+
+<figure class=long>
+<blockquote>
+<p><dfn>国際化</dfn> (アメリカ英語: internationalization イギリス英語: internationalisation、i18n) は、ソフトウェアに技術的な変更を加えることなく多様な言語や地域に適合できるようにする、ソフトウェア設計の工程である。
+
+<p><dfn>地域化</dfn> (アメリカ英語: localization イギリス英語: localisation、L10N) は、地域固有の構成部品や翻訳テキストを追加することによって、ソフトウェアを特定の地域や言語に適合させる工程である。
+</blockquote>
+
+<figcaption>
+<a href="http://ja.wikipedia.org/wiki/%E5%9B%BD%E9%9A%9B%E5%8C%96%E3%81%A8%E5%9C%B0%E5%9F%9F%E5%8C%96">Wikipedia: 国際化と地域化</a>
+</figcaption>
+</figure>
+
+<p>本発表ではもう少し広く、世界的に Web アプリケーションを提供するための諸々を取り上げます。
+</section>
+
+<section>
+<h1>はてなサービス国際化の歴史</h1>
+
+<figure>
+<dl class=service-list>
+<dt>2006
+<dd>Hatena Inc. 設立
+<dd><img src="http://serif.hatelabo.jp/favicon.ico" alt="Hatena::Serif">
+
+<dt>2007
+<dd><code>Ridge::Plugin::I18N</code>
+<dd><img src="https://www.hatena.ne.jp/images/favicon/www.gif" alt="Hatena::WWW">
+<img src="https://www.hatena.ne.jp/images/favicon/message.gif" alt="Hatena::Message">
+<img src="https://www.hatena.ne.jp/images/favicon/star.gif" alt="Hatena::Star">
+<img src="https://www.hatena.ne.jp/images/favicon/haiku.gif" alt="Hatena::Haiku">
+<img src="http://cdn-ak.f.st-hatena.com/images/fotolife/w/wakabatan/20130409/20130409172120.png" alt="Hatena::World">
+<img src="https://www.hatena.ne.jp/images/favicon/diary.gif" alt="Hatena::Diary"><small>[com]</small>
+
+<dt>2009
+<dd>Hatena::Translator
+<dd><img src="https://www.hatena.ne.jp/images/favicon/ugomemo.gif" alt="Hatena::Ugomemo">
+<img src="https://www.hatena.ne.jp/images/favicon/bookmark.gif" alt="Hatena::Bookmark"><small>[Fx]</small>
+(<img src="https://www.hatena.ne.jp/images/favicon/haiku2.gif" alt="Hatena::Haiku2">)
+<dd><img src="https://www.hatena.ne.jp/images/favicon/www.gif" alt="Hatena::WWW">
+<img src="https://www.hatena.ne.jp/images/favicon/message.gif" alt="Hatena::Message">
+<img src="https://www.hatena.ne.jp/images/favicon/star.gif" alt="Hatena::Star">
+<img src="https://www.hatena.ne.jp/images/favicon/diary.gif" alt="Hatena::Diary"><small>[com]</small>
+(リニューアル)
+
+<dt>2010
+<dd><img src="https://www.hatena.ne.jp/images/favicon/mono.gif" alt="Hatena::Monolith">
+<img src="http://www.hatena.ne.jp/images/top/side_webservice.gif" alt="Hatena Developer Center">
+(<img src="https://www.hatena.ne.jp/images/favicon/coco.gif" alt="Hatena::Coco">
+<img src="http://l.hatena.ne.jp/images/favicon.ico" alt="Hatena::Land">)
+<dd><img src="https://www.hatena.ne.jp/images/favicon/haiku.gif" alt="Hatena::Haiku">
+(リニューアル)
+
+<dt>2011
+<dd><img src="https://www.hatena.ne.jp/images/favicon/blog.gif" alt="Hatena::Blog">
+<dd><img src="https://www.hatena.ne.jp/images/favicon/www.gif" alt="Hatena::FAQ"> (リニューアル)
+
+<dt>2012
+<dd>(<img src="http://one.hatena.ne.jp/favicon.ico" alt="Hatena::One">)
+</dl>
+</figure>
+
+</section>
+
+<section>
+<h1>国際化の要素</h1>
+
+<figure>
+<table class=i18n-elements>
+<tr>
+<th>
+サービス
+<td>
+<p>ユーザーサポート
+<p>コミュニティ設計・運営
+<p>広告営業
+<p>法務
+<p><mark>翻訳</mark>
+<p>デザイン
+<p><mark>課金と通貨</mark>
+<p><mark>コンテンツの言語</mark>
+<p><mark>アルゴリズム</mark>
+
+<tr>
+<th>
+アプリケーション
+<td>
+<p><mark>テキストの言語</mark>
+<p><mark>テキスト管理</mark>
+<p><mark>機械翻訳</mark>
+<p><mark>数値</mark>
+<p><mark>日付</mark>
+<p><mark>国・地域</mark>
+<p><mark>文字コード・フォント</mark>
+
+<tr>
+<th>
+インフラ
+<td>
+<p>ドメイン・DNS
+<p>データセンター・クラウド
+<p>ストレージ
+<p>CDN
+</table>
+</figure>
+
+<ul>
+  <li>アプリケーション層を中心に多少上の方まで行きます
+
+    <ul>
+      <li>実装方針・考え方とか、事例紹介とか
+      <li>あちこち色々話が飛びます
+    </ul>
+</ul>
+</section>
+
+<section id=toc>
+<h1>だいたいの目次</h1>
+
+<ul>
+  <li><a href="#text-langs">テキストの言語</a>
+  <li><a href="#langs">言語の識別と選択</a>
+  <li><a href="#nontext">テキスト以外の国際化</a>
+  <li><a href="#signs">記号とフォント</a>
+  <li><a href="#caches">キャッシュと国際化</a>
+  <li><a href="#clientside">クライアント側での国際化</a>
+  <li><a href="#text2">再びテキスト</a>
+  <li><a href="#country">国といろいろ</a>
+  <li><a href="#flow">多言語テキストのある開発工程</a>
+  <li><a href="#contents">国際化サービス設計と実装</a>
+</ul>
+
+</section>
+
+<section class=cover id=text-langs>
+<h1>テキストの言語</h1>
+</section>
+
+<section>
+<h1>Web アプリケーションのテキスト</h1>
+
+<ul>
+<li>見出し、メニュー、ボタン、説明文など
+  <ul>
+    <li>テンプレートやコードにたくさん埋まってる
+  </ul>
+<li class=arrow>テキストデータを分離して、言語を切り替えられるようにする
+</ul>
+
+<figure class=screenshots>
+<img src="http://cdn-ak.f.st-hatena.com/images/fotolife/w/wakabatan/20130418/20130418150257.png?1366265043">
+<img src="http://cdn-ak.f.st-hatena.com/images/fotolife/w/wakabatan/20130418/20130418150256.png?1366265059">
+</figure>
+
+</section>
+
+<section>
+<h1>どこで実装するのか</h1>
+
+<ul>
+  <li>Web ブラウザー?
+    <ul>
+      <li>HTML・DOM・CSS には言語切り替え機能がない
+      <li><code>Accept-Language:</code> ヘッダーをサーバーに送る
+    </ul>
+  <li class=arrow>Web サーバーでやるのが基本
+</ul>
+</section>
+
+<section>
+<h1><a href="http://www.gnu.org/software/gettext/">GNU gettext</a></h1>
+
+<ul>
+  <li>Linux 等でよく使われている国際化ライブラリ
+</ul>
+
+<figure class=code>
+<pre class=C><code>printf (<mark>gettext (</mark>"Hello, world!\n"<mark>)</mark>);</code></pre>
+</figure>
+
+<div class=codeset>
+<figure class=code>
+<figcaption><code>en.po</code></figcaption>
+
+<pre class=PO><code>msgid "Hello, world!\n"
+msgstr "Hello, world!\n"</code></pre>
+</figure>
+
+<figure class=code>
+<figcaption><code>ja.po</code></figcaption>
+
+<pre class=PO><code>msgid "Hello, world!\n"
+msgstr "こんにちは、世界。\n"</code></pre>
+</figure>
+</div>
+
+<ul>
+  <li>C だけでなくいろんな言語の実装がある
+  <li>.po ファイルのエディタもいろいろある
+</ul>
+</section>
+
+<section>
+<h1><a href="http://search.cpan.org/dist/Locale-Maketext-Simple/lib/Locale/Maketext/Simple.pm"><code>Locale::Maketext::Simple</code></a></h1>
+
+<ul>
+  <li>ファイル形式が GNU gettext 互換の Perl モジュール
+</ul>
+
+<figure class=code>
+<pre class=Perl><code>use Locale::Maketext::Simple;
+print <mark>loc("Hello, World!")</mark>;</code></pre>
+</figure>
+
+<ul>
+  <li>2007年のはてなサービスは <code>Ridge::Plugin::I18N</code> を利用
+  <li><code>Ridge::Plugin::I18N</code> は <code>Locale::Maketext::Simple</code> を採用
+</ul>
+
+<figure class=code>
+<pre class=Perl><code>sub default : Public {
+    ...
+    $r->res->content($r-><mark>loc('hello_world')</mark>);
+}
+
+&lt;p>[% <mark>l('hello_world')</mark> %]</code></pre>
+</figure>
+</section>
+
+<section>
+<h1>テキスト管理</h1>
+
+<ul>
+  <li>翻訳テキストをどう管理するか
+  <li>初期の運用
+    <ul>
+      <li>アプリケーション本体と同じ Git リポジトリに入れて、
+      <li>原語テキストを翻訳者に渡して、
+      <li>返ってきたものを開発者が .po に記入
+    </ul>
+  <li>わりとすぐに破綻
+    <ul>
+      <li>開発者と翻訳者のやり取りが煩雑で間違いやすい
+      <li>.po ファイルの手書きは困難 (面倒くさい、構文ミスしがち、長文つらい)
+      <li>必要なテキストが全言語で揃っているか確認しづらい
+      <li>複数の開発者が並行して編集していると整合性確認やマージが困難
+    </ul>
+</ul>
+</section>
+
+<section>
+<h1>Hatena::Translator</h1>
+
+<figure>
+<blockquote>
+<p>はてなは高い技術力を誇る会社です。効率よくなおかつ正確に翻訳作業が進行するよう、翻訳システム「Hatena::<wbr>Translator (はてな翻訳)」を自社で開発し、国際化に挑みました。
+</blockquote>
+<figcaption>
+<a href="http://pr.hatenastaff.com/entry/20090821/1250818212">国際化を果たした「うごメモ」の世界での盛り上がりと自社開発翻訳システム「Hatena::Translator」</a>
+</figcaption>
+</figure>
+
+<ul>
+  <li>多言語テキスト管理ツール
+  <li>「メッセージID」に対して各言語の「メッセージ」を登録する Web アプリケーション
+  <li>開発者・翻訳者ともいつでもどこでも簡単に使える
+  <li>各言語のテキストを一覧できる
+  <li>編集履歴を参照できる
+  <li>.po ファイルなどで入出力できる
+</ul>
+
+<figure class=screenshots>
+<img src="http://cdn-ak.f.st-hatena.com/images/fotolife/h/hatenapr/20090824/20090824165449.jpg">
+</figure>
+
+</section>
+
+<section>
+<h1>テキストメッセージ取得の新実装 (2009)</h1>
+
+<ul>
+  <li><code>Locale::Maketext::Simple</code> はなんか複雑で無駄なことしてた
+  <li>テキスト取得は相当回数実行されるので、速度最優先
+  <li><code>.po</code>/<code>.mo</code> ファイルでなく 
+    <code>.pm</code> ファイルを Hatena::Translator
+    で生成し、 Perl データ構造を直接読み込む
+  <li>メッセージIDからメッセージへの変換はハッシュアクセス最低限 +
+    <code>sprintf</code> 1回だけに
+</ul>
+
+<figure class=screenshots>
+<img src="http://cdn-ak.f.st-hatena.com/images/fotolife/w/wakabatan/20130418/20130418181223.png?1366276344">
+<figcaption class=label>モジュール変更によるサーバー負荷の低下</figcaption>
+</figure>
+
+</section>
+
+<section>
+<h1>メッセージデータ <code>.pm</code> ファイル</h1>
+
+<ul>
+  <li>Hatena::Translator のメッセージデータを Perl の
+    <code>Data::Dumper</code> でコード化したもの
+  <li>(<code>.po</code> もそうだったけど) マージ失敗のトラブルが多発したので
+    <code>NULL</code> をコメントとして入れて Git
+    がバイナリファイルとみなさせている
+</ul>
+</section>
+
+<section>
+<h1>フレームワークと国際化</h1>
+
+<ul>
+  <li><code>Ridge::Plugin::I18N</code> (2007)
+
+    <ul>
+      <li>WAF の文脈オブジェクトに直接メソッドを生やす
+
+        <figure class=code>
+          <pre class=Perl><code>$r->loc($msgid)
+$r->lang
+$r->tz
+...</code></pre></figure>
+
+      <li>それを Template Toolkit マクロでラップ
+
+        <figure class=code>
+<pre class=TT><code>[%- MACRO loc(text, args1, args2, args3, args4) BLOCK;
+   r.loc(text, args1, args2, args3, args4);
+END; -%]</code></pre>
+        </figure>
+    </ul>
+</ul>
+</section>
+
+<section>
+<h1>フレームワークと国際化 (続き)</h1>
+
+<ul>
+  <li>Web ページはそれで良いが、他にもある
+    <ul>
+      <li>メール送信
+      <li>バッチ処理
+      <li class=more>...
+    </ul>
+  <li>国際化は WAF 層だけの問題か?
+
+    <figure class=code>
+<pre class=Perl><code>$channel->name_<mark>for_lang($lang)</mark></code></pre>
+
+<pre class=Perl><code>sub MyApp::Movie::to_rss_item {
+    my $self = shift;
+    return {
+        title => <mark>$r->loc</mark>('movie_by_', $self->author->name),
+    };
+}</code></pre>
+</figure>
+</ul>
+</section>
+
+<section>
+<h1>ロケールオブジェクト (2009)</h1>
+
+<ul>
+  <li>「ロケールオブジェクト」に国際化関連処理を一元化
+  <li>必要に応じて引き回す
+  <li>WAF から取得しても良いし、他の方法で作っても良い
+</ul>
+
+<figure class=code>
+<pre class=Perl><code>$channel->name_for_locale(<mark>$r->locale</mark>);
+$movie->to_rss_item(locale => <mark>$r->locale</mark>);
+MyApp::Message->new(
+    locale => <mark>$user->create_locale</mark>,
+    body_template => ...,
+);</code></pre></figure>
+
+<figure class=code>
+<pre class=TT><code>[%- MACRO loc(text, args1, args2, args3, args4) BLOCK;
+   <mark>r.locale</mark>.text(text, args1, args2, args3, args4);
+END; -%]</code></pre>
+</figure>
+</section>
+
+<section class=cover id=langs>
+<h1>言語の識別と選択</h1>
+
+<p>いったん話は飛びますがまた後でテキストの話に戻りますwww
+</section>
+
+<section>
+<h1><a href="http://suika.suikawiki.org/~wakaba/wiki/sw/n/%E8%A8%80%E8%AA%9E%E3%82%BF%E3%82%B0">IETF の言語タグ</a></h1>
+
+<ul>
+  <li>BCP 47 (RFC 4646 + RFC 4647)
+  <li>インターネット・Web で言語の識別に標準的に使われている
+  <li>大文字・小文字は区別しない
+</ul>
+
+<figure>
+<table>
+  <tr><th><code>ja</code><td>日本語
+  <tr><th><code>en-GB</code><td>英語 (イギリス)
+  <tr><th><code>es-021</code><td>スペイン語 (北米)
+  <tr><th><code>zh-Hant-tw</code><td>繁体字中国語 (台湾)
+</table>
+</figure>
+</section>
+
+<section>
+<h1>短い言語タグ</h1>
+
+<ul>
+  <li>はてなシステム内部での表現形式
+  <li>小文字を使う、冗長な地域タグを削るなど
+</ul>
+
+<figure>
+<table>
+  <tr><td><code>ja-JP</code><td>→<th><code>ja</code> <td>日本語
+  <tr><td><code>en-US</code><td>→<th><code>en</code> <td>米語
+  <tr><td><code>en-GB</code><td>→<th><code>en-gb</code> <td>英語
+</table>
+</figure>
+</section>
+
+<section>
+<h1>HTTP <code>Accept-Language:</code> 要求ヘッダー</h1>
+
+<ul>
+  <li>送ってほしい言語を列挙する
+  <li>Web ブラウザーは必ず送ってくる
+    <ul>
+      <li>システム設定等から既定値が決まる
+      <li>どのブラウザーでもユーザーがカスタマイズ可能
+    </ul>
+</ul>
+
+<figure class=code>
+<pre class=HTTP><code>Accept-Language: ja,en-US,en-GB</code></pre>
+</figure>
+
+</section>
+
+<section>
+<h1>言語の決定</h1>
+
+<ul>
+  <li>基本的には、 <code>Accept-Language:</code> の言語とアプリケーションが対応している言語のリストを照合して最初に一致したものを選ぶ
+  <li>ちょっと複雑なこともしている
+
+    <ul>
+      <li><code>en-AU</code> → <code>en-au, en</code> に展開
+        (<code>en-au</code> に対応していなくても <code>en</code> に対応していれば一致する)
+    </ul>
+</ul>
+</section>
+
+<section>
+<h1>うまく決定できない例</h1>
+
+<figure class=code><pre class=HTTP><code>Accept-Language: en-US,ja,en</code></pre></figure>
+
+<ul>
+  <li><code>ja</code> と <code>en</code> には対応しているが、
+    <code>en-US</code> には対応していない
+  <li>実質的には <code>en-US</code> = <code>en</code> だから英語が選ばれてほしい
+  <li>が <code>ja</code> が選択されてしまう
+  <li>普通はこんな変な設定にはしない
+  <li><code>en-US,ja</code> だけなら <code>en-US,en,ja</code> に展開され、 <code>en</code> が選ばれる
+</ul>
+
+</section>
+
+<section>
+<h1>言語決定の優先順位</h1>
+
+<ol>
+  <li>URL により明示されている言語
+  <li>言語選択メニューで設定した Cookie (あれば)
+  <li>ユーザー設定で設定した言語 (DB から)
+  <li>HTTP <code>Accept-Language:</code> の言語
+  <li><code>hatena.ne.jp</code> ドメインなら日本語
+  <li>クライアントのIPアドレスに基づく推定値
+</ol>
+</section>
+
+<section>
+<h1>URL による言語の明示</h1>
+
+<figure class=long>
+  <ul>
+    <li><code>http://<mark>fr</mark>.flipnote.hatena.com/</code>
+    <li><code>http://s.hatena.ne.jp/?<mark>locale.lang=en</mark></code>
+    <li><code>http://developer.hatena.ne.jp/<mark>en</mark>/<wbr>documents/<wbr>star</code>
+  </ul>
+</figure>
+
+<ul>
+  <li>特定の言語でリンクしたいとき
+  <li>検索エンジン向け
+  <li>開発用 (すごい便利)
+</ul>
+</section>
+
+<section>
+<h1>言語決定ふりかえり</h1>
+
+<ul>
+  <li>ユーザー設定は使うべきではなかった
+    <ul>
+      <li>全アクセスで必ずDBを引く必要がある
+        <ul>
+          <li>「ようこそ～さん」はJSで挿入できるが言語はできない
+        </ul>
+      <li>ユーザー設定自体は必要 (メール送信など)
+    </ul>
+  <li>「<code>hatena.ne.jp</code> なら日本語」は最初なかった
+    <ul>
+      <li>アメリカの googlebot に英語で返してしまい、日本語ページが Google から消える事件
+    </ul>
+  <li>IP アドレスからの推測は要らなかった
+    <ul>
+      <li>Web ブラウザーは <code>Accept-Language:</code> を必ず送ってくる
+      <li>ボットは URL ごとに固定の言語を返した方が便利 (検索エンジン、<code>[http://...:title]</code> 記法など)
+    </ul>
+</ul>
+</section>
+
+<section>
+<h1>言語選択メニュー</h1>
+
+<ul>
+  <li>その場で言語を選べる → Cookie で保存
+
+    <figure class=screenshots>
+      <img src="http://cdn-ak.f.st-hatena.com/images/fotolife/w/wakabatan/20130419/20130419110556.png?1366337158">
+    </figure>
+
+  <li>本当に要るのかどうか?
+    <ul>
+      <li><code>Accept-Language:</code> で大体合ってるはず
+      <li>合わないとしたらいつか?
+        <dl>
+          <dt>母語と違う言語のOS使ってる人?
+          <dd>OS使えてるならその言語でいいじゃん
+          <dt>共用の計算機とか?
+          <dd>一部の人しか使わないなら、そんなに目立たせなくても良いかも?
+        </dl>
+      <li>そもそも発見できるか
+        <ul>
+          <li>「日本語」ボタンが言語選択メニューだとフランス人が気づけるか
+          <li>最低限、それっぽいアイコンはほしいよね
+        </ul>
+        
+        <figure class=screenshots>
+          <img src="http://cdn-ak.f.st-hatena.com/images/fotolife/w/wakabatan/20130419/20130419111053.png?1366337463">
+          <figcaption class=label>はてなブログだと更に発見の難易度が高い...</figcaption>
+        </figure>
+    </ul>
+
+  <li>コンテンツの範囲 (あとで詳しく取り上げる) の選択は有用
+
+    <figure class=screenshots>
+      <img src="http://cdn-ak.f.st-hatena.com/images/fotolife/w/wakabatan/20130419/20130419120522.png?1366340727">
+      <img src="http://cdn-ak.f.st-hatena.com/images/fotolife/w/wakabatan/20130419/20130419120757.png?1366340883">
+    </figure>
+
+  <li>初回アクセス時には大きく出る
+
+    <figure class=screenshots>
+      <img src="http://cdn-ak.f.st-hatena.com/images/fotolife/w/wakabatan/20130419/20130419120953.png?1366340994">
+    </figure>
+
+  <li>他のサービスはどうしてるか?
+
+    <figure class=screenshots>
+      <img src="http://cdn-ak.f.st-hatena.com/images/fotolife/w/wakabatan/20130419/20130419121338.png?1366341222"><!-- YouTube -->
+      <img src="http://cdn-ak.f.st-hatena.com/images/fotolife/w/wakabatan/20130419/20130419121900.png?1366341541"><!-- ustream -->
+    </figure>
+
+</ul>
+</section>
+
+<section>
+<h1>URL と言語選択</h1>
+
+<ul>
+  <li>HTTP 内容折衝
+    <ul>
+      <li>同じ URL で <code>Accept-Language:</code> により出し分け
+      <li>かっこいい
+      <li>リンクしやすい
+    </ul>
+  <li>でも URL を使う各種サービスは同一 URL での多言語を想定していない
+    <ul>
+      <li>Google の検索結果
+      <li>はてなブックマークのエントリーページ
+      <li><code>[http://...:title]</code> 記法
+      <li>Facebook でシェア
+    </ul>
+</ul>
+</section>
+
+<section>
+<h1>URL と言語選択 (続き)</h1>
+
+<ul>
+  <li><code>Accept-Language:</code> を見る正規形の URL と言語ごとの URL の両方あるといいのか?
+
+    <figure>
+      <ul>
+        <li><code>http://flipnote.hatena.com/</code>
+        <li><code>http://<mark>fr</mark>.flipnote.hatena.com/</code>
+        <li><code>http://<mark>es</mark>.flipnote.hatena.com/</code>
+      </ul>
+    </figure>
+
+  <li>検索エンジンには各言語版それぞれをクロールさせる
+
+    <ul>
+      <li>Google 先生は <code>rel=alternate</code> を使えば良いと<a href="http://googlewebmastercentral.blogspot.co.uk/2011/12/new-markup-for-multilingual-content.html">言って</a> <a href="http://googlewebmastercentral.blogspot.jp/2012/05/multilingual-and-multinational-site.html">いる</a>
+
+        <figure class=code>
+          <pre class=HTML><code>&lt;link rel=alternate hreflang=fr href="http://fr.flipnote.hatena.com/">
+&lt;link rel=alternate hreflang=es href="http://es.flipnote.hatena.com/"></code></pre>
+        </figure>
+    </ul>
+
+  <li>ソーシャル系ボタンの URL は見てる人の言語に合わせる
+  <li>他サイト・メール等からの誘導時は正規形 URL を使う
+</ul>
+</section>
+
+<section>
+<h1>言語別 URL の形式はどれが良いか</h1>
+
+<figure>
+  <ul>
+    <li><code>http://<mark>ja</mark>.example.com/hoge</code>
+    <li><code>http://example.com/<mark>ja</mark>/hoge</code>
+    <li><code>http://example.com/hoge.<mark>ja</mark></code>
+    <li><code>http://example.com/hoge?<mark>locale.lang=ja</mark></code>
+  </ul>
+</figure>
+
+<ul>
+  <li>query は検索エンジンその他ツールとの相性がいまいちだった、あと格好悪い...
+  <li>Apache の内容折衝 (<code>MultiViews</code>) なら拡張子方式
+    <ul>
+      <li><code>hoge.ja.html</code>, <code>hoge.en.html</code> を置いておくと
+        <code>hoge</code>, <code>hoge.ja</code>, <code>hoge.en</code>
+        でアクセスできる
+    </ul>
+  <li>既存の URL (の実装) への影響を避けるならドメイン方式
+  <li>どれが良いかは WAF の設計 (ルーティング規則の書き方) にもよる
+  <li>他社サービスも様々でこれといって標準的な方法は無い
+</ul>
+</section>
+
+<section class=cover id=nontext>
+<h1>テキスト以外の国際化</h1>
+</section>
+
+<section>
+<h1>画像</h1>
+
+<ul>
+  <li>文字が入っている画像はどうするか?
+    <ul>
+      <li>できるだけ文字 + CSS + 文字のない画像に置き換える
+
+        <figure class=screenshots>
+          <img src="http://cdn-ak.f.st-hatena.com/images/fotolife/w/wakabatan/20130423/20130423152642.png?1366698405">
+          <img src="http://cdn-ak.f.st-hatena.com/images/fotolife/w/wakabatan/20130423/20130423152959.png?1366698602">
+          <figcaption class=label>
+            同じ「お気に入りに追加」ボタンでもはてなブックマークでは画像、
+            うごメモはてなでは文字
+          </figcaption>
+        </figure>
+
+      <li>ロゴ、スクリーンショットの類はどうしようもないから全言語分作る
+        <ul>
+          <li>数が多いとデザイナーさんがつらいがどうしようもない
+        </ul>
+    </ul>
+</ul>
+
+<figure class=code>
+  <pre class=TT><code>[%- loc_img('hoge') -%]</code></pre>
+
+  <p>はこう展開される:
+
+  <pre class=TT>&lt;img src="/images/<mark>en</mark>/hoge.png" alt="[% loc('image.hoge') %]">
+&lt;img src="/images/<mark>fr</mark>/hoge.png" alt="[% loc('image.hoge') %]"></code></pre>
+</figure>
+</section>
+
+<section>
+<h1>デザイン</h1>
+
+<ul>
+  <li>文字の長さが言語により変わる
+    <ul>
+      <li>ロシア語が長くなるとか、ドイツ語の単語が長いとか
+      <li>文字数によって崩れない方法で作らないといけない
+        <ul>
+          <li>文字数不定のユーザー入力と同じ感じ
+          <li>Web デザイナーは慣れてそうではあるが...
+        </ul>
+
+        <figure class=screenshots>
+          <img src="http://cdn-ak.f.st-hatena.com/images/fotolife/w/wakabatan/20090702/20090702110357.png">
+        </figure>
+    </ul>
+  <li>制限の多いプラットフォーム向けにはひどいことやってる
+
+    <figure class=code>
+      <pre clsss=TT><code>&lt;td width="[% loc('width1') %]">...&lt;td width="[% loc('width2') %]">...</code></pre>
+    </figure>
+  <li>言語別 CSS も用意したけど使われてない
+
+    <figure class=code>
+      <pre class=TT><code>&lt;link rel=stylesheet href="/css/[% locale.text_lang | html %].css"></code></pre>
+    </figure>
+    
+    <ul>
+      <li>地域によって好まれるデザインのテイストとかありそうだけど
+      <li>メンテナンスコスト考えると使わないのは正解かも
+    </ul>
+</ul>
+</section>
+
+<section>
+<h1>数値</h1>
+
+<ul>
+  <li>見落としがちだけど地域によって一般的な書き方が<a href="http://en.wikipedia.org/wiki/Decimal_mark">違う</a>
+</ul>
+
+<figure>
+  <table>
+    <tr><th><code>12<mark>,</mark>345<mark>.</mark>67</code> <td>日米英、加(英語)など
+    <tr><th><code>12<mark>&nbsp;</mark>345<mark>,</mark>67</code> <td>仏、加(仏語)、スイス(数値)など
+    <tr><th><code>12<mark>.</mark>345<mark>,</mark>67</code> <td>独伊蘭など
+    <tr><th><code>12<mark>'</mark>345<mark>,</mark>67</code> <td>スイス(価格)
+  </table>
+</figure>
+</section>
+
+<section>
+<h1>数値の書き方</h1>
+
+<ul>
+  <li>日本向けにはよくこうしていたけれど
+
+    <figure class=code>
+      <pre class=TT><code>[% n.chunk(-3).join(',') %]</code></pre>
+    </figure>
+
+  <li>ロケールオブジェクトに任せる
+
+    <figure class=code>
+      <pre class=TT><code>[% locale.number(n) %]</code></pre>
+    </figure>
+</ul>
+</section>
+
+<section>
+<h1>数字</h1>
+
+<ul>
+  <li>各種文字体系で独自の数字がある
+  <li>が、普通はそれほど気にしなくていい
+    <ul>
+      <li>いつものアラビア数字でだいたい通じる
+      <li>日本向けサービスで漢数字を使わないのと同じ
+    </ul>
+</ul>
+</section>
+
+<section>
+<h1>数値に記号を入れるべきか?</h1>
+
+<dl>
+  <dt>スター
+    <dd>なんとなく見慣れているので記号無しのままにした
+
+      <figure class=screenshots>
+        <img src="http://cdn-ak.f.st-hatena.com/images/fotolife/w/wakabatan/20130419/20130419142923.png?1366349367">
+      </figure>
+
+  <dt>価格・ポイント数
+    <dd>何かのはずみで見慣れぬ表記が出て誤解したらまずい気がして、記号無しのままにした
+
+      <figure>
+        <dl>
+          <dt>12<mark>.</mark>345 ポイント <dd>12ポイントと1000分の345? 1万2345ポイント?
+          <!--<dt>100<mark>.</mark>50 USD <dd>100ドル50セント (必ず小数点以下2桁なので曖昧性は無い)-->
+        </dl>
+      </figure>
+</dl>
+</section>
+
+<section>
+<h1>日付表記</h1>
+
+<ul>
+  <li>文化の違いによる誤解の例としてよく取り上げられるやつ:
+
+    <figure>
+      <dl>
+        <dt>03/04/05 の意味は?
+          <dd>日 2003年4月5日
+          <dd>米 2005年3月4日
+          <dd>英 2005年4月3日
+      </dl>
+    </figure>
+
+  <li>年月日の順序は地域と言語によって<a href="http://en.wikipedia.org/wiki/Date_format_by_country">ばらばら</a>
+  <li><code>April 5, 2003</code> とか <code>2003年4月5日</code> 
+    とかすると誤読を防げる (各言語での月名や「年月日」の辞書が必要になる)
+</ul>
+</section>
+
+<section>
+<h1>いつでもローカライズするべきか</h1>
+
+<ul>
+  <li>クレジットカードの有効期限
+    <ul>
+      <li>カードに印字されてる順 (月/年) で固定した方がいい
+      <li>年は2桁で印字されてるが、4桁の方がいいかも
+    </ul>
+
+    <figure class=screenshots>
+      <img src="http://cdn-ak.f.st-hatena.com/images/fotolife/w/wakabatan/20130419/20130419143213.png?1366349537">
+    </figure>
+
+  <li>スタッフ用の管理画面
+    <ul>
+      <li>日付による絞り込みフォームへのコピペ
+        <ul>
+          <li>見てる人の言語に合わせて日付指定フォーマットを変えるのは流石につらい
+        </ul>
+      <li>管理者同士の意思疎通の障壁になるおそれがある
+    </ul>
+
+    <figure class=screenshots>
+      <img src="http://cdn-ak.f.st-hatena.com/images/fotolife/w/wakabatan/20130419/20130419144023.png?1366350026">
+    </figure>
+</ul>
+</section>
+
+<section>
+<h1>数値や日付の表記のバリエーション</h1>
+
+<figure>
+  <ul>
+    <li><code>12,345</code> vs <code>1,2345</code>
+    <li><code>April 5, 2003</code> vs <code>4/5/2003</code> vs <code>Apr. 5, 2003</code>
+    <li><code>2013.4.3</code> vs <code>2013年4月3日</code> vs <code>平成25年4月3日</code>
+  </ul>
+</figure>
+
+<ul>
+  <li>ある国・言語で許容される形式が複数あることが多い
+  <li>日付を入れるスペースによって短縮形を使いたいこともある
+  <li>{開発者|コンテンツ著者|見る人}の好みもある
+  <li>対象プラットフォームのUIの表記に合わせたいとか
+</ul>
+</section>
+
+<section>
+<h1>日時の書式の管理</h1>
+
+<ul>
+  <li><a href="http://cldr.unicode.org/">CLDR</a> に世界中の言語のデータが揃ってる
+  <li>Perl だと <code>DateTime::Locale</code> に入っている
+  <li>がそれだと要求を満たせないこともある
+  <li class=arrow>Hatena::Translator で「長い日時」「短い日時」「月日」などの各言語のパターンを管理している
+
+    <figure class=screenshots>
+      <img src="http://cdn-ak.f.st-hatena.com/images/fotolife/w/wakabatan/20130419/20130419152338.png?1366352623">
+    </figure>
+
+  <li>はてなダイアリーは日記を書く人が日付のパターンを指定できる
+
+    <figure class=screenshots>
+      <img src="http://cdn-ak.f.st-hatena.com/images/fotolife/w/wakabatan/20130419/20130419152504.png?1366352705">
+    </figure>
+
+  <li>見る人の好みはカバーできていない
+    <ul>
+      <li>開発者にとっても利用者にとっても費用対効果に見合わない
+      <li>将来的にはクライアント側でできるようになるか (後述)
+    </ul>
+
+    <figure class=screenshots>
+      <img src="http://cdn-ak.f.st-hatena.com/images/fotolife/w/wakabatan/20130419/20130419152736.png?1366352869">
+      <figcaption class=label>
+        OS の地域設定では日付や数値の表記をユーザーが細かく指定できる
+      </figcaption>
+    </figure>
+</ul>
+</section>
+
+<section>
+<h1>暦</h1>
+
+<ul>
+  <li>グレゴリオ暦・西暦年号だけ対応していればいい
+     <ul>
+       <li>年号のバリエーション (平成、民国みたいなの) 
+         は余裕があれば対応してもいいがデフォルトは西暦でいい
+       <li>イスラム暦とかは大変だけど中東サポートするなら必要なのか?
+       <li>日本の旧暦とかはカレンダーや年表でもなければ要らない
+     </ul>
+</ul>
+</section>
+
+<section>
+<h1>日付の入力</h1>
+
+<ul>
+  <li>年月日の順序や月名リストなどのデータを使って自力で実装するしかなかった (地味に面倒)
+  <li>最近のブラウザーは日付入力機能が実装されている
+    <ul>
+      <li>ブラウザーがユーザーの環境に合わせて表示してくれる
+    </ul>
+
+    <figure class=code>
+      <pre class=HTML><code>&lt;input <mark>type=date</mark>></code></pre>
+
+      <input type=date>
+    </figure>
+</ul>
+</section>
+
+<section>
+<h1>タイムゾーン (時間帯)</h1>
+
+<ul>
+  <li>DBではUTCで保存しておく
+  <li>読み書きするときに見る人の時刻に変換する
+  <li>簡単そうだけど意外と難しい
+</ul>
+</section>
+
+<section>
+<h1>タイムゾーンの決定</h1>
+
+<ul>
+  <li>タイムゾーンには <code>Accept-Language:</code> 相当のものがない
+    <ul>
+      <li>サーバー側は事前にユーザーのタイムゾーンを知れない
+    </ul>
+  <li>確実にしたければユーザーに選ばせるしかない
+  <li>未選択ならどうするか?
+    <ul>
+      <li>Wikipedia はログインしないと UTC 表記
+
+        <figure class=long>
+          <blockquote>
+            <p>旧厚生事務次官宅殺傷事件に絡み、毎日新聞が11月19日付けで「事件の約6時間前にWikipediaに犯行を示唆する書き込みがあったことが分かった」などと報じたが、実際には事件後の書き込みだったことがネット上で相次いで指摘された。毎日新聞はWebサイト上から記事を削除し、おわびと訂正を掲載した。
+          </blockquote>
+          <figcaption>
+            <a href="http://www.itmedia.co.jp/news/articles/0811/19/news051.html">ITmedia <time datetime=2008-11-19>2008/11/19</time></a>
+          </figcaption>
+        </figure>
+        
+      <li>JavaScript の <code>Date</code> オブジェクトから時差を求める方法がある
+        <figure class=code>
+          <pre class=JS><code>(new Date).getTimezoneOffset()</code></pre>
+        </figure>
+
+        <ul>
+          <li>これを使えばクライアント側で表示を調整できる
+          <li>ただし自分で日付を適切な書式に整形しないといけない (ちょっとだけ後述)
+          <li>取得できるのは時差であり、タイムゾーンではない
+        </ul>
+    </ul>
+</ul>
+</section>
+
+<section>
+<h1>タイムゾーンの名前</h1>
+
+<ul>
+  <li>過去・未来の日時を扱うなら、 +09:00 のような時差の表記だけでは足りない
+    <ul>
+      <li>夏時刻制 (サマータイム) があるか?
+      <li>夏時刻はいつからいつまでか?
+      <li>過去のタイムゾーン変更・夏時刻制度変更があったか?
+    </ul>
+  <li><a href="http://www.iana.org/time-zones">IANA のタイムゾーンデータベース</a>に世界中のタイムゾーンの名前と定義が載っている
+    <ul>
+      <li><code>Asia/Tokyo</code>、<code>America/New_York</code> など
+      <li>あらゆる言語や環境で採用されている (※ただし Windows を除く)
+      <li>Perl の <code>DateTime::TimeZone</code> も
+      <li>各言語でのタイムゾーン名の表記は CLDR にある
+    </ul>
+
+    <figure class=screenshots>
+      <img src="http://cdn-ak.f.st-hatena.com/images/fotolife/w/wakabatan/20130419/20130419160130.png?1366354903">
+
+      <figcaption class=label>本当は地図をクリックで選べると格好良いが、地図データを用意するのが大変過ぎる</figcaption>
+    </figure>
+
+  <li>多くないか?
+    <ul>
+      <li>夏時刻、過去のタイムゾーンなど
+      <li>現在は同じだからといってまとめるのも危険
+        <ul>
+          <li><code>Asia/Tokyo</code> も <code>Asia/Seoul</code>
+            も現在の時刻だけ考えると <code>+09:00</code> 夏時刻なしで同じだが
+
+            <figure>
+              <blockquote>
+                <p>ヤフーの表示、「タイムゾーン： GMT +09:00 韓国、日本 」となっていました。
+                  さっき、ヤフーの登録情報を変更しようとしたら、上記になっていました。
+                  ここは、日本ですよね？社長さんが、韓国系だから、韓国仕様なのでしょうか？
+              </blockquote>
+              <figcaption><a href="http://detail.chiebukuro.yahoo.co.jp/qa/question_detail/q1140784901">Yahoo! 知恵袋</a></figcaption>
+            </figure>
+        </ul>
+    </ul>
+</ul>
+</section>
+
+<section>
+<h1>タイムゾーンデータ管理</h1>
+
+<ul>
+  <li><code>DateTime::TimeZone</code> のバージョンの新旧がサーバーにより混在して、新しい方にしかないタイムゾーンを使っていたユーザーが古いサーバーでエラーになる事案
+  <li class=arrow>タイムゾーン名の集合を古い方で固定した
+  <li>がそんなのでいいのか...
+    <ul>
+      <li>全サービスの全サーバーのモジュールを一斉に更新するのは非現実的
+      <li>コードとデータで分けて、データを配布する仕組みを用意するのが理想的だが...
+    </ul>
+</ul>
+</section>
+
+<section>
+<h1>ロケールオブジェクトの日時 API</h1>
+
+<figure class=code>
+  <table class=combination>
+    <tr><th><code>datetime</code>, <code>date</code>, <code>month_day</code>, <code>time</code>, ... <td>日付の種類
+    <tr><th>なし / <code>long</code> <td>長さ
+    <tr><th>なし / <code>no_tz</code> <td>タイムゾーン変換
+    <tr><th>なし / <code>html</code> <td>構文
+  </table>
+</figure>
+
+<div class=codeset>
+  <figure class=code>
+    <pre class=Perl><code>$locale-><wbr><mark>datetime_html</mark>($dt)
+$locale-><wbr><mark>month_day_no_tz</mark>($dt)
+$locale-><wbr><mark>time_html</mark>($dt)</code></pre>
+  </figure>
+  <figure class=code>
+    <pre class=TT><code>[% loc_date($dt) %]
+[% loc_datetime($dt) %]</code></pre>
+  </figure>
+</div>
+</section>
+
+<section>
+<h1>相対時刻っぽい表記</h1>
+
+<ul>
+  <li>最近流行りの「10分前」「4日前」のようなもの
+  <li>タイムゾーンが気にならなくなるメリットがある
+  <li>でもわかりにくいという批判も多い
+  <li>普通は数ヶ月以上前の場合やツールチップなどで絶対時刻を出してるので、
+    タイムゾーン対応は結局は必要
+</ul>
+
+<figure class=code>
+  <pre class=HTML><code>&lt;time datetime="2013-04-04T00:12:44Z" title="<mark>2013/4/4 9:12:44</mark>"><mark>13日前</mark>&lt;/time></code></pre>
+
+  <p><code>time</code> 要素の <code>datetime</code> 属性を
+    JavaScript でチェックして、「○分前」をクライアント側で書き換えたりもしている
+</figure>
+</section>
+
+<section>
+<h1>週</h1>
+
+<ul>
+  <li>一週間は日曜始まりか月曜始まりか?
+    <ul>
+      <li>「週間ランキング」などでは実装コスト上の理由で一律で決めたい
+      <li>これも地域によって傾向が違うけど好みも大きい部類のもので、難しい
+      <li>開発者側で適当に決めちゃって良い
+    </ul>
+</ul>
+</section>
+
+<section>
+<h1>「日」の境界</h1>
+
+<ul>
+  <li>「日」の切り替わりは何時か?
+
+    <dl>
+      <dt>はてな市民の日数計算
+        <dd>全ユーザー UTC 0時で固定
+        <dd>ユーザー体験と実装コストのバランス
+
+      <dt>ランキングの計算
+        <dd>すべて同じ時刻で固定
+        <dd>ユーザーによって集計期間が違うとランキングとして成り立たない
+
+      <dt>ダイアリーの日付の変わる時間
+        <dd>ユーザー設定可能、デフォルト6時
+        <dd>生活リズムの問題、タイムゾーンとは直交する概念
+
+      <dt>イベント
+        <dd>
+
+        <figure>
+          <blockquote>
+            <p>本日と明日のハロウィンの日（10/31）限定で ... はてなスターを「はてなカボチャ」に変更します。
+            <p>... 11月1日の0時には元のスターに戻ります ...
+          </blockquote>
+          <figcaption>
+            <a href="http://d.hatena.ne.jp/hatenastar/20091030/1256870523">【ハロウィン限定】はてなスターをはてなカボチャに変更しました</a>
+
+            <p>JavaScript の <code>new Date()</code> (= 見ている人の現地時刻) 
+              の0時まで画像を差し替えた
+          </figcaption>
+        </figure>
+
+        <dd>もちろん時刻もタイムゾーンの影響を受ける
+
+          <figure class=screenshots>
+            <img src="http://cdn-ak.f.st-hatena.com/images/fotolife/w/wakabatan/20130423/20130423101431.png?1366679673">
+            <figcaption>
+              <a href="http://d.hatena.com/hatenahaiku/20110203/1296721736">Feb. 14. 2011: Maintenance for Hatena Haiku version update</a>
+            </figcaption>
+          </figure>
+    </dl>
+</ul>
+</section>
+
+<section>
+<h1>うごメモランキング</h1>
+
+<ul>
+  <li>ここまでの話が全部関係ある(!)
+</ul>
+
+<figure class="long screenshots">
+  <img src="http://cdn-ak.f.st-hatena.com/images/fotolife/w/wakabatan/20130419/20130419173442.png?1366360486">
+</figure>
+
+</section>
+
+<section class=cover id=signs>
+<h1>記号とフォント</h1>
+</section>
+
+<section>
+<h1>記号の意味</h1>
+
+<figure class=screenshots>
+  <img src="http://cdn-ak.f.st-hatena.com/images/fotolife/w/wakabatan/20130422/20130422155409.png?1366613657">
+</figure>
+
+<ul>
+  <li>「※」
+    <ul>
+      <li>日本ではよく使われるが欧米では使わない
+      <li>日本語以外では <code>*</code> を出している
+    </ul>
+  <li>「○×」 vs 「✓✗」
+    <ul>
+      <li>肯定マークは日米でまったく違う
+      <li>否定マークは日本では対称形で印字するけど米国では<a href="http://en.wikipedia.org/wiki/X_mark">非対称形が普通</a>らしい
+        <ul>
+          <li>たぶん手書きだと区別つかないし意味は通じる
+          <li>それが違和感を与えるかどうか?
+        </ul>
+    </ul>
+</ul>
+</section>
+
+<section>
+<h1>文字コード</h1>
+
+<ul>
+  <li>最近は全部 UTF-8 にしておけばだいたい困らない
+  <li class=note>※ただし日本市場を除く
+
+    <ul>
+      <li>古いコードが EUC-JP だったり
+      <li>ガラケー対応 (絵文字付きシフトJIS) が必要だったり
+      <li>電子メールは日本向けだけ ISO-2022-JP だったり
+    </ul>
+  <li>MySQL の <code>CHARSET</code> は <code>UTF8MB4</code> か <code>BINARY</code>
+    <ul>
+      <li><code>UTF8</code> は <code>U+10000</code> 以上の文字 (絵文字など) を扱えないのでだめ
+    </ul>
+</ul>
+</section>
+
+<section>
+<h1>フォント</h1>
+
+<ul>
+  <li>すべての文字があらゆる環境で表示できるかは定かでない
+  <li>が、最近のOSは主要な文字・記号を表示できるフォントをだいたい持っていそう
+    <ul>
+      <li>欧米のフォントの基準的なものの一つとして
+        <a href="http://en.wikipedia.org/wiki/Windows_Glyph_List_4">WGL4</a>
+        というのがあるらしい
+      <li>「☆」や「★」は WGL4 に含まれていないが、英語版でもそのまま使っている
+
+<!--
+欧米言語でもそのまま用いるもの (WGL4 にあり): ×、©、←、→、↑、↓、—
+欧米言語でもそのまま用いるもの (WGL4 になし): ☆、★
+欧米言語では置き換えたもの: ※、「、」、・
+… -> ...
+-->
+    </ul>
+  <li>絵文字は画像に変換して出している
+    <ul>
+      <li>あと数年も経てばこれも必要なくなるはず
+    </ul>
+</ul>
+</section>
+
+<section>
+<h1>bidi</h1>
+
+<ul>
+  <li>右から左に書く文字の混在
+    <ul>
+      <li>だいたいはブラウザーが適当に処理してくれる
+      <li>たまに何もしないと表示がおかしくなるケースがある
+        <ul>
+          <li>主としてユーザー入力 (名前とか)
+          <li>中東向けにサービス提供していないので顕在化していないが...
+
+          <li><a href="http://www.whatwg.org/specs/web-apps/current-work/#the-bdi-element"><code>bdi</code> 要素</a>がいい感じにしてくれる
+            <ul>
+              <li>Chrome は実装済み
+            </ul>
+
+            <figure class=code>
+              <pre class=HTML><code>&lt;ul>
+ &lt;li>User &lt;bdi>jcranmer&lt;/bdi>: 12 posts.
+ &lt;li>User &lt;bdi>hober&lt;/bdi>: 5 posts.
+ &lt;li>User &lt;bdi>إيان&lt;/bdi>: 3 posts.
+&lt;/ul></code></pre>
+            </figure>
+
+            <figure class=screenshots>
+              <img src="http://cdn-ak.f.st-hatena.com/images/fotolife/w/wakabatan/20130422/20130422162358.png?1366615440">
+              <img src="http://cdn-ak.f.st-hatena.com/images/fotolife/w/wakabatan/20130422/20130422170027.png?1366617628">
+            </figure>
+        </ul>
+    </ul>
+
+  <li>中東圏にサービス展開するなら、もっと色々考えないといけない
+    <ul>
+      <li>左サイドバーは右側にあるべきか? など
+      <li>ブラウザーの右スクロールバーは左側に出たりする
+    </ul>
+</ul>
+</section>
+
+<section class=cover id=caches>
+<h1>キャッシュと国際化</h1>
+</section>
+
+<section>
+<h1>キャッシュにご注意</h1>
+
+<ul>
+  <li>キャッシュするとき言語その他の違いにも注意しないといけない
+    <ul>
+      <li>テンプレートキャッシュや、ロケールオブジェクトを参照して生成したデータのキャッシュ
+        <ul>
+          <li class=arrow>キャッシュキーに言語名などを入れる
+        </ul>
+      <li>reverse proxy とアプリケーションサーバーの間のキャッシュ
+        <ul>
+          <li class=arrow>reverse proxy で URL に言語名を挿入するなど
+            <ul>
+              <li><code>Vary: Accept-Language</code> とか理解するキャッシュサーバーが望ましいが...
+              <li>要求ヘッダーにない情報から言語が決まると困る
+              <li>そういうときは応答ヘッダーで <code>Cache-Control: no-cache</code> とかしないといけない
+            </ul>
+        </ul>
+    </ul>
+
+  <li>面倒でミスしやすいしヒット率も下がるし、しないで済むならしたくない
+    <ul>
+      <li class=arrow>キャッシュいらない方法を考える
+      <li class=arrow>ロケールオブジェクトを参照する手前でキャッシュする
+    </ul>
+
+    <figure>
+      <blockquote>
+        <p>タイムスタンプがエントリーによって数時間ずれて表示される問題がありました。
+      </blockquote>
+      <figcaption>
+        <a href="http://d.hatena.ne.jp/hatenahaiku/20080610/1213078069">エントリーのタイムスタンプのずれについて</a>
+      </figcaption>
+    </figure>
+</ul>
+</section>
+
+<section>
+<h1>クライアント側キャッシュ</h1>
+
+<ul>
+  <li>言語設定が変更されると、 Web ブラウザーのキャッシュの言語とずれが生じる
+  <li class=arrow>Cookie の言語とページの言語 (<code>document.<wbr>documentElement.<wbr>lang</code>) を比較、違っていれば再読み込み
+
+    <figure class=code>
+      <pre class=JS><code>Hatena.Locale.reloadIfWrongLocale();</code></pre>
+    </figure>
+</ul>
+
+</section>
+
+<section class=cover id=clientside>
+<h1>クライアント側での国際化</h1>
+</section>
+
+<section>
+<h1>JavaScript と国際化</h1>
+
+<ul>
+  <li>国際化は基本的にサーバー側でやる
+  <li>がクライアント側で HTML を組み立てることもある
+  <li>数値と日付は気の利いたメソッドが用意されている
+
+    <figure class=code>
+      <pre class=JS><code>Number.prototype.<mark>toLocaleString()</mark>
+Date.prototype.<mark>toLocaleString()</mark></code></pre>
+    </figure>
+
+    <ul>
+      <li>ユーザー側の設定に応じた表記にしてくれる
+      <li>長らく、 Chrome が
+        <figure>
+          <code>Wed Dec 13 2000 10:00:00 GMT+0900 (Japan Standard Time)</code>
+        </figure>
+        のような変な文字列しか返さないので使えなかった
+      <li>が最近まともになった
+    </ul>
+
+  <li>もっと色々したければ <code>window.Intl</code> が最近できた
+
+    <ul>
+      <li><a href="http://www.ecma-international.org/ecma-402/1.0/">ECMA-402</a> <cite>ECMAScript Internationalization API Specification</cite>
+      <li>Chrome にはもう入っている
+    </ul>
+</ul>
+</section>
+
+<section>
+<h1>JavaScript でテキスト</h1>
+
+<ul>
+  <li>JavaScript で文字列を出したいときはどうするか?
+  <li>Perl と同じ API のロケールオブジェクトを JavaScript でも実装してみた
+
+    <figure class=code>
+      <pre class=JS><code>Hatena.Locale.<mark>text('hello_world')</mark></code></pre>
+    </figure>
+
+    <ul>
+      <li>文字列データ (JSON 形式) を非同期で読み込むので使いづらかった
+        <ul>
+          <li>読み込み完了前だとメッセージデータがまだない
+          <li>完了まで待つのか?
+        </ul>
+      <li>かといって同期的に読み込むのも嫌だ
+    </ul>
+  <li>必要な文字列データを JavaScript コードに埋め込んでおいても良いか?
+
+    <figure class=code>
+<pre class=TT><code>&lt;script>
+  alert('<mark>[% tloc('hello_world') | js %]</mark>');
+&lt;/script></code></pre>
+    </figure>
+    
+    <ul>
+      <li>初期によく使われていた
+      <li>正しいエスケープは案外難しい
+        <ul>
+          <li><code>| js</code> じゃなく <code>| html</code> にしちゃったり
+          <li>その <code>| js</code> も <code>U+2028</code> と <code>U+2029</code> をエスケープ<a href="http://cpansearch.perl.org/src/MIYAGAWA/Template-Plugin-JavaScript-0.02/lib/Template/Plugin/JavaScript.pm">してくれない</a>ので安心できない
+        </ul>
+      <li>リスクしかないので避けるべき
+    </ul>
+  <li><code>data-*</code> 属性に埋めておくのが意外と使い勝手が良い
+    <ul>
+      <li>最寄りの要素とか、 <code>html</code> 要素や <code>body</code> 要素につけておく
+    </ul>
+
+    <figure class=code>
+      <pre class=TT><code>&lt;form 
+    onsubmit="return confirm(<mark>this.getAttribute('data-confirm')</mark>)"
+    <mark>data-confirm</mark>="[% tloc('confirm') | html %]"></code></pre>
+    </figure>
+</ul>
+</section>
+
+<section class=cover id=text2>
+<h1>再びテキスト</h1>
+</section>
+
+<section>
+<h1>引数つきメッセージ</h1>
+
+<ul>
+  <li>メッセージの一部を引数化したいことがよくある
+
+    <figure class=code>
+      <blockquote><mark>%1</mark>さんと<mark>%2</mark>さんがともだちになりました。</blockquote>
+      <pre class=Perl><code>$locale->text('friendship.become_friends', <mark>$arg1, $arg2</mark>)</code></pre>
+    </figure>
+
+  <li>二人称を表す引数は言語によっては代名詞で置き換えられる
+
+    <figure>
+      <blockquote><mark>%1</mark> さんの『%2』への投稿に %3 さんからコメントがつきました。</blockquote>
+      <blockquote>There was a reply to <mark>your</mark> comment on "%2" by %3.</blockquote>
+    </figure>
+
+  <li>引数の順序は入れ替わることがある
+
+    <figure>
+      <blockquote>アルバム(<mark>%1</mark>)に<mark>%2</mark>枚の写真</blockquote>
+      <blockquote><mark>%2</mark> photos to album "<mark>%1</mark>"</blockquote>
+    </figure>
+
+  <li><code>%4</code> まであれば足りる
+
+    <figure>
+      <blockquote><mark>%1</mark>, <mark>%2</mark>, <mark>%3</mark> and <mark>%4</mark> other people</blockquote>
+    </figure>
+</ul>
+</section>
+
+<section>
+<h1>単数形・複数形など</h1>
+
+<ul>
+  <li>数によって語形が変わる言語が多い
+
+    <figure>
+      <ul>
+        <li>0日, 1日, 2日, 3日, ...
+        <li>0 days, 1 <mark>day</mark>, 2 days, 3 days, ...
+        <li>0 <mark>jour</mark>, 1 <mark>jour</mark>, 2 jours, 3 jours, ...
+      </ul>
+    </figure>
+
+    <ul>
+      <li>スロベニア語だと4通りの形がある
+      <li>変わり方のバリエーションは15種類くらいある
+
+<!--
+|*内部表現|*定数名|*Mozilla 番号|*バリエーション数|*説明|
+|o|QT_O|#0|1|単複同形 (日本語など)|
+|1_o|QT_1_O|#1|2|単数形 (n=1)、複数形 (n≠1) (英語など)|
+|01_o|QT_01_O|#2|2|単数形 (n=0,1)、複数形 (n≠0,1) (仏語など)|
+|0_1b_o|-|?|3|(未実装)|
+|1_2_o|-|?|3|(未実装)|
+|1_bj_o|-|?|3|(未実装)|
+|1_24_o|-|?|3|(未実装)|
+|1_24ce_o|-|?|3|(未実装)|
+|1_2_3_o|-|?|4|(未実装)|
+-->
+
+      <li>参考資料:
+        <a href="http://www.gnu.org/software/gettext/manual/gettext.html#Plural-forms">gettext</a>,
+        <a href="https://developer.mozilla.org/ja/Localization_and_Plurals">MDN</a>,
+        <a href="http://www.unicode.org/cldr/data/charts/supplemental/language_plural_rules.html">CLDR</a>
+    </ul>
+
+  <li>Hatena::Translator では...
+
+    <figure class=screenshots>
+      <img src="http://cdn-ak.f.st-hatena.com/images/fotolife/w/wakabatan/20130422/20130422122743.png?1366601264">
+    </figure>
+
+    <ul>
+      <li>活用しそうな語には印をつけておく
+      <li>翻訳者に選んでもらう
+    </ul>
+
+  <li>呼び出すときは数も渡す
+    
+    <figure class=code>
+      <pre class=Perl><code>$locale-><mark>text_n</mark>($msgid, <mark>$n</mark>, ...)</code></pre>
+    </figure>
+
+    <ul>
+      <li>なお、メッセージ内に数値が入るとは限らない
+        
+        <figure class=code>
+<pre class=TT><code>[% loc_n('green_star', 1) %] (1)
+[% loc_n('red_star', 2) %] (2)</code></pre>
+
+<pre>Green Star (1)
+Red Stars (2)</pre>
+        </figure>
+    </ul>
+
+  <li>数の影響がありそうなものは、原則として活用すると思っておくべき
+
+    <figure>
+      <blockquote>
+        <p>id:%1 さんの%2プラスはあと<mark>%3</mark>日間でご利用いただけなくなります。
+      </blockquote>
+    </figure>
+
+    <ul>
+      <li><code>%3</code> が「3」や「11」でも、言語によっては形が変わる
+      <li>ある日 <code>%3</code> を「3」から「1」に変えたくなるかもしれない
+      <li><code>%3</code> が「1」なら、「id:%1 さんの%2プラスは明日でご利用いただけなくなります。」の方が自然かもしれない
+    </ul>
+
+</ul>
+</section>
+
+<section>
+<h1>複雑なもの</h1>
+
+<ul>
+  <li>「構造化メッセージ」機能
+    <ul>
+      <li>従来は Perl コード内で文字列を組み立てていた
+      <li>メッセージIDと引数のデータ構造を組み立ててロケールオブジェクトに渡す
+    </ul>
+</ul>
+
+<figure>
+  <blockquote>
+    指定した人 (id:hatena と id:hatenastaff) に公開などの条件
+  </blockquote>
+
+<pre>%1などの条件
+  [
+    指定した人 (%1) に公開
+      [
+        %1 と %2
+          [
+            id:hatena
+            id:hatenastaff
+          ]
+      ]
+  ]</pre>
+</figure>
+</section>
+
+<section>
+<h1>テキストと HTML</h1>
+
+<ul>
+  <li>初期は HTML (や場合によっては TT (!)) をそのまま .po に入れていた
+  <li>しかし専門知識のない翻訳者に HTML を書かせるのは無理がある
+
+    <figure class=code>
+      <pre class=HTML><code>See&lt;<mark> </mark>a href="http://s.hatena.com/"><mark> </mark>Hatena Star Help<mark>&lt;a></mark>for more information.</code></pre>
+    </figure>
+
+    <ul>
+      <li>タグを書き間違える
+        (本来書きなおす必要もないのだけど...)
+      <li>スペースをどこに入れたら良いかわかっていない
+      <li>タグの中も翻訳するのかどうか
+        <ul>
+          <li>属性名や <code>href</code> 属性は翻訳しないが 
+            <code>title</code> 属性は翻訳する、が正解だが...
+          <li>属性値を括る <code>"</code> は言語によらず <code>"</code> のまま
+        </ul>
+    </ul>
+
+  <li>翻訳者に渡すのは本当のテキストだけにするべき
+
+    <figure class=code>
+<pre class=TT><code>[% l = BLOCK %]
+  &lt;a href="http://s.hatena.ne.jp/help">[% loc('star.help') %]&lt;/a>
+[% END %]
+[% loc('see_help_for_details', l) %]</code></pre>
+    </figure>
+
+    <ul>
+      <li>タグが混じる時は必ず引数化する
+      <li>テンプレートが面倒になるが仕方ない
+      <li>タグをテンプレートに集約できるしこちらの方が筋がいい
+        <ul>
+          <li>もし後から <code>class</code> 属性を付けたくなったら?
+        </ul>
+    </ul>
+
+  <li>完全にテキストだけでいいか?
+
+    <ul>
+      <li>慣習的表現のために HTML タグを入れたくなるかもしれない
+
+        <figure>
+          <table>
+            <tr><th>日 <td><mark>「次へ」</mark>をクリックしてください
+            <tr><th>英 <td>Click the <mark>&lt;i>Next&lt;/i></mark> button
+          </table>
+        </figure>
+
+        <figure>
+          <table>
+            <tr><th>日 <td><mark>No.</mark> 3
+            <tr><th>仏 <td><mark>n&lt;sup>o&lt;/sup></mark>3
+          </table>
+        </figure>
+
+        <figure>
+          <table>
+            <tr><th>日 <td>&lt;ruby>癲癇&lt;rt>てんかん&lt;/ruby>にご注意ください
+          </table>
+        </figure>
+
+      <li>が実際にはほぼ使われていない。
+</ul>
+</section>
+
+<section>
+<h1>メールテキスト</h1>
+
+<ul>
+  <li>メールのテキストは適当な長さで改行を入れたい
+  <li>最初は翻訳者にお願いしてみたけど無理だった
+    <ul>
+      <li>文字数を自分で数えるのは馬鹿らしい
+      <li>プロポーショナルフォントだと見た目の文字数がばらばら
+      <li>引数が入ると事前に文字数を決められない
+    </ul>
+  <li>結局テンプレート処理時に適当にワードラップする実装にした
+</ul>
+</section>
+
+<section>
+<h1>テキストメソッドと HTML メソッド</h1>
+
+<ul>
+  <li>初期の実装はテキストと HTML の区別を曖昧にしていた
+  <li>途中からしっかり区別するようにした
+
+    <figure class=code>
+      <pre class=TT><code>&lt;h1>[% <mark>h</mark>loc('qanda') %]&lt;/h1></code></pre>
+      <pre class=TT><code>&lt;img alt="[% <mark>t</mark>loc('qanda') | html %]"></code></pre>
+      <pre class=Perl><code>$mail->title_template($locale-><mark>plain_text</mark>('qanda'));</code></pre>
+    </figure>
+
+  <li>引数は素通しなので XSS に注意
+
+    <figure class=code>
+<pre class=TT><code>[% l = BLOCK %]
+  &lt;a href="/[% user.name | html %]/">[% user.display_name | html %]&lt;/a>
+[% END %]
+[% hloc('welcome', l) %]</code></pre>
+    </figure>
+</ul>
+</section>
+
+<section>
+<h1>ロケールオブジェクトの引き回し</h1>
+
+<ul>
+  <li>ここまで見てきたように (そしてこれから見るように)、
+    国際化はありとあらゆる機能に影響する
+  <li><code>$locale</code> をありとあらゆるメソッドに渡すのか?
+  <li>流石にしんどいので大域変数 (的なもの) にしてみた...
+    <ul>
+      <li>本当にそれで良かったのかどうか...
+    </ul>
+</ul>
+</section>
+
+<section class=cover id=flow>
+<h1>多言語テキストのある開発工程</h1>
+</section>
+
+<section>
+<h1>現方式の良いところ</h1>
+
+<ul>
+  <li>テキストを集約して管理できる
+    <ul>
+      <li>他のサービスで使ってる文言を調べたり
+      <li>仕様変更時に影響箇所を調べたり
+      <li>新規追加しようとしたら既に似たものがあって、表現揺れに気づいたり
+    </ul>
+  <li>誰でも使える
+    <ul>
+      <li>コードに触れないマーケティング、編集の人にも Hatena::Translator
+        の URL を渡せば読み書きしてもらえる
+    </ul>
+</ul>
+</section>
+
+<section>
+<h1>現方式の悪いところ</h1>
+
+<ul>
+  <li>Hatena::Translator に登録するのが面倒くさい
+    <ul>
+      <li>テンプレートと行ったり来たりしながら Web インターフェイスで登録するのがつらい
+      <li class=arrow>テキストファイルを作って投稿 API でまとめて登録できるようにした (すごい便利!)
+
+        <figure class=code>
+<pre><code>----
+id:haiku2.theme.check
+チェック
+----
+id:haiku2.theme.simple
+シンプル
+----
+id:haiku2.theme.solid
+ソリッド
+----
+id:haiku2.theme.note
+ノート
+----
+id:haiku2.theme.wrapping
+ラッピング
+----
+id:haiku2.theme.stripe
+ストライプ</code></pre>
+        </figure>
+    </ul>
+
+  <li>テンプレートとコードから日本語がなくなる
+    <ul>
+      <li>テンプレートが暗号みたいで困る
+
+        <figure class=code>
+<pre class=TT><code>[% <mark># こんにちは</mark> %]
+[% loc('hello_world') %]</code></pre>
+        </figure>
+
+        のようにブロックごとに簡略化した内容を注釈で入れたりしている。
+
+        <figure class=code>
+          <pre class=TT><code>[% 'こんにちは、世界' <mark>| loc('hello_world')</mark> %]</code></pre>
+        </figure>
+
+        のような書き方とか、大元の gettext のスタイルで
+
+        <figure class=code>
+          <pre class=TT><code>[% loc(<mark>'こんにちは、世界'</mark>) %]</code></pre>
+        </figure>
+
+        というのもありかもしれないが...
+
+      <li><code>hatena-translator.el</code> by <img src="https://www.hatena.ne.jp/users/hi/hitode909/profile.gif?1356508953" class=profile-icon>hitode909
+        <ul>
+          <li>カーソル位置にあるメッセージIDのテキストを API で取得して表示
+        </ul>
+
+        <figure class=screenshots>
+          <img src="http://cdn-ak.f.st-hatena.com/images/fotolife/w/wakabatan/20130422/20130422151607.png?1366611372">
+        </figure>
+
+      <li>本当はテンプレートエンジンに手を入れるのが正しい解かも
+        <ul>
+          <li>可読性と書きやすさを両立できる専用の構文がほしい
+          <li>テキストはテンプレート中に高頻度で登場するし、
+            first-class citizen たるべきだろう
+            
+            <figure class=code>
+              <pre class=Temma><code>&lt;p><mark>&lt;msg:hello_world alt="こんにちは、世界"/></mark>
+&lt;p>&lt;button><mark>&lt;msg:button.ok alt="OK"/></mark>&lt;/button></code></pre>
+              <figcaption class=label>
+                <a href="https://github.com/wakaba/temma/blob/master/lib/Temma/Language.pod#integration-with-text-catalog">Temma テンプレート言語</a>はこうした経緯を踏まえて設計されている
+              </figcaption>
+            </figure>
+
+          <li>しかし移行・学習コスト的にテンプレート言語の変更は難しい...
+        </ul>
+    </ul>
+</ul>
+</section>
+
+<section>
+<h1>語形の揺れ</h1>
+
+<ul>
+  <li>アルファベットの先頭・語頭を大文字にするかどうかぶれてたり
+    <ul>
+      <li>先頭だけ大文字にしておけば概ね良い
+      <li>見出しの途中の自立語の先頭を大文字にしていることがある
+      <!--<li>稀にリンクテキスト等として文中に入れたくなって困るが、あまりない-->
+    </ul>
+  <li>末尾の句読点 (<code>.</code> や <code>。</code>) の有無がぶれてたり
+    <ul>
+      <li>言語によって (翻訳者によって) 違ってたりする
+    </ul>
+  <li><code>.</code> の後にスペースを入れておくとよい
+
+    <figure class=code>
+      <pre class=TT><code>[% loc('msg1') %][% loc('msg2') %]</code></pre>
+    </figure>
+
+    <ul>
+      <li><code>。</code>の直後に次の文が来ても違和感ないのでこう書いてしまう
+      <li><code>.</code>の後にはスペースがほしい
+      <li>翻訳者に頼りきらずにテンプレートでもスペースを入れるのが一番良い
+    </ul>
+  <li>「名前:」のように <code>:</code> が入ってたり
+    <ul>
+      <li>他の用途 (例えば表の見出し) に使えなくなるので入れるべきではない
+    </ul>
+</ul>
+</section>
+
+<section>
+<h1>メッセージIDの命名規則</h1>
+
+<ul>
+  <li>最初は一応命名規則があった
+    <ul>
+      <li>テンプレートのファイル名を . でつなぐ
+
+        <figure class=code>
+          <ul>
+            <li><code>user.following.title</code>
+            <li><code>user.following.users</code>
+          </ul>
+        </figure>
+    </ul>
+
+  <li>現実にはそう簡単でもない
+    <ul>
+      <li>複数テンプレートで使うとか、別のテンプレートに移動するとか
+      <li>後から他のところで使いたくなるとか
+
+        <figure>
+          <code>mobile_help.colorstar.p1</code>
+        </figure>
+        
+        <ul>
+          <li>うごメモモバイル版ヘルプのカラースターの項、第1段落
+          <li>後にはてなハイクのヘルプ (全デバイス対象) にも流用
+          <li>新しいIDを割り振るべきか → ケースバイケース
+            <ul>
+              <li>この例では同じ内容のヘルプなので分けたくない
+            </ul>
+        </ul>
+    </ul>
+
+  <li>結局雰囲気でつける感じになっている
+  <li>一般的な命名規則を作るのが困難
+
+    <figure>
+      <blockquote>
+        URLにあわせつつ、空気を読もう
+      </blockquote>
+    </figure>
+</ul>
+</section>
+
+<section>
+<h1>翻訳プロセス</h1>
+
+<ol>
+  <li>開発者がメッセージを Hatena::Translator に登録する
+    
+    <p>手順はケースバイケース、どれでもいい:
+      <ul>
+        <li>デザイナーがテンプレートを書くのと同時に登録する
+        <li>日本語でテンプレートを書いてから別の人が登録する
+        <li>ディレクターが登録してからエンジニアがそれを使ってテンプレートを書く
+      </ul>
+    <p>ただし沢山のテンプレートの文言をまとめて登録するのは極めて苦痛な作業なので避けたい
+
+      <li>翻訳対象メッセージに <code>20130415hogefeature</code>
+        のようなタグをつけて翻訳者に引き渡す
+      <li>翻訳が完了したら <code>update-translations.pl</code> で
+        Hatena::Translator からアプリケーションにデータをエクスポートする
+      <li>実際に動作させてみてチェック
+</ul>
+</section>
+
+<section>
+<h1>動的反映</h1>
+
+<ol>
+  <li>開発者・翻訳者共有の開発サーバーを用意する
+  <li>メッセージと開発サーバー上の URL の対応表をスクリプトで登録しておく
+  <li>Hatena::Translator で反映ボタンを押すと、
+    その時点でのメッセージセットが Hatena::Translator
+    から開発サーバーに送られる
+
+    <figure class=screenshots>
+      <img src="http://cdn-ak.f.st-hatena.com/images/fotolife/w/wakabatan/20130422/20130422172952.png?1366619395">
+    </figure>
+  <li>翻訳者はその場で翻訳テキストが入ったページを確認できる
+</ol>
+</section>
+
+<section>
+<h1>メールのテキスト確認</h1>
+
+<ul>
+  <li>確認したいとき一々メール送信するのは手間がかかる
+  <li>○日継続したら自動送信のようなメールもある
+  <li class=arrow>翻訳者用に確認 Web ページを作った
+    <ul>
+      <li>メール本文中の引数は適当にそれっぽいものを当てはめるなど
+    </ul>
+  <li>があまり一般的な仕組みにできなくて、だんだん使われなくなった
+    <ul>
+      <li>便利ではあるのだけれど...
+    </ul>
+</ul>
+</section>
+
+<section>
+<h1>その場翻訳</h1>
+
+<ul>
+  <li>Web アプリケーション自体の画面上でメッセージを選んで
+    Hatena::Translator を呼び出せる
+  <li>実際に動作させてみたらおかしかったところを修正、というのを想定していた
+  <li>あまり利用されず衰退しました
+</ul>
+</section>
+
+<section>
+<h1>品質管理</h1>
+
+<ul>
+  <li>翻訳テキストの品質をどう管理するか
+    <ul>
+      <li>構文的なものは開発者がチェックしてる
+        <ul>
+          <li>「%1」が「1%」になっていないか
+          <li>HTML タグが壊れていないか
+          <li>メッセージ中の URL がコピペミスされていないか
+        </ul>
+      <li>翻訳の正しさ、文脈的な整合性などはチェックしきれない
+      <li>アプリケーションと言語・文化の両方を理解している人が検収するべきだが...
+    </ul>
+
+  <li>大きなリリースやリニューアルの時は全体をチェックできるかもしれないが...
+    <ul>
+      <li>小さな機能追加による不整合の発生に気づけるか
+      <li>日本語だけでもすべて見きれない
+    </ul>
+
+</ul>
+</section>
+
+<section>
+<h1>翻訳の品質、いくつかの事例</h1>
+
+<ul>
+  <li>言語によっては活用形として「性」がある
+    
+    <figure>
+      <ul>
+        <li>「ID Hatena」は女性形
+        <li>「Flipnotes」は女性形
+      </ul>
+    </figure>
+    
+    <ul>
+      <li>変数の性とその後の動詞や形容詞の性を揃えないといけないとかあるか?
+        <ul>
+          <li>今のところ報告はない
+          <li>存在しないのか、見つかっていないのか?
+        </ul>
+    </ul>
+
+  <li>ある言語の翻訳完了後、別の人から文体が揃っていないと指摘があった
+    <ul>
+      <li>日本語でいう「だ・である調」と「です・ます調」の違いのようなものか?
+      <li>その言語をちょっとかじった程度の人だと気づかないかも?
+        ネイティブの翻訳者におかしいと指摘できないかも?
+    </ul>
+
+  <li>日本語版であえて英語を使っていることがある
+
+    <figure class=screenshots>
+      <img src="http://cdn-ak.f.st-hatena.com/images/fotolife/w/wakabatan/20130424/20130424171546.png?1366791348">
+    </figure>
+
+    <ul>
+      <li>フランス語版やドイツ語版でも英語のままにするべきか?
+      <li>日本人のその英単語の認知度やニュアンスとフランス人のものは同じか?
+        (たぶん違う)
+      <li>「日本語版だけどあえて英語を使った」温度感を翻訳できるか?
+        (たぶん無理)
+    </ul>
+</ul>
+</section>
+
+<section>
+<h1>翻訳発注</h1>
+
+<ul>
+  <li>英語など一部言語は社内で翻訳できる
+  <li>できない言語は外注している
+  <li>翻訳は英語の語数単位で価格が決まる
+  <li>外注翻訳者にどこまでやってもらえるか?
+    <ul>
+      <li>文字数が多くて表示が崩れるとか
+      <li>ある条件の時だけ表示される文言の整合性がどうとか
+      <li>アプリケーションの複雑さによっては、
+        実際に触って見てもらうことすら簡単ではない
+    </ul>
+</ul>
+</section>
+
+<section>
+<h1>翻訳が足りていない場合</h1>
+
+<ul>
+  <li>スケジュールの都合その他で翻訳が揃わなくてもリリースすることがある
+    <ul>
+      <li>日英だけ準備できたらリリースして他は出来次第など
+      <li>ユーザー数の多い言語優先になるのは致し方ない...
+    </ul>
+  <li>Hatena::Translator から出力するときに似た言語に自動フォールバックする
+    <ul>
+      <li>フランス語 → 英語
+      <li>北米スペイン語 → スペイン語
+      <li class=more>など
+     </ul>
+</ul>
+</section>
+
+<section>
+<h1>Hatena::Translator でのコミュニケーション</h1>
+
+<ul>
+  <li>メッセージごとにコメント欄がある
+
+    <figure class=screenshots>
+      <img src="http://cdn-ak.f.st-hatena.com/images/fotolife/w/wakabatan/20130423/20130423103324.png?1366680805">
+    </figure>
+
+    <ul>
+      <li><code>%1</code> など引数の意味を書いておく
+      <li>翻訳者が質問があれば開発者に聞ける
+      <li>IDコールもできる
+      <li>コメントがあると IRC に通知される
+    </ul>
+</ul>
+</section>
+
+<section>
+<h1>Hatena::Translator の一覧ビュー</h1>
+
+<ul>
+  <li>タグ
+    <ul>
+      <li>サービス名、機能名、日付など
+      <li>新サービスはサービス名のタグで見ることが多い
+      <li>メッセージが増えてくると機能ごとのタグで見るのが便利になる
+    </ul>
+    
+    <figure>
+      <ul>
+        <li><code>/entries?<mark>tags=Haiku-2010+heading</mark></code>
+        <li><code>/entries?<mark>tags=110603theme</mark></code>
+      </ul>
+    </figure>
+  <li>言語
+    <ul>
+      <li>指定した言語だけ、指定した順で
+    </ul>
+    
+    <figure>
+      <ul>
+        <li><code>/entries.<mark>ja,en,fr</mark></code>
+      </ul>
+    </figure>
+
+    <figure class=screenshots>
+      <img src="http://cdn-ak.f.st-hatena.com/images/fotolife/w/wakabatan/20130423/20130423103954.png?1366681197">
+      <figcaption class=label>
+        翻訳者用に GUI もある
+      </figcaption>
+    </figure>
+
+  <li>データ形式
+    <figure>
+      <ul>
+        <li><code>/entries.ja.<mark>pm</mark></code>
+        <li><code>/entries.ja.<mark>json</mark></code>
+        <li><code>/entries.ja.<mark>csv</mark></code>
+      </ul>
+    </figure>
+</ul>
+</section>
+
+<section>
+<h1>Hatena::Translator の検索</h1>
+
+<ul>
+  <li>メッセージID、メッセージ本文から検索できる
+    <ul>
+      <li>テンプレートのメッセージIDから探したいとき
+      <li>実際のページの文言から探したいとき
+    </ul>
+  <li>Web ブラウザーに検索エンジン登録しておくと極めて便利
+    <figure class=screenshots>
+      <img src="http://cdn-ak.f.st-hatena.com/images/fotolife/w/wakabatan/20130422/20130422185450.png?1366624491">
+    </figure>
+  <li>開発者は一覧ビューより検索を使うのが良い
+</ul>
+</section>
+
+<section>
+<h1>進捗管理支援</h1>
+
+<figure class=screenshots>
+  <img src="http://cdn-ak.f.st-hatena.com/images/fotolife/w/wakabatan/20090605/20090605141315.png">
+</figure>
+</section>
+
+<section>
+<h1>Hatena::Translator のよくある要望</h1>
+
+<ul>
+  <li>ブランチ
+    <ul>
+      <li>Git のブランチと同じように Hatena::Translator 側にもブランチ作りたい
+      <li>良い実装方法思いつかない
+      <li>メッセージ内容が意味的に変わるときは新メッセージIDにする運用でなんとかなってる
+    </ul>
+
+    <li>メッセージIDの削除・改名
+      <ul>
+        <li>タグ全削除、typo しないよう気をつける、という運用
+        <li>死ぬほど削除したい場面に遭遇してないので実装する気にならないw
+      </ul>
+
+    <li>他のメッセージを参照
+      <ul>
+        <li>同じ内容のメッセージを複数用意せざるを得ない時にコピペでなく参照したい
+        <li>でもそういうのを推奨したくない
+        <li>実装が面倒 (DB引く回数が増える、循環参照対策など)
+      </ul>
+</ul>
+</section>
+
+<section>
+<h1>Hatena::Translator アンチパターン</h1>
+
+<ul>
+  <li>HTML などのタグを含めるべきではない (前出)
+  <li>メッセージIDは連番にするべきではない
+    <ul>
+      <li>後から途中に何か挿入したくなりがち
+    </ul>
+  <li>言語ごとに違う内容にしたいとき
+    <ul>
+      <li>内容ごとに別のメッセージを用意して、テンプレート側で切り替えるべき
+      <li>違う内容が出ていることにぱっと見気づかず、メンテナンスが困難になる
+    </ul>
+</ul>
+</section>
+
+<section>
+<h1><a href="http://gengo.com/">Gengo</a> (旧 myGengo)</h1>
+
+<ul>
+  <li>翻訳を発注できる Web サービス
+    <ul>
+      <li>数時間で中の人が翻訳して返してくれる
+    </ul>
+
+    <figure class=screenshots>
+      <img src="http://cdn-ak.f.st-hatena.com/images/fotolife/w/wakabatan/20130423/20130423105832.png?1366682314">
+    </figure>
+  <li>Web API が提供されている
+  <li><a href="https://github.com/wakaba/translator-mygengo">Translator-myGengo</a>
+    <ul>
+      <li>Hatena::Translator から API を利用して発注して、結果を
+        Hatena::Translator に戻すツール
+    </ul>
+
+    <figure class=screenshots>
+      <img src="http://cdn-ak.f.st-hatena.com/images/fotolife/w/wakabatan/20130423/20130423105734.png?1366682257">
+    </figure>
+</ul>
+</section>
+
+<section class=cover id=country>
+<h1>国といろいろ</h1>
+</section>
+
+<section>
+<h1>国</h1>
+
+<ul>
+  <li>たまに閲覧者の国の情報を使う
+  <li>主な用途は法規制への対応、例えば
+    <ul>
+      <li>課金サービス → 国情報に基づき提供
+      <li>ID登録や投稿など → 国情報に基づき年齢制限
+    </ul>
+</ul>
+</section>
+
+<section>
+<h1>国判定</h1>
+
+<ul>
+  <li>登録ユーザー → 登録時に選択した国
+  <li>ゲスト → IPアドレスから推定
+  <li>正しいとは限らないが、他に信じられるものがない
+  <li>IP アドレスと国のマッピングは常に最新のデータを使うこと!
+</ul>
+</section>
+
+<section>
+<h1>国コード</h1>
+
+<ul>
+  <li>ISO 3166-1 2文字国コード
+
+    <figure>
+      <table>
+        <tr><th><code>JP</code> <td>日本
+        <tr><th><code>US</code> <td>アメリカ合衆国
+        <tr><th><code>FR</code> <td>フランス
+      </table>
+    </figure>
+
+  <li>システム内部では小文字に正規化して扱っている
+</ul>
+</section>
+
+<section>
+<h1>価格</h1>
+
+<ul>
+  <li>課金サービスのため複数の通貨を扱わないといけない
+    <ul>
+      <li>JPY, USD, ...
+    </ul>
+
+    <figure>
+      <ul>
+        <li>￥ 500
+        <li>$ 4.99
+      </ul>
+    </figure>
+
+  <li>価格を整数だと思っていると USD が小数 (セント) 付きで困ったりする
+  <li>でも小数にして本当に良いのか
+
+    <figure class=code>
+<pre class=sh><code>$ perl -e 'printf "%.40f", 4.99'
+4.9900000000000002131628207280300557613373</code></pre>
+    </figure>
+    
+  <li>ほとんどの場合気づかないけど、稀に問題が起こってもたぶん気づかない
+  <li>セントより細かくはならないのだから、常に100倍しておけば良い
+    <ul>
+      <li>ただし100分の1にせずに表示しないように注意が必要
+    </ul>
+
+  <li>DBに記録するときはどの通貨なのかも一緒に記録しておこう
+    <ul>
+      <li>当たり前っぽいけどそうでもない
+      <li>決済会社カラムで区別できると思って貨幣カラムを作らない -> 後から困る
+    </ul>
+</ul>
+<!--
+  価格設定、為替、国籍と使える通貨とか色々問題があるが今回は触れない
+-->
+</section>
+
+<section>
+<h1>単位</h1>
+
+<ul>
+  <li>ヤード・ポンド法の国向けにサービス提供するなら要注意
+</ul>
+
+<figure class=screenshots>
+  <img src="http://cdn-ak.f.st-hatena.com/images/fotolife/w/wakabatan/20130423/20130423112344.png?1366683825">
+</figure>
+</section>
+
+<section>
+<h1>たくさんの軸、たくさんの組み合わせ</h1>
+
+<figure>
+  <table class="combination compact">
+    <tr><td>見ている人の言語
+    <tr><td>コンテンツ著者の言語
+    <tr><td>見ている人の地域
+    <tr><td>コンテンツ著者の地域
+    <tr><td>タイムゾーン
+    <tr><td>通貨
+    <tr><td><code>hatena.ne.jp</code> vs <code>hatena.com</code>
+  </table>
+</figure>
+
+</section>
+
+<section>
+<h1>どう出し分けたらいいのだろう</h1>
+
+<ul>
+  <li>出し分けが必要なとき、何で条件分岐するべきなのか
+  <li>“日本向け”の広告 → 日本語? 日本国民? <code>hatena.ne.jp</code>?
+  <li>うごメモの作品には <code>lang</code> カラムがあるが値は地域 (日米欧)
+    <ul>
+      <li>日本版リリース時点で <code>lang</code> を用意してあった
+      <li>米欧版リリース時に言語でなく地域が必要だとわかった
+        <ul>
+          <li>既に大量の作品が投稿されていたので <code>alter table</code>
+            を避けて <code>lang</code> を流用した
+          <li>その後ずっと開発者を混乱させてしまったので、
+            無理にでも <code>alter</code> するべきだった
+        </ul>
+      <li><code>lang</code> が要ると判断したのは間違いだったか?
+        <ul>
+          <li>どちらもあり得た、判断は難しい
+        </ul>
+    </ul>
+  <li>もっと単純な場合でも間違ってることが多い
+    <ul>
+      <li>開発者含めほとんどの人は気づかない...
+    </ul>
+  <li>カジュアルに出し分けするべきではない
+</ul>
+</section>
+
+<section>
+<h1>国旗</h1>
+
+<ul>
+  <li>国旗アイコンを出したくなるけど慎重になった方が良い
+  <li>言語には国旗を使わないべき
+    <ul>
+      <li>言語と国は一致しない (例・英語)
+    </ul>
+    
+  <li>国によっては利用制限があるらしい
+    <ul>
+      <li>Web サイト上の画像データにまで適用されるかは自明ではないが...
+    </ul>
+  <li>装飾的な加工がどこまで許されるか
+  <li>係争地の旗はトラブルの元になる
+</ul>
+
+<figure>
+  <blockquote>
+    <p>この画像は、旗、紋章、印章等といった公式の記章を表しています。このようなシンボルの使用については、多くの国で制限されています。これらの制限は、著作権の状態に関わらず適用されます。
+  </blockquote>
+  <figcaption>
+    <a href="http://commons.wikimedia.org/wiki/Template:Insignia/ja">Wikimedia における注意文</a>
+  </figcaption>
+</figure>
+
+<figure>
+  <blockquote>
+    <p>Until 2004, the flag was used exclusively on or in front of buildings owned by the government, ministries, statutory boards and educational institutions on a year round basis. The flag could only be flown by individuals and non-governmental organisations during the month of August to mark the country's national day on 9 August.
+  </blockquote>
+  <figcaption>
+    <a href="http://en.wikipedia.org/wiki/Flag_of_Singapore#Regulations_and_guidelines">シンガポール国旗のレギュレーション</a>
+  </figcaption>
+</figure>
+
+<ul>
+  <li>スターをつけた人の国
+    <ul>
+      <li>国旗を出しているがそれなりに配慮している
+    </ul>
+
+    <figure class=screenshots>
+      <img src="http://cdn-ak.f.st-hatena.com/images/fotolife/w/wakabatan/20130423/20130423122707.png?1366687628">
+    </figure>
+</ul>
+</section>
+
+<section>
+<h1>プライバシー</h1>
+
+<ul>
+  <li>国、言語、タイムゾーン、...
+
+  <li>取り扱いには注意が必要
+    <ul>
+      <li>はてなでは公開情報とはしていない
+      <li>匿名化していても、組み合わせで推定できてしまうことも
+      <li>人種・国籍差別のリスク...
+    </ul>
+  <li>とはいえ有効に活用もできる
+    <ul>
+      <li>☆をつけた人の国
+      <li><a href="http://dic.nicovideo.jp/a/%E6%B5%B7%E5%A4%96%E3%81%AE%E5%8F%8D%E5%BF%9C%E3%82%B7%E3%83%AA%E3%83%BC%E3%82%BA">海外の反応シリーズ</a>
+        <ul>
+          <li>YouTube ユーザーの国が公開されているから成り立つ
+        </ul>
+      <li>チャットサービス
+        <ul>
+          <li>参加者のタイムゾーンは有益情報
+        </ul>
+    </ul>
+</ul>
+</section>
+
+<section>
+<h1>CLDR</h1>
+
+<ul>
+  <li><a href="http://cldr.unicode.org/">CLDR</a> - Unicode Common Locale Data Repository
+  <li>言語、タイムゾーン、通貨等々の実装に必要なデータが揃ってる
+  <li>各言語での言語名、タイムゾーン名、地域名など
+  <li>便利だけど若干品質に不安もある
+    <ul>
+      <li>大文字・小文字の揺れとか
+      <li>たまに適当な翻訳データが入っていたり
+    </ul>
+  <li>表記データは Hatena::Translator にインポートして適宜修正して使っている
+</ul>
+</section>
+
+<section class=cover id=contents>
+<h1>国際化サービス設計と実装</h1>
+</section>
+
+<section>
+<h1>コンテンツの言語</h1>
+
+<ul>
+  <li>完全にケースバイケース
+  <li>いくつかの事例を紹介する
+</ul>
+</section>
+
+<section>
+<h1>ハイクの場合</h1>
+
+<ul>
+  <li>リリース後に日英2バージョンに分離
+    <ul>
+      <li>2007/12/13 (JST) 招待制ベータ版リリース (<a href="http://d.hatena.ne.jp/hatenahaiku/20071213/1197527468">日</a>, <a href="http://d.hatena.com/hatenahaiku/20071213/1197533752">英</a>)
+      <li>2007/12/14 (JST) 海外ユーザーに開放
+      <li>2007/12/15 (JST) <a href="http://d.hatena.ne.jp/hatenahaiku/20071215/1197714648">日本ユーザーに開放、正式リリース</a>
+      <li>2008/1/31 (JST) h.hatena.com を英語版として分離して正式リリース
+        (<a href="http://d.hatena.ne.jp/hatenahaiku/20080131/1201769738">日</a>,
+        <a href="http://d.hatena.com/hatenahaiku/20080131/121767964">英</a>)
+    </ul>
+  <li>トップページ (パブリックタイムライン)、キーワードページ
+    <ul>
+      <li>日本語ばかりで英語で投稿しづらい雰囲気だった
+      <li>キーワード単位で言語を分けるような案もあったが結局サイトごと2分割
+      <li>当初は閑古鳥が鳴いていたけど徐々に人が集まってきた
+    </ul>
+
+  <li>UGC サービスの場合、コンテンツの国際化はサービス・コミュニティ設計そのものであり、とても難しい
+
+  <li>投稿テーブルはじめ、プログラム中のありとあらゆる箇所で jp と com
+    の区別が必要になった (投稿自体、投稿数、最近更新されたキーワード等々)
+    <ul>
+      <li>もし今から4分割にしようとか言われたら、絶対に反対するw
+    </ul>
+</ul>
+</section>
+
+<section>
+<h1>うごメモの場合</h1>
+
+<ul>
+  <li>2008/12 日本版リリース
+  <li>2009/8 米欧にサービス拡大
+  <li>みんなの作品 (パブリックタイムライン)、チャンネル
+    <ul>
+      <li>うごメモシアター (DSi) では日米欧各地域内の作品のみ表示
+      <li>うごメモはてな (Web) では全世界または各地域内でユーザー選択可能 (当初は全世界がデフォルト)
+    </ul>
+  <li>投稿ができる DSi では同地域の作品だけ表示され、日本語ばかりで投稿しづらい、とはならなかった
+  <li>Web では他地域の作品も見れるので異文化交流的な風景も見られた
+  <li>とはいえ英語ユーザーが圧倒的に多い
+    <ul>
+      <li>人口比的な問題もあるが、英語以外の人が萎縮していないか?
+    </ul>
+  <li>2011/9 から <code>ugomemo.hatena.ne.jp</code> のデフォルトは日本地域のみに
+    <ul>
+      <li>一見さんにはそちらの方が良いという判断
+    </ul>
+  <li>一定の成功を収めたと言えるが、一筋縄ではいかない
+</ul>
+</section>
+
+<section>
+<h1>うごメモのチャンネル</h1>
+
+<ul>
+  <li>デフォルトでは全世界共通
+    <ul>
+      <li>管理者設定で地域を限定できる
+    </ul>
+  <li>管理者は自分の言語のチャンネル名・説明を編集できる
+  <li>他の言語のチャンネル名・説明は誰でも編集できる
+    <ul>
+      <li>管理者が使えない言語でも誰かが翻訳してくれればチャンネルが広がっていく
+      <li>翻訳者が正しく翻訳しているかは自明でないが...
+    </ul>
+
+    <figure class=screenshots>
+      <img src="http://cdn-ak.f.st-hatena.com/images/fotolife/w/wakabatan/20130423/20130423175555.png?1366707357">
+      <figcaption class=label>
+        「クイズ」チャンネルのドイツ語訳
+      </figcaption>
+    </figure>
+  <li>しかし現実には...
+    <ul>
+      <li>ほとんどのチャンネルは単一言語のみ
+      <li>翻訳されているチャンネルもほとんどはチャンネル管理者自身が記述
+        (おそらく機械翻訳)
+      <li>人気チャンネルの説明は編集合戦...
+      <!-- e.g. 「棒人間」チャンネルの英語の説明に「お友達になりたいとかも大歓迎」 (ママ) -->
+    </ul>
+  <li>ところで各言語をどんなデータ構造でDBに保存するのか? (後述)
+</ul>
+</section>
+
+<section>
+<h1>コメント翻訳</h1>
+
+<ul>
+  <li>テキストコメントには機械翻訳ボタンが出る
+  <li>押すと見ている言語に翻訳してくれる
+
+    <figure class=screenshots>
+      <img src="http://cdn-ak.f.st-hatena.com/images/fotolife/w/wakabatan/20130423/20130423182209.png?1366708931">
+    </figure>
+
+  <li>外部の翻訳サービスの Web API を呼び出している
+    <ul>
+      <li>初期: Google Translate
+      <li>現在: Microsoft Translator API
+        <ul>
+          <li>簡単な REST API (ただし MS テイストw) で使いやすい
+          <li>元の言語を自動判定してくれる
+        </ul>
+    </ul>
+  <li>他の言語の人ともコメントのやりとりが行われていた
+  <li>思った以上に押されている
+  <li>ただしほとんどのコメントは画像なので翻訳できない...
+</ul>
+</section>
+
+<section>
+<h1>ハッピィ</h1>
+
+<ul>
+  <li>パーツの色や形は外人さんも作れるように配慮している
+    <ul>
+      <li>ただし日本向けサービスなのでデフォルトでは日本人ぽい顔が候補に出る
+    </ul>
+</ul>
+
+<figure class=screenshots>
+  <img src="http://cdn-ak.f.st-hatena.com/images/fotolife/w/wakabatan/20130423/20130423182959.png?1366709400">
+  <img src="http://cdn-ak.f.st-hatena.com/images/fotolife/w/wakabatan/20130423/20130423183217.png?1366709538">
+</figure>
+</section>
+
+<section>
+<h1>ハッピィショップ</h1>
+
+<ul>
+  <li>ハッピィは正式には日本語でのみ提供している
+  <li>が、どこからか迷い込んできた外人さんが間違って購入するケースが複数回あった
+    <ul>
+      <li>読めないボタンを安易に押しちゃうの...とは思いつつ
+      <li>購入手続き部分は英語表示にも対応した
+    </ul>
+    <figure class=screenshots>
+      <img src="http://cdn-ak.f.st-hatena.com/images/fotolife/w/wakabatan/20130423/20130423183412.png?1366709653">
+    </figure>
+</ul>
+</section>
+
+<section>
+<h1>言語の障壁</h1>
+
+<ul>
+  <li>なぜか<a href="http://h.hatena.com/target?word=http://serif.hatena.ne.jp/aidem/">登山するバイト戦士におもしろいセリフを言わせよう！ - イーアイデム×はてな×デイリーポータルZコラボ企画</a>で盛り上がる <code>h.hatena.com</code> の人々
+    <ul>
+      <li>日本語版しかない企画なのに...
+      <li><code>h.hatena.ne.jp</code> よりも先に com で話題にw
+      <li>母語でなくても読めなくても使おうとする人は一定数いる
+    </ul>
+  <li>日本以外に展開していないサービスでも、気づかずに深刻な問題を起こさせてしまわないよう配慮くらいはしたい
+</ul>
+</section>
+
+<section>
+<h1>固有名詞</h1>
+
+<ul>
+  <li>サービスで扱う固有名詞も多言語対応が必要
+    <ul>
+      <li>ユーザーのニックネーム
+      <li>はてなココのスポット名
+      <li class=more>...
+    </ul>
+  <li>内部的には多言語対応している
+    <ul>
+      <li>現在ははてなスタッフのみ編集可能
+      <li>一部の公式ユーザーのみ利用している
+      <li>閲覧者の文字体系・言語の名前がなければ、他の言語の名前にフォールバック
+    </ul>
+
+    <figure class=screenshots>
+      <img src="http://cdn-ak.f.st-hatena.com/images/fotolife/w/wakabatan/20130423/20130423185225.png?1366710747">
+      <img src="http://cdn-ak.f.st-hatena.com/images/fotolife/w/wakabatan/20130423/20130423185248.png?1366710771">
+    </figure>
+  <li>固有名詞は何で分ければ良いのか
+    <ul>
+      <li>「Karasuma-oike」は英語でもフランス語でもなく日本語
+      <li>言語でなく「ラテン文字表記」か?
+      <li>でも「Oike building」は英語っぽい
+    </ul>
+
+    <figure class=long>
+      <blockquote>
+        <p>国土交通省と東京都は20日、千代田区の国会周辺にある道路案内標識のローマ字の表記を英語に改める作業を始めた。外国人観光客らに分かりやすくするためで、「Kokkai」は「The National Diet」になる。国道沿いの標識は国交省が、都道沿いの標識は都が手掛け、年内に終える予定。
+      </blockquote>
+      <figcaption>
+        <a href="http://www.nikkei.com/article/DGXNASDG2002U_Q3A820C1CC1000/">「Kokkai」やめます 国会周辺の標識、英語表記に &mdash; 日本経済新聞</a>
+      </figcaption>
+    </figure>
+
+  <li>文字体系にも標準的なコードがある
+    <ul>
+      <li><a href="http://unicode.org/iso15924/iso15924-codes.html">ISO 15924 文字体系コード</a>
+
+        <figure>
+          <table>
+            <tr><th><code>Latn</code><td>ラテン文字
+            <tr><th><code>Jpan</code><td>日本語文字 (仮名漢字)
+            <tr><th><code>Arab</code><td>アラビア文字
+            <tr><th><code>Grek</code><td>ギリシャ文字
+          </table>
+        </figure>
+    </ul>
+</ul>
+</section>
+
+<section>
+<h1>氏名</h1>
+
+<ul>
+  <li>表記いろいろ
+    <ul>
+      <li>漢字、カナ、ラテン文字、...
+      <li>言語でなく文字
+    </ul>
+  <li>構成要素いろいろ
+    <ul>
+      <li>姓、名、ミドルネーム、父性、<var>n</var>世、Sir、...
+      <li>5項目あればだいたい足りるが...
+    </ul>
+  <li>順序いろいろ
+    <ul>
+      <li>姓名、名姓、...
+    </ul>
+  <li>区切り文字いろいろ
+    <ul>
+      <li>なし、スペース、「・」、「=」、...
+    </ul>
+
+  <li>テキストボックス1つだけ、が最も“国際化”されている
+  <li>が、サービス的に分けたい願望もある
+    <ul>
+      <li>氏名きちんといれさせたい
+      <li>一部だけ取り出して使いたい
+        <ul>
+          <li>メールの文頭で「Hi, Taro!」みたいなのとか
+        </ul>
+    </ul>
+</ul>
+</section>
+
+<section>
+<h1>氏名の設定</h1>
+
+<ul>
+  <li>ちゃんとやるとこうなる:
+
+    <figure class=screenshots>
+      <img src="http://cdn-ak.f.st-hatena.com/images/fotolife/w/wakabatan/20130424/20130424121313.png?1366773196">
+    </figure>
+
+  <li>流石に使いにくいので、よく使われそうなものだけ出してる
+  <li>日本語なら漢字 + カナ + ラテン文字、英語ならラテン文字などデフォルトで見せるものも調整している
+  <li>初期開始フローはもっと簡略化している
+    
+    <figure class=screenshots>
+      <img src="http://cdn-ak.f.st-hatena.com/images/fotolife/w/wakabatan/20130424/20130424124006.png?1366774808">
+    </figure>
+
+  <li>実名制にこだわる Facebook はちゃんとしてるんでしょ?
+
+    <figure class=screenshots>
+      <img src="http://cdn-ak.f.st-hatena.com/images/fotolife/w/wakabatan/20130424/20130424124615.png?1366775182">
+    </figure>
+
+    <ul>
+      <li>2011年にようやく日本語氏名を設定できるように (ちなみにFacebookページは2013年1月に多言語対応)
+      <li><a href="https://www.facebook.com/help/languagename">タイムラインの言語設定とやらにより設定できる氏名の言語も変わる</a>らしい
+      <li>API から取得する方法がドキュメント化されてなくてみんな困ってる
+        <ul>
+          <li>ぐぐると解説記事がたくさんでてくる
+          <li>無指定 → デフォルト表記、 locale 指定 → 指定された表記、の切り替え式 (同時には取れない)
+          <li>多言語対応している Web アプリケーションが両方の表記をほしいと思っても、若干面倒くさい
+        </ul>
+    </ul>
+
+  <li>あまり考えないとこうなるw
+
+    <figure class=screenshots>
+      <img src="http://cdn-ak.f.st-hatena.com/images/fotolife/w/wakabatan/20130424/20130424120124.png?1366772838">
+      <img src="http://cdn-ak.f.st-hatena.com/images/fotolife/w/wakabatan/20130424/20130424120300.png?1366772592">
+    </figure>
+
+    <ul>
+      <li>人名専用オブジェクトを作って整形はすべて任せるべき
+        <ul>
+          <li>開発者が毎回考えなくても正しい表記になるように
+        </ul>
+      <li>人名の一部を取り出すのも
+        <ul>
+          <li>「Hi, Taro!」は日本語だと「山田さん、こんにちは。」?
+        </ul>
+    </ul>
+</ul>
+</section>
+
+<section>
+<h1>住所</h1>
+
+<ul>
+  <li>氏名と同じで自由入力が一番良いが、構造化したい要求も強い
+    <ul>
+      <li>郵便番号からの住所入力
+      <li>選択肢から選ばせたい
+      <li>バリデーション可能性
+      <li>詳細度を制御したい
+      <li class=more>...
+    </ul>
+
+    <figure class=screenshots>
+      <img src="http://cdn-ak.f.st-hatena.com/images/fotolife/w/wakabatan/20130424/20130424141507.png?1366780510" alt="都道府県選択ボックス">
+    </figure>
+
+<!--
+    Web API で外部に渡すデータは指定された形式で入力させるしかない
+    e.g. クレジットカード決済
+-->
+
+  <li>対象地域外の人のための「その他」選択肢も必要になる
+
+    <figure class=screenshots>
+      <img src="http://cdn-ak.f.st-hatena.com/images/fotolife/w/wakabatan/20130424/20130424125035.png?1366775442" alt="海外の方は9999999と入力ください。">
+    </figure>
+</ul>
+</section>
+
+<section>
+<h1>地域の選択</h1>
+
+<ul>
+  <li>地域区分は世界各地で多種多様なので一般化するのは無理
+    <ul>
+      <li>日本国内でも 国 > 都道府県 > (郡) > 市町村 > 大字 > 小字で6段階くらい本当は必要
+    </ul>
+  <li>国、地域、都市の3段階に近似したけど世界に通用する気がしない
+  <li>統廃合があるたびに追随しないといけないが世界規模だとほぼ不可能...
+</ul>
+
+<figure class=screenshots>
+  <img src="http://cdn-ak.f.st-hatena.com/images/fotolife/w/wakabatan/20130424/20130424143927.png?1366781972">
+</figure>
+</section>
+
+<section>
+<h1>学校</h1>
+
+<ul>
+  <li>学校制度は世界各地でばらばら
+
+    <figure class=screenshots>
+      <img src="http://cdn-ak.f.st-hatena.com/images/fotolife/w/wakabatan/20130424/20130424144205.png?1366782126">
+    </figure>
+
+  <li>何年制かも国や学校によって色々
+    <ul>
+      <li>学年選択は選択ボックスでなく数値入力が良いか?
+      <li>でも年少・年中、Freshman・Sophomore みたいに数字以外の学年名もある...
+    </ul>
+
+    <figure class=screenshots>
+      <img src="http://cdn-ak.f.st-hatena.com/images/fotolife/w/wakabatan/20130424/20130424144519.png?1366782335">
+    </figure>
+
+  <li>年度初めがいつかも国や学校によって色々
+    <ul>
+      <li>○月入学・進級だから～のような処理には学校ごとのデータが必要になるがほとんど不可能
+    </ul>
+
+  <li>世界規模で学校単位のサービスを作るとしたら相当な労力が必要
+    <ul>
+      <li>日本国内だけでも中等教育学校、高等専門学校などは蔑ろにされがち...
+    </ul>
+
+  <li>大体の人がカバーできればOK、で割り切れるか?
+    <ul>
+      <li>「一般的」と「例外的」の線引きができるか?
+      <li>例外に含まれてしまった人は使えなくなってしまうのか?
+      <li>あるいは「その他」を用意するか?
+    </ul>
+</ul>
+</section>
+
+<section>
+<h1>地図</h1>
+
+<figure class=screenshots>
+  <img src="http://cdn-ak.f.st-hatena.com/images/fotolife/w/wakabatan/20130424/20130424145117.png?1366782679">
+</figure>
+
+<ul>
+  <li>地図サービス側でいい感じに国際化してくれてるので、あまり考えることはない
+  <li>ただし世界的な地図サービスは政治的なリスクを抱えている
+    <ul>
+      <li>それを API で呼び出すだけでもリスクを共有することになる
+    </ul>
+</ul>
+
+<figure>
+  <blockquote>
+    <p>東京都や環境省のインターネットサイトの地図で日本海の名称に韓国が主張する「東海」、沖縄県・尖閣諸島には中国名の「釣魚島群島」が併記されていたことが１２日、分かった。米インターネット検索大手「グーグル」の地図ソフト「グーグルマップ」のデータを使用したためで、既に併記を削除、またはサイトを閉鎖、修正している。
+<!--
+　都のサイトは防災関連情報を提供しており、１１日夕、外部からの指摘で併記が削除されるよう設定を切り替えた。防災管理課の担当者は「都内の防災情報を扱うため地図を使用していたので、そこまで気付かなかった」と説明している。
+
+　環境省は東日本大震災に伴う廃棄物の処理状況を紹介するサイトで併記が判明。いったん閉鎖、表記を修正する。東北地方を中心に利用があると想定、「日本海の表記などは精査していなかった」という。
+
+　海上自衛隊の公式ホームページでも同様の地図が使われていたことが判明している。
+2013.4.12 12:09
+-->
+  </blockquote>
+  <figcaption>
+    <a href="http://sankei.jp.msn.com/life/news/130412/trd13041212100011-n1.htm">地図に「東海」「釣魚島群島」 東京都や環境省のサイト</a>
+  </figcaption>
+</figure>
+<!--
+<http://www.huffingtonpost.jp/2013/09/29/google-map-forbidden_n_4011180.html>
+グーグルマップの「利用禁止令」 竹島や北方領土が「日本名でない表記」 政府が自治体などに要請
+The Huffington Post  |  投稿日: 2013年09月29日 16時53分 JST  |  更新: 2013年09月29日 19時02分 JST
+-->
+</section>
+
+<section>
+<h1>多言語データ構造</h1>
+
+<ul>
+  <li>「オブジェクトに付随する多言語データ」をどう保存するのがよいか?
+  <li>e.g. うごメモチャンネルテーブル
+    <code>(id, name, description, created)</code>
+
+    <ol>
+      <li><code>name={"ja":"烏丸御池","en":"Karasuma-oike"}</code>
+        <ul>
+          <li>正規化されてないデータは嫌だ (検索しにくいなど)
+        </ul>
+      <li><code>(id, name_ja, name_en, description_ja, description_en, created)</code>
+        <ul>
+          <li>対応言語数だけ <code>_ja</code> <code>_en</code> <code>_fr</code>
+            などずらずら並ぶのはつらい
+          <li>言語を増やしたくなったら alter しないといけない
+        </ul>
+        <li><code>(id, created) + (ch_id, lang, name, desc)</code>
+          <ul>
+            <li>簡単な SQL 一本で引けなくなってしまう
+          </ul>
+    </ol>
+
+  <li><code>name</code> は 2. に、 <code>description</code> は 3. にした
+    <ul>
+      <li>対応言語はそんなに頻繁に増やさない
+      <li>名前はチャンネルを表示するあらゆる場面で使うから同じ SQL で取得したい
+      <li>説明を表示する場面は限られるしサイズが大きくなりがちなので別テーブルに分離
+    </ul>
+  <li>取得時は見ている人の言語のもの (なければ適当にフォールバック)
+    <ul>
+      <li><a href="https://gist.github.com/wakaba/5450060"><code>Role::HasMultilingualColumns</code></a>
+    </ul>
+
+</ul>
+</section>
+
+<section>
+<h1>アルゴリズムの国際化</h1>
+
+<ul>
+  <li>ソート (照合順序)
+    <ul>
+      <li>アルゴリズムの国際化の“例題”
+      <li>言語によってアルファベットの整列順が異なるとか、漢字の読みで整列とか
+      <li>Web アプリケーションでは意外と使わない
+        <ul>
+          <li>日付順、何かのスコア順で並べることがほとんど
+          <li>唯一あるのは国名リストか?
+
+            <figure class=screenshots>
+              <img src="http://cdn-ak.f.st-hatena.com/images/fotolife/w/wakabatan/20130424/20130424155053.png?1366786271">
+              <figcaption class=label>
+                あまり難しいことはせず、各言語の符号位置順で並べてある。
+                漢字の国名はカタカナの後に並ぶ。
+                よそのサイトでもそうなっていることが多いので、読みで“正しく”整列させると逆に混乱する人もいるかもしれない...
+              </figcaption>
+            </figure>
+        </ul>
+    </ul>
+
+  <li>自然言語処理関係のあらゆるもの
+    <ul>
+      <li>言語ごとにそれぞれ実装するしかない
+      <li>うごメモ検索
+        <ul>
+          <li>五十音表ソフトウェアキーボード
+
+            <figure class=screenshots>
+              <img src="http://f.hatena.ne.jp/images/fotolife/n/nmy/20100826/20100826174833.gif">
+              <!-- http://ugomemohatena.hatenastaff.com/entry/20100826/1282815573
+ -->
+            </figure>
+
+          <li>MeCab で検索用読み仮名データを自動生成している
+            <!-- 万能ではないけどわりとうまくいってる -->
+
+          <li>データ構造からUIまで完全に言語依存
+        </ul>
+    </ul>
+</ul>
+</section>
+
+<section>
+<h1>はてなブログ</h1>
+
+<ul>
+  <li>ブログの管理者がブログの言語を選択できる
+  <li>「次の記事」「コメントを書く」は<mark>ブログの言語</mark>
+  <li>フォームなど UI としての性質が強い部分は<mark>閲覧者の言語</mark>
+  <li>表示の一貫性と閲覧者の利便性のバランス
+</ul>
+
+<figure class=screenshots>
+  <img src="http://cdn-ak.f.st-hatena.com/images/fotolife/w/wakabatan/20130424/20130424163720.png?1366789042">
+</figure>
+</section>
+
+<section>
+<h1>ヘルプ</h1>
+
+<ul>
+  <li>初期
+    <ul>
+      <li>章ごとに1メッセージとして <code>.po</code> ファイルで管理
+      <li>長文かつ HTML タグ入りでメンテナンスしづらい
+    </ul>
+  <li>言語ごとにテンプレートを分ける仕組みも作った
+    <ul>
+      <li>あまり使われなかったので一部を除きすぐに削除
+      <li>利用規約くらい?
+    </ul>
+  <li>その後
+    <ul>
+      <li>Hatena::Translator で段落単位で管理
+      <li>細切れで登録・テンプレート記述するのが面倒くさい
+    </ul>
+  <li>多言語対応 CMS があると理想的...
+</ul>
+</section>
+
+<section>
+<h1>FAQ</h1>
+
+<ul>
+  <li>管理画面から言語を指定して登録できる
+  <li>閲覧者の言語の質問と回答だけ表示される
+  <li>同じ内容の項目でも言語ごとに別の URL になってしまうのがちょっと不便
+</ul>
+
+<figure class=screenshots>
+  <img src="http://cdn-ak.f.st-hatena.com/images/fotolife/w/wakabatan/20130424/20130424165053.png?1366789856">
+</figure>
+</section>
+
+<section>
+<h1>Hatena Developer Center</h1>
+
+<ul>
+  <li>いくつかの API ドキュメントは日本語の他に英語もある
+    <ul>
+      <li>ドキュメントに切り替えボタンが付いている
+    </ul>
+
+    <figure class=screenshots>
+      <img src="http://cdn-ak.f.st-hatena.com/images/fotolife/w/wakabatan/20130424/20130424165224.png?1366789945">
+    </figure>
+
+  <li>URL の path で言語を分けている
+    
+    <figure class=screenshots>
+      <ul>
+        <li><code>http://developer.hatena.ne.jp<wbr>/<mark>ja</mark>/documents/star/apis/count</code>
+        <li><code>http://developer.hatena.ne.jp<wbr>/<mark>en</mark>/documents/star/apis/count</code>
+      </ul>
+    </figure>
+
+  <li>リンクしたいときに言語を考慮しないといけないのは不便
+  <li>言語を省略したら見ている人の言語に自動リダイレクトしたいが今は <code>ja</code> 固定
+    
+    <figure class=screenshots>
+      <ul>
+        <li><code>http://developer.hatena.ne.jp<wbr>/documents/star/apis/count</code>
+      </ul>
+    </figure>
+
+  <li>言語ごとにそれぞれのページを編集する形なので、内容の同期が地味に面倒くさい
+    <ul>
+      <li>Hatena::Translator なら各言語を横に並べて編集できる
+      <li>でも Hatena::Translator は長文の管理に向いていない...
+    </ul>
+</ul>
+</section>
+
+<section>
+<h1>告知日記</h1>
+
+<figure class=screenshots>
+  <img src="http://cdn-ak.f.st-hatena.com/images/fotolife/w/wakabatan/20130424/20130424165446.png?1366790087">
+</figure>
+
+<ul>
+  <li>同内容で各言語に翻訳された告知日記群
+  <li>言語メニューから互いに移動できる
+  <li>URL は言語ごとに違う (リンクしたいときとても面倒)
+  <li>多言語対応 CMS があると理想的...
+</ul>
+
+</section>
+
+<section>
+<h1>メンテナンス画面</h1>
+
+<figure class=screenshots>
+  <img src="http://cdn-ak.f.st-hatena.com/images/fotolife/w/wakabatan/20130424/20130424170259.png?1366790585">
+</figure>
+
+<ul>
+  <li>通常のアプリケーションサーバーを通らないで表示される画面
+    <ul>
+      <li>全言語併記した静的ファイル
+      <li>世界的に出荷されている製品付属のマニュアルみたいw
+      <li><code>Accept-Language:</code> で内容折衝もできなくはないが、 
+        HTML 1ページで完結しているほうが面倒がない
+    </ul>
+  <li>メンテナンス情報ページ URL <code>http://maintenance.hatena.com/</code>
+    <ul>
+      <li>適当な言語の情報ページにリダイレクトする
+      <li>Reverse proxy で取れる HTTP ヘッダーの情報だけで言語選択している
+        <ul>
+          <li>アプリケーションサーバー無しの最低限の構成
+        </ul>
+    </ul>
+</ul>
+
+</section>
+
+<!--
+
+触れてない話題
+
+  notranslate=""
+  電話番号
+  サービス名の選択
+  サービスコンセプトの問題
+  プロフィール項目
+    血液型は日本以外で要るか?
+
+-->
+
+<section>
+<h1>まとまらない</h1>
+
+<ul>
+  <li>あらゆる方向からあらゆることを考えないといけない
+  <li>サービス設計の根本に関わる問題である
+  <li>プログラムの実装方法にも深く関わってくる
+  <li>言語切り替え、日付の表記のような基礎的な部分は (データさえ揃えれば) 簡単
+  <li>その先はケースバイケースで考えていくしかない
+</ul>
+
+</section>
