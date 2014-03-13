@@ -4,3 +4,6 @@ destdir=${WEBHACC_DIR-./local/webhacc}
 git clone https://github.com/manakai/webhacc-cli ${destdir}
 cd ${destdir} && make deps && \
 cd ${currentdir} && cp ${destdir}/webhacc ./webhacc
+cd ${currentdir} && echo "Add following line to your crontab
+
+" && ./webhacc --generate-cron-lines
