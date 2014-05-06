@@ -1,3 +1,4 @@
 #!/bin/sh
 mkdir -p local/bin
 curl https://raw.githubusercontent.com/wakaba/perl-setupenv/master/bin/pmbp.pl > local/bin/pmbp.pl
+exec perl -e 'unless (-s "local/bin/pmbp.pl") { system "rm local/bin/pmbp.pl"; die "Download failed" }'
