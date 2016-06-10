@@ -45,8 +45,8 @@ sub rfc3339 ($) {
 } # rfc3339
 
 print qq{<!DOCTYPE HTML><html lang=en><title>Perl packages</title>
-<link rel=stylesheet href="http://suika.fam.cx/www/style/html/xhtml">
-<link rel=author href="http://suika.fam.cx/~wakaba/who?" title=Wakaba>
+<link rel=stylesheet href="https://suika.fam.cx/www/style/html/xhtml">
+<link rel=author href="https://suika.fam.cx/~wakaba/who?" title=Wakaba>
 <h1>Perl packages</h1>
 
 <p>Note that these snapshot packages might be <em>outdated</em>.  The
@@ -131,8 +131,8 @@ print q{
 <hr>
 
 <footer>
-  <p>See also: <a href="http://github.com/wakaba/packages">Repository</a>.
-  <p>Contact: <a href="mailto:w@suika.fam.cx">Wakaba</a>.
+  <p>See also: <a href="https://github.com/wakaba/packages">Repository</a>.
+  <p>Contact: <a href="mailto:wakaba@suikawiki.org">Wakaba</a>.
 </footer>
 
 };
