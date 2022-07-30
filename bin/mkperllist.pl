@@ -16,6 +16,12 @@ while (my $json_f = $json_d->next) {
   $data->{$json->{dist_name}}->{$json->{version}} = $json;
 }
 
+sub url ($) {
+  my $s = shift;
+  $s =~ s{^https?://suika.fam.cx/}{https://suika.suikawiki.org/};
+  return $s;
+}
+
 sub htescape ($) {
   my $s = shift;
   $s =~ s/&/&amp;/g;
@@ -45,8 +51,8 @@ sub rfc3339 ($) {
 } # rfc3339
 
 print qq{<!DOCTYPE HTML><html lang=en><title>Perl packages</title>
-<link rel=stylesheet href="https://suika.fam.cx/www/style/html/xhtml">
-<link rel=author href="https://suika.fam.cx/~wakaba/who?" title=Wakaba>
+<link rel=stylesheet href="https://suika.suikawiki.org/www/style/html/xhtml">
+<link rel=author href="https://suika.suikawiki.org/~wakaba/who?" title=Wakaba>
 <h1>Perl packages</h1>
 
 <p>Note that these snapshot packages might be <em>outdated</em>.  The
@@ -95,7 +101,7 @@ for my $dist_name (sort { $a cmp $b } keys %{$data}) {
         print q{<dt>Git repository};
         for (keys %{$info->{urls}->{git}}) {
           printf q{<dd><a href="%s">%s</a>},
-              htescape $info->{urls}->{git}->{$_}, htescape $_;
+              htescape url $info->{urls}->{git}->{$_}, htescape $_;
         }
       }
 
@@ -103,7 +109,7 @@ for my $dist_name (sort { $a cmp $b } keys %{$data}) {
         print q{<dt>Continuous integration};
         for (keys %{$info->{urls}->{ci}}) {
           printf q{<dd><a href="%s">%s</a>},
-              htescape $info->{urls}->{ci}->{$_}, htescape $_;
+              htescape url $info->{urls}->{ci}->{$_}, htescape $_;
         }
       }
     } else {
