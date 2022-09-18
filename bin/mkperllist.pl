@@ -134,11 +134,15 @@ for my $dist_name (sort { $a cmp $b } keys %{$data}) {
 
 print q{
 
+
+<sw-ads normal></sw-ads>
+<script src="https://manakai.github.io/js/global.js" async></script>
 <hr>
 
 <footer>
   <p>See also: <a href="https://github.com/wakaba/packages">Repository</a>.
-  <p>Contact: <a href="mailto:wakaba@suikawiki.org">Wakaba</a>.
+  <p>Contact: <a href="mailto:wakaba@suikawiki.org">Wakaba</a>.</p>
+  <sw-ads-notes></sw-ads-notes>
 </footer>
 
 };
